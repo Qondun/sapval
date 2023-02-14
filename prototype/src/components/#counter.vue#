@@ -1,0 +1,18 @@
+<script>
+import { ref } from 'vue';
+import PrimaryButton from './PrimaryButton.vue';
+import DangerButton from './DangerButton.vue';
+
+const count = ref(0);
+
+export default {
+       name: "Counter",
+       props: {
+       	      count: Int
+       }
+}
+</script>
+
+<template>
+	<button
+</template>
