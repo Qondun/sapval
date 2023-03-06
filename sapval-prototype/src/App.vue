@@ -1,60 +1,118 @@
 <script setup>
 import HelloWorld from './components/HelloWorld.vue'
 import TheWelcome from './components/TheWelcome.vue'
+import SortingMenu from './components/SortingMenu.vue'
+import RuleCategories from './components/RuleCategories.vue'
 import { reactive } from 'vue'
 let state = reactive({ count: 0 })
+let dynamicBot = reactive ({ state: 1}) //TODO: change the names
 
 function increment() {
-      state.count++
+  state.count++
+}
+function updateState(e) {
+  dynamicBot.state = e
 }
 </script>
 
-<template>  
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+<template>
+  <div id="mainGrid">
+    <header class="gridItem">
+      <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
 
-    <div class="wrapper">
-      <HelloWorld v-if="state.count>2" msg="You did it!" />
-      <HelloWorld v-else msg="Någonting annat" />
+      <div class="wrapper">
+        <HelloWorld v-if="state.count>2" msg="You did it!" />
+        <HelloWorld v-else msg="Någonting annat" />
+      </div>
+    </header>
+
+    <main class="gridItem">
+      {{ dynamicBot.state }}
+      <SortingMenu @clickedMenu="updateState" :state="dynamicBot.state"/>
+    </main>
+    <div class="gridItem" id="dynamicBottom">
+      <TheWelcome v-if="dynamicBot.state==1" @clicked="increment" :count="state.count"/>
+      <!--<div v-if="dynamicBot.state==1" class="botDiv" style="background-color: blue">
+        <h1>1</h1>
+      </div>-->
+      <RuleCategories v-else-if="dynamicBot.state==2"/>
+      <!--<div v-else-if="dynamicBot.state==2" class="botDiv" style="background-color: red">
+        <h1>2</h1>
+      </div>-->
+      <div v-else-if="dynamicBot.state==3" class="botDiv" style="background-color: green">
+        <h1>3</h1>
+      </div>
+      <div v-else class="botDiv" style="background-color: yellow">
+        <h1>4</h1>
+      </div>
     </div>
-  </header>
-
-  <main>
-    {{state.count}}
-    <TheWelcome @clicked="increment" :count="state.count"/>
-  </main>
+    <footer class="gridItem">
+      <p>Meddelande</p>
+      <p>Historik</p>
+    </footer>
+  </div>  
 </template>
 
 <style>
 :root{
   --background-color: blue;
-  --severity_1: #fff2cc;
+  --severity1: #fff2cc;
+  --severity2: #93c47d;
+  --severity3: #cf4c22;
+  --severity4: #741b47;
+  --severity5: #190263;
+  --buttonBorderRadius: 10px;
+}
+
+#mainGrid {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+
+.gridItem {
+  width: 100%;
 }
 
 header {
   line-height: 1.5;
+  background-color: #a1a1a1;
+  height: 40vh;
 }
 
 .logo {
   display: block;
-  margin: 0 auto 2rem;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+main {
+  background-color: #f3f3f3;
+  height: 10vh;
+}
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
+#dynamicBottom {
+  display: flex;
+  background-color: #a1a1a1;
+  height: 45vh;
+  overflow: scroll;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
 
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+.botDiv {
+  width: 200px;
+  height: 200px;
+}
+
+footer {
+  height: 5vh;
+  background-color: #454545;
+  text-align: center;
+  color: #000;
+}
+footer p {
+  vertical-align: middle;
 }
 </style>

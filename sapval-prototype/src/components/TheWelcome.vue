@@ -10,7 +10,11 @@ const state = defineProps(['count'])
 </script>
 
 <template>
-  <div class="bar" :style="{'width': state.count*100 + 'px'}">{{ state.count }}</div>
+  <div class="bar" id="severity1" :style="{'width': state.count*100 + 'px'}">{{ state.count }}</div>
+  <div class="bar" id="severity2" :style="{'width': state.count*100 + 'px'}">{{ state.count }}</div>
+  <div class="bar" id="severity3" :style="{'width': state.count*100 + 'px'}">{{ state.count }}</div>
+  <div class="bar" id="severity4" :style="{'width': state.count*100 + 'px'}">{{ state.count }}</div>
+  <div class="bar" id="severity5" :style="{'width': state.count*100 + 'px'}">{{ state.count }}</div>
   <button @click="$emit('clicked')">
   {{ state.count }}
   </button>
@@ -94,6 +98,26 @@ const state = defineProps(['count'])
 <style>
 .bar{
   height: 50px;
+  text-align: center;
+}
+#severity_1{
   background-color: var(--severity_1);
+  color: #000;
+}
+#severity_2{
+  background-color: var(--severity_2);
+  color: #000;
+}
+#severity_3{
+  background-color: var(--severity_3);
+  color: #000;
+}
+#severity_4{
+  background-color: var(--severity_4);
+  color: #fff;
+}
+#severity_5{
+  background-color: var(--severity_5);
+  color: #fff;
 }
 </style>
