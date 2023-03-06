@@ -5,7 +5,7 @@ import SortingMenu from './components/SortingMenu.vue'
 import RuleCategories from './components/RuleCategories.vue'
 import { reactive } from 'vue'
 let state = reactive({ count: 0 })
-let dynamicBot = reactive ({ state: 1}) //TODO: change the names
+let dynamicBot = reactive ({ state: 0}) //TODO: change the names
 
 function increment() {
   state.count++
