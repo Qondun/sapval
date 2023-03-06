@@ -31,15 +31,15 @@ function updateState(e) {
       <SortingMenu @clickedMenu="updateState" :state="dynamicBot.state"/>
     </main>
     <div class="gridItem" id="dynamicBottom">
-      <TheWelcome v-if="dynamicBot.state==1" @clicked="increment" :count="state.count"/>
+      <TheWelcome v-if="dynamicBot.state==0" @clicked="increment" :count="state.count"/>
       <!--<div v-if="dynamicBot.state==1" class="botDiv" style="background-color: blue">
         <h1>1</h1>
       </div>-->
-      <RuleCategories v-else-if="dynamicBot.state==2"/>
+      <RuleCategories v-else-if="dynamicBot.state==1"/>
       <!--<div v-else-if="dynamicBot.state==2" class="botDiv" style="background-color: red">
         <h1>2</h1>
       </div>-->
-      <div v-else-if="dynamicBot.state==3" class="botDiv" style="background-color: green">
+      <div v-else-if="dynamicBot.state==2" class="botDiv" style="background-color: green">
         <h1>3</h1>
       </div>
       <div v-else class="botDiv" style="background-color: yellow">

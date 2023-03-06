@@ -1,27 +1,27 @@
 <script setup>
     //const dynamicBot = defineProps(['state'])
-    let lastSelectedTab = 1;
+    let lastSelectedTab = 0;
     let tabSelectArr = [true, false, false, false];
     function updateSelectedTab(tabNum){
-        if(tabNum != lastSelectedTab) {
+        //if(tabNum != lastSelectedTab) {
             this.tabSelectArr[lastSelectedTab] = false;
             this.tabSelectArr[tabNum] = true;
             this.lastSelectedTab = tabNum;
-        }
+        //}
     }
 </script>
 <template>
     <div id="menuBox">
-        <div class="menuItem" :class="{ selectedTab: tabSelectArr[1] }" @click="$emit('clickedMenu',1), updateSelectedTab(1)">
+        <div class="menuItem" :class="{ selectedTab: tabSelectArr[0] }" @click="$emit('clickedMenu',0), updateSelectedTab(0)">
             <p>Översikt regler</p>
         </div>
-        <div class="menuItem" :class="{ selectedTab: tabSelectArr[2] }" @click="$emit('clickedMenu',2), updateSelectedTab(2)">
+        <div class="menuItem" :class="{ selectedTab: tabSelectArr[1] }" @click="$emit('clickedMenu',1), updateSelectedTab(1)">
             <p>Kategorier regler</p>
         </div>    
-        <div class="menuItem" :class="{ selectedTab: tabSelectArr[3] }" @click="$emit('clickedMenu',3), updateSelectedTab(3)">
+        <div class="menuItem" :class="{ selectedTab: tabSelectArr[2] }" @click="$emit('clickedMenu',2), updateSelectedTab(2)">
 
         </div>    
-        <div class="menuItem" :class="{ selectedTab: tabSelectArr[4] }" @click="$emit('clickedMenu',4), updateSelectedTab(4)">
+        <div class="menuItem" :class="{ selectedTab: tabSelectArr[3] }" @click="$emit('clickedMenu',3), updateSelectedTab(3)">
 
         </div>    
     </div>
