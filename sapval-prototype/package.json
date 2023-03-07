@@ -10,6 +10,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@mongodb-js/charts-embed-dom": "^3.0.0",
     "vue": "^3.2.47"
   },
   "devDependencies": {
