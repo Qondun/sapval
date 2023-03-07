@@ -18,6 +18,7 @@ function updateState(e) {
 <template>
   <div id="mainGrid">
     <header class="gridItem">
+      <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="640" height="480" src="https://charts.mongodb.com/charts-project-0-qnuvu/embed/charts?id=6406017d-e7f9-4b4e-8ab8-04cbc03ba696&maxDataAge=3600&theme=light&autoRefresh=true"></iframe>
       <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
 
       <div class="wrapper">
