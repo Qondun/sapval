@@ -19,7 +19,7 @@
             <p>Kategorier regler</p>
         </div>    
         <div class="menuItem" :class="{ selectedTab: tabSelectArr[2] }" @click="$emit('clickedMenu',2), updateSelectedTab(2)">
-
+            <p>Varningar per allvarighetsgrad</p>
         </div>    
         <div class="menuItem" :class="{ selectedTab: tabSelectArr[3] }" @click="$emit('clickedMenu',3), updateSelectedTab(3)">
 
@@ -28,35 +28,38 @@
 </template>
 <style>
     #menuBox {
-        vertical-align: bottom;
         display: flex;
         flex-flow: row wrap;
-        height: 60%;
+        height: 65%;
         width: 30%;
         justify-content: flex-start;
         position: absolute;
         bottom: 0;
         right: 0;
+        z-index: 1;
+        margin-bottom: -2px;
     }
     .menuItem {
-        background-color: #eeeeee;
-        border: 2px solid;
+        background-color: var(--buttonColor);
+        border: var(--generalBorders);
         border-radius: var(--buttonBorderRadius);
         border-bottom-left-radius: 0px;
         border-bottom-right-radius: 0px;
-        border-color: black;
         height: 100%;
-        width: 20%;
+        width: 23%;
         color: black;
         text-align: center;
     }
     .menuItem:hover {
-        background-color: #999;
+        background-color: var(--buttonColorHover);
         color: white;
         cursor: pointer;
     }
     .selectedTab {
-        background-color: #a1a1a1; 
+        background-color: #cecece; 
         border-bottom: none;
+    }
+    .selectedTab:hover {
+        background-color: #bebebe;
     }
 </style>

@@ -3,20 +3,26 @@ import HelloWorld from './components/HelloWorld.vue'
 import TheWelcome from './components/TheWelcome.vue'
 import SortingMenu from './components/SortingMenu.vue'
 import RuleCategories from './components/RuleCategories.vue'
+import Footer from './components/Footer.vue'
 import { reactive } from 'vue'
 let state = reactive({ count: 0 })
-let dynamicBot = reactive ({ state: 0}) //TODO: change the names
+let overviewLayout = reactive({ state: 0 })
+let dynamicBot = reactive ({ state: 0 }) //TODO: change the names
 
 function increment() {
   state.count++
 }
-function updateState(e) {
+function updateOverviewState() {
+  overviewLayout.state = !overviewLayout.state;
+}
+
+function updateBotState(e) {
   dynamicBot.state = e
 }
 </script>
 
 <template>
-  <div id="mainGrid">
+  <div v-if="overviewLayout.state==0" id="mainGrid">
     <header class="gridItem">
       <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
 
@@ -28,7 +34,7 @@ function updateState(e) {
 
     <main class="gridItem">
       {{ dynamicBot.state }}
-      <SortingMenu @clickedMenu="updateState" :state="dynamicBot.state"/>
+      <SortingMenu @clickedMenu="updateBotState" :botState="dynamicBot.state"/>
     </main>
     <div class="gridItem" id="dynamicBottom">
       <TheWelcome v-if="dynamicBot.state==0" @clicked="increment" :count="state.count"/>
@@ -47,10 +53,13 @@ function updateState(e) {
       </div>
     </div>
     <footer class="gridItem">
-      <p>Meddelande</p>
-      <p>Historik</p>
+      <Footer @clickedHistory="updateOverviewState" :overviewState="overviewLayout.state"/>
     </footer>
-  </div>  
+  </div>
+  <div v-else id="historyLayout">
+    <h1>HISTORIK</h1>
+    <Footer @clickedHistory="updateOverviewState" :state="overviewLayout.state"/> <!-- TEMPORARY -->
+  </div>
 </template>
 
 <style>
@@ -62,6 +71,9 @@ function updateState(e) {
   --severity4: #741b47;
   --severity5: #190263;
   --buttonBorderRadius: 10px;
+  --buttonColor: #aeaeae;
+  --buttonColorHover: #555;
+  --generalBorders: 2px solid #000;
 }
 
 #mainGrid {
@@ -78,7 +90,7 @@ function updateState(e) {
 
 header {
   line-height: 1.5;
-  background-color: #a1a1a1;
+  background-color: #f3f3f3;
   height: 40vh;
 }
 
@@ -93,12 +105,15 @@ main {
 
 #dynamicBottom {
   display: flex;
-  background-color: #a1a1a1;
+  background-color: #cecece;
   height: 45vh;
   overflow: scroll;
   justify-content: center;
   align-items: center;
   position: relative;
+  border: var(--generalBorders);
+  border-right: 0;
+  border-left: 0;
 }
 
 .botDiv {
@@ -108,11 +123,17 @@ main {
 
 footer {
   height: 5vh;
-  background-color: #454545;
+  background-color: #f3f3f3;
   text-align: center;
   color: #000;
 }
 footer p {
   vertical-align: middle;
+}
+
+#historyLayout {
+  width: 100%;
+  height: 100%;
+  background-color: green;
 }
 </style>

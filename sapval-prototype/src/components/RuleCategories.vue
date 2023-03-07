@@ -43,14 +43,14 @@
 }
 
 .categoryDiv {
-    background-color: #aeaeae;
+    background-color: var(--buttonColor);
     width: 30%;
     height: 30%;
     border-radius: var(--buttonBorderRadius);
 }
 
 .categoryDiv:hover {
-    background-color: #999;
+    background-color: var(--buttonColorHover);
     cursor: pointer;
 }
 </style>
