@@ -5,6 +5,7 @@ import SortingMenu from './components/SortingMenu.vue'
 import RuleCategories from './components/RuleCategories.vue'
 import PatientCircle from './components/PatientCircle.vue'
 import Footer from './components/Footer.vue'
+import WardView from './components/WardView.vue'
 import { reactive } from 'vue'
 let state = reactive({ count: 0 })
 let overviewLayout = reactive({ state: 0 })
@@ -25,13 +26,13 @@ function updateBotState(e) {
 <template>
   <div v-if="overviewLayout.state==0" id="mainGrid">
     <header class="gridItem">
-      <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="640" height="480" src="https://charts.mongodb.com/charts-project-0-qnuvu/embed/charts?id=6406017d-e7f9-4b4e-8ab8-04cbc03ba696&maxDataAge=3600&theme=light&autoRefresh=true"></iframe>
-      <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+      <WardView/>
 
-      <div class="wrapper">
+      <!-- <div class="wrapper">
         <HelloWorld v-if="state.count>2" msg="You did it!" />
         <HelloWorld v-else msg="Någonting annat" />
-      </div>
+      </div> -->
+  
     </header>
 
     <main class="gridItem">
@@ -92,6 +93,8 @@ header {
   line-height: 1.5;
   background-color: #f3f3f3;
   height: 40vh;
+  overflow: scroll;
+
 }
 
 .logo {
