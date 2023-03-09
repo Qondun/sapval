@@ -3,6 +3,7 @@ import HelloWorld from './components/HelloWorld.vue'
 import TheWelcome from './components/TheWelcome.vue'
 import SortingMenu from './components/SortingMenu.vue'
 import RuleCategories from './components/RuleCategories.vue'
+import PatientCircle from './components/PatientCircle.vue'
 import Footer from './components/Footer.vue'
 import { reactive } from 'vue'
 let state = reactive({ count: 0 })
@@ -49,9 +50,7 @@ function updateBotState(e) {
       <div v-else-if="dynamicBot.state==2" class="botDiv" style="background-color: green">
         <h1>3</h1>
       </div>
-      <div v-else class="botDiv" style="background-color: yellow">
-        <h1>4</h1>
-      </div>
+      <PatientCircle v-else/>
     </div>
     <footer class="gridItem">
       <Footer @clickedHistory="updateOverviewState" :overviewState="overviewLayout.state"/>
@@ -113,7 +112,8 @@ main {
   align-items: center;
   position: relative;
   border: var(--generalBorders);
-  border-right: 0;
+  border-right: 0
+  ;
   border-left: 0;
 }
 
