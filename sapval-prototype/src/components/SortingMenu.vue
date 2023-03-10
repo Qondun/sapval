@@ -22,8 +22,8 @@
             <p>Varningar per allvarighetsgrad</p>
         </div>    
         <div class="menuItem" :class="{ selectedTab: tabSelectArr[3] }" @click="$emit('clickedMenu',3), updateSelectedTab(3)">
-
-        </div>    
+            <p>Exempel</p>
+        </div>
     </div>
 </template>
 <style>

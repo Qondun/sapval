@@ -4,7 +4,7 @@ import TheWelcome from './components/TheWelcome.vue'
 import SortingMenu from './components/SortingMenu.vue'
 import RuleCategories from './components/RuleCategories.vue'
 import PatientCircle from './components/PatientCircle.vue'
-import Footer from './components/Footer.vue'
+import MiniMenu from './components/MiniMenu.vue'
 import WardView from './components/WardView.vue'
 import { reactive } from 'vue'
 let state = reactive({ count: 0 })
@@ -24,10 +24,11 @@ function updateBotState(e) {
 </script>
 
 <template>
-  <div v-if="overviewLayout.state==0" id="mainGrid">
+  <!-- <div v-if="overviewLayout.state==0" id="mainGrid"> -->
+  <div id="mainGrid">
     <header class="gridItem">
       <WardView/>
-
+      <MiniMenu @clickedHistory="updateOverviewState" :overviewState="overviewLayout.state"/>
       <!-- <div class="wrapper">
         <HelloWorld v-if="state.count>2" msg="You did it!" />
         <HelloWorld v-else msg="Någonting annat" />
@@ -36,7 +37,6 @@ function updateBotState(e) {
     </header>
 
     <main class="gridItem">
-      {{ dynamicBot.state }}
       <SortingMenu @clickedMenu="updateBotState" :botState="dynamicBot.state"/>
     </main>
     <div class="gridItem" id="dynamicBottom">
@@ -53,14 +53,14 @@ function updateBotState(e) {
       </div>
       <PatientCircle v-else/>
     </div>
-    <footer class="gridItem">
+    <!--<footer class="gridItem">
       <Footer @clickedHistory="updateOverviewState" :overviewState="overviewLayout.state"/>
-    </footer>
+    </footer>-->
   </div>
-  <div v-else id="historyLayout">
+  <!-- <div v-else id="historyLayout">
     <h1>HISTORIK</h1>
-    <Footer @clickedHistory="updateOverviewState" :state="overviewLayout.state"/> <!-- TEMPORARY -->
-  </div>
+    <Footer @clickedHistory="updateOverviewState" :state="overviewLayout.state"/> 
+  </div> -->
 </template>
 
 <style>
@@ -92,7 +92,7 @@ function updateBotState(e) {
 header {
   line-height: 1.5;
   background-color: #f3f3f3;
-  height: 40vh;
+  height: 45vh;
   overflow: scroll;
 
 }
