@@ -8,14 +8,15 @@ import MiniMenu from './components/MiniMenu.vue'
 import WardView from './components/WardView.vue'
 import { reactive } from 'vue'
 let state = reactive({ count: 0 })
-let overviewLayout = reactive({ state: 0 })
+let layout = reactive({ state: 0 })
 let dynamicBot = reactive ({ state: 0 }) //TODO: change the names
 
+console.log(layout.state)
 function increment() {
   state.count++
 }
-function updateOverviewState() {
-  overviewLayout.state = !overviewLayout.state;
+function updateLayoutState(e) {
+  layout.state = !layout.state;
 }
 
 function updateBotState(e) {
@@ -24,48 +25,37 @@ function updateBotState(e) {
 </script>
 
 <template>
-  <!-- <div v-if="overviewLayout.state==0" id="mainGrid"> -->
-  <div id="mainGrid">
-    <header class="gridItem">
+  <!-- OVERVIEW PAGE -->
+  <div v-if="layout.state==0" id="overviewGrid">
+    <header class="overviewGridItem">
       <WardView/>
-      <MiniMenu @clickedHistory="updateOverviewState" :overviewState="overviewLayout.state"/>
-      <!-- <div class="wrapper">
-        <HelloWorld v-if="state.count>2" msg="You did it!" />
-        <HelloWorld v-else msg="Någonting annat" />
-      </div> -->
-  
+      <MiniMenu @clickedHistory="updateLayoutState(layoutState)" :layoutState="layout.state"/>
     </header>
 
-    <main class="gridItem">
+    <main class="overviewGridItem">
       <SortingMenu @clickedMenu="updateBotState" :botState="dynamicBot.state"/>
     </main>
-    <div class="gridItem" id="dynamicBottom">
+
+    <div id="dynamicBottom" class="overviewGridItem">
       <TheWelcome v-if="dynamicBot.state==0" @clicked="increment" :count="state.count"/>
-      <!--<div v-if="dynamicBot.state==1" class="botDiv" style="background-color: blue">
-        <h1>1</h1>
-      </div>-->
       <RuleCategories v-else-if="dynamicBot.state==1"/>
-      <!--<div v-else-if="dynamicBot.state==2" class="botDiv" style="background-color: red">
-        <h1>2</h1>
-      </div>-->
       <div v-else-if="dynamicBot.state==2" class="botDiv" style="background-color: green">
         <h1>3</h1>
       </div>
       <PatientCircle v-else/>
     </div>
-    <!--<footer class="gridItem">
-      <Footer @clickedHistory="updateOverviewState" :overviewState="overviewLayout.state"/>
-    </footer>-->
   </div>
-  <!-- <div v-else id="historyLayout">
-    <h1>HISTORIK</h1>
-    <Footer @clickedHistory="updateOverviewState" :state="overviewLayout.state"/> 
-  </div> -->
+
+  <!-- HISTORY PAGE -->
+  <div v-else id="historyGrid">
+    <h1>Historik</h1>
+    <MiniMenu @clickedHistory="updateLayoutState(layoutState)" :layoutState="layout.state" />
+  </div>
 </template>
 
 <style>
 :root{
-  --background-color: blue;
+  --background-color: #f3f3f3;
   --severity1: #fff2cc;
   --severity2: #93c47d;
   --severity3: #cf4c22;
@@ -77,7 +67,7 @@ function updateBotState(e) {
   --generalBorders: 2px solid #000;
 }
 
-#mainGrid {
+#overviewGrid {
   width: 100%;
   height: 100%;
   display: flex;
@@ -85,16 +75,15 @@ function updateBotState(e) {
   justify-content: space-between;
 }
 
-.gridItem {
+.overviewGridItem {
   width: 100%;
 }
 
 header {
+  background-color: var(--background-color);
   line-height: 1.5;
-  background-color: #f3f3f3;
   height: 45vh;
   overflow: scroll;
-
 }
 
 .logo {
@@ -102,7 +91,7 @@ header {
 }
 
 main {
-  background-color: #f3f3f3;
+  background-color: var(--background-color);
   height: 10vh;
 }
 
@@ -135,9 +124,9 @@ footer p {
   vertical-align: middle;
 }
 
-#historyLayout {
+#historyGrid {
   width: 100%;
-  height: 100%;
-  background-color: green;
+  height: 100vh;
+  background-color: var(--background-color);
 }
 </style>
