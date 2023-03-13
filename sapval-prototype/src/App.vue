@@ -1,13 +1,18 @@
 <script setup>
 import HelloWorld from './components/HelloWorld.vue'
+import { ref } from 'vue';
+
 import TheWelcome from './components/TheWelcome.vue'
 import SortingMenu from './components/SortingMenu.vue'
 import RuleCategories from './components/RuleCategories.vue'
 import PatientCircle from './components/PatientCircle.vue'
 import MiniMenu from './components/MiniMenu.vue'
-import WardView from './components/WardView.vue'
-import { reactive } from 'vue'
+import { reactive } from 'vue';
+import WardOverviewChart from './components/WardOverviewChart.vue';
+
+
 let state = reactive({ count: 0 })
+
 let overviewLayout = reactive({ state: 0 })
 let dynamicBot = reactive ({ state: 0 }) //TODO: change the names
 
@@ -16,7 +21,10 @@ function increment() {
 }
 function updateOverviewState() {
   overviewLayout.state = !overviewLayout.state;
+
+
 }
+
 
 function updateBotState(e) {
   dynamicBot.state = e
@@ -27,9 +35,9 @@ function updateBotState(e) {
   <!-- <div v-if="overviewLayout.state==0" id="mainGrid"> -->
   <div id="mainGrid">
     <header class="gridItem">
-      <WardView/>
-      <MiniMenu @clickedHistory="updateOverviewState" :overviewState="overviewLayout.state"/>
-      <!-- <div class="wrapper">
+      <WardOverviewChart/>
+<!--       <MiniMenu @clickedHistory="updateOverviewState" :overviewState="overviewLayout.state"/>
+ -->      <!-- <div class="wrapper">
         <HelloWorld v-if="state.count>2" msg="You did it!" />
         <HelloWorld v-else msg="Någonting annat" />
       </div> -->
