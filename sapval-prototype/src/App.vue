@@ -33,7 +33,7 @@ function updateBotState(e) {
   <!-- OVERVIEW PAGE -->
   <div v-if="layout.state==0" id="overviewGrid">
     <header class="overviewGridItem">
-      <WardView/>
+      <WardOverviewChart/>
       <MiniMenu @clickedHistory="updateLayoutState(layoutState)" :layoutState="layout.state"/>
     </header>
 
