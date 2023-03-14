@@ -1,34 +1,38 @@
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c4d"},"Verksamhetsområde":"Hjärt- lungmedicin","":"","WardGroup":"Hj/Lng","Avdelning":"50G","Antal öppna vårdplatser":15}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c4b"},"Verksamhetsområde":"Geriatrik","":"","WardGroup":"Geri","Avdelning":"30B","Antal öppna vårdplatser":24}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c4a"},"Verksamhetsområde":"Geriatrik","":"","WardGroup":"Geri","Avdelning":"30A","Antal öppna vårdplatser":24}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c49"},"Verksamhetsområde":"Akut- och internmedicin","":"","WardGroup":"Akt/Intern","Avdelning":"30C","Antal öppna vårdplatser":20}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c52"},"Verksamhetsområde":"Akut- och internmedicin","":"","WardGroup":"Akt/Intern","Avdelning":"30E","Antal öppna vårdplatser":25}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c5c"},"Verksamhetsområde":"Rehabilitering och smärtcentr","":"","WardGroup":"reumat","Avdelning":"85C","Antal öppna vårdplatser":20}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c5d"},"Verksamhetsområde":"Neuro","":"","WardGroup":"Neuro","Avdelning":"85E","Antal öppna vårdplatser":25}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c60"},"Verksamhetsområde":"Thoraxkirurgi","":"","WardGroup":"Thrx","Avdelning":"50D","Antal öppna vårdplatser":27}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c61"},"Verksamhetsområde":"Urologi","":"","WardGroup":"Urlg","Avdelning":"50C","Antal öppna vårdplatser":17}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c68"},"Verksamhetsområde":"Psykiatri","":"","WardGroup":"Psyk","Avdelning":1,"Antal öppna vårdplatser":24}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c4c"},"Verksamhetsområde":"Hjärt- lungmedicin","":"","WardGroup":"Hj/Lng","Avdelning":"50F","Antal öppna vårdplatser":27}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c4f"},"Verksamhetsområde":"Infektionssjukdomar","":"","WardGroup":"Infek","Avdelning":"30F","Antal öppna vårdplatser":28}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c51"},"Verksamhetsområde":"Blod och tumörsjukd.","":"","WardGroup":"Blod/Tumor","Avdelning":"101A","Antal öppna vårdplatser":18}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c56"},"Verksamhetsområde":"Kvinnosjukvård","":"","WardGroup":"Kvinno","Avdelning":"96C1","Antal öppna vårdplatser":12}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c59"},"Verksamhetsområde":"Kirurgi","":"","WardGroup":"Kirugi","Avdelning":"70E","Antal öppna vårdplatser":24}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c5a"},"Verksamhetsområde":"Plastik- och kärlkirurgi","":"","WardGroup":"Plstk/kärlk","Avdelning":"85F2","Antal öppna vårdplatser":12}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c5b"},"Verksamhetsområde":"Ortopedi","":"","WardGroup":"Ort","Avdelning":"70B","Antal öppna vårdplatser":24}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c62"},"Verksamhetsområde":"Öron näs hals","":"","WardGroup":"Öron","Avdelning":"85F1","Antal öppna vårdplatser":12}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c64"},"Verksamhetsområde":"Psykiatri","":"","WardGroup":"Psyk","Avdelning":"3B","Antal öppna vårdplatser":12}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c67"},"Verksamhetsområde":"Psykiatri","":"","WardGroup":"Psyk","Avdelning":"4B","Antal öppna vårdplatser":12}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c6a"},"Verksamhetsområde":"Psykiatri","":"","WardGroup":"Psyk","Avdelning":"PAVA","Antal öppna vårdplatser":12}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c50"},"Verksamhetsområde":"Kirurgi","":"","WardGroup":"Kirugi","Avdelning":"70C","Antal öppna vårdplatser":24}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c53"},"Verksamhetsområde":"Blod och tumörsjukd.","":"","WardGroup":"Blod/Tumor","Avdelning":"101B","Antal öppna vårdplatser":24}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c57"},"Verksamhetsområde":"Kirurgi","":"","WardGroup":"Kirugi","Avdelning":"70D","Antal öppna vårdplatser":24}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c5e"},"Verksamhetsområde":"Specialmedicin hur reumatol","":"","WardGroup":"reumat","Avdelning":"100B1","Antal öppna vårdplatser":7}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c65"},"Verksamhetsområde":"Neuro","":"","WardGroup":"Neuro","Avdelning":"85D","Antal öppna vårdplatser":19}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c4e"},"Verksamhetsområde":"Hjärt- lungmedicin","":"","WardGroup":"Hj/Lng","Avdelning":"50E","Antal öppna vårdplatser":18}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c54"},"Verksamhetsområde":"Blod och tumörsjukd.","":"","WardGroup":"Blod/Tumor","Avdelning":"100A","Antal öppna vårdplatser":16}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c55"},"Verksamhetsområde":"Infektionssjukdomar","":"","WardGroup":"Infek","Avdelning":"50EX","Antal öppna vårdplatser":12}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c58"},"Verksamhetsområde":"Ortopedi","":"","WardGroup":"Ort","Avdelning":"70A","Antal öppna vårdplatser":24}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c5f"},"Verksamhetsområde":"Specialmedicin hur reumatol","":"","WardGroup":"reumat","Avdelning":"100B2","Antal öppna vårdplatser":17}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c63"},"Verksamhetsområde":"Psykiatri","":"","WardGroup":"Psyk","Avdelning":"3A","Antal öppna vårdplatser":12}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c66"},"Verksamhetsområde":"Psykiatri","":"","WardGroup":"Psyk","Avdelning":"4A","Antal öppna vårdplatser":12}
-{"_id":{"$oid":"6401fcf9d64d3fef5a891c69"},"Verksamhetsområde":"Neuro","":"","WardGroup":"Neuro","Avdelning":"85B","Antal öppna vårdplatser":29}
+{
+    "wardsInfo": [
+        {"Verksamhetsområde":"Hjärt- lungmedicin","":"","WardGroup":"Hj/Lng","Avdelning":"50G","vårdplatser":15},
+        {"Verksamhetsområde":"Geriatrik","":"","WardGroup":"Geri","Avdelning":"30B","vårdplatser":24 },
+        {"Verksamhetsområde":"Geriatrik","":"","WardGroup":"Geri","Avdelning":"30A","vårdplatser":24},
+        {"Verksamhetsområde":"Akut- och internmedicin","":"","WardGroup":"Akt/Intern","Avdelning":"30C","vårdplatser":20},
+        {"Verksamhetsområde":"Akut- och internmedicin","":"","WardGroup":"Akt/Intern","Avdelning":"30E","vårdplatser":25},
+        {"Verksamhetsområde":"Rehabilitering och smärtcentr","":"","WardGroup":"reumat","Avdelning":"85C","vårdplatser":20},
+        {"Verksamhetsområde":"Neuro","":"","WardGroup":"Neuro","Avdelning":"85E","vårdplatser":25},
+        {"Verksamhetsområde":"Thoraxkirurgi","":"","WardGroup":"Thrx","Avdelning":"50D","vårdplatser":27},
+        {"Verksamhetsområde":"Urologi","":"","WardGroup":"Urlg","Avdelning":"50C","vårdplatser":17},
+        {"Verksamhetsområde":"Psykiatri","":"","WardGroup":"Psyk","Avdelning":1,"vårdplatser":24},
+        {"Verksamhetsområde":"Hjärt- lungmedicin","":"","WardGroup":"Hj/Lng","Avdelning":"50F","vårdplatser":27},
+        {"Verksamhetsområde":"Infektionssjukdomar","":"","WardGroup":"Infek","Avdelning":"30F","vårdplatser":28},
+        {"Verksamhetsområde":"Blod och tumörsjukd.","":"","WardGroup":"Blod/Tumor","Avdelning":"101A","vårdplatser":18},
+        {"Verksamhetsområde":"Kvinnosjukvård","":"","WardGroup":"Kvinno","Avdelning":"96C1","vårdplatser":12},
+        {"Verksamhetsområde":"Kirurgi","":"","WardGroup":"Kirugi","Avdelning":"70E","vårdplatser":24},
+        {"Verksamhetsområde":"Plastik- och kärlkirurgi","":"","WardGroup":"Plstk/kärlk","Avdelning":"85F2","vårdplatser":12},
+        {"Verksamhetsområde":"Ortopedi","":"","WardGroup":"Ort","Avdelning":"70B","vårdplatser":24},
+        {"Verksamhetsområde":"Öron näs hals","":"","WardGroup":"Öron","Avdelning":"85F1","vårdplatser":12},
+        {"Verksamhetsområde":"Psykiatri","":"","WardGroup":"Psyk","Avdelning":"3B","vårdplatser":12},
+        {"Verksamhetsområde":"Psykiatri","":"","WardGroup":"Psyk","Avdelning":"4B","vårdplatser":12},
+        {"Verksamhetsområde":"Psykiatri","":"","WardGroup":"Psyk","Avdelning":"PAVA","vårdplatser":12},
+        {"Verksamhetsområde":"Kirurgi","":"","WardGroup":"Kirugi","Avdelning":"70C","vårdplatser":24},
+        {"Verksamhetsområde":"Blod och tumörsjukd.","":"","WardGroup":"Blod/Tumor","Avdelning":"101B","vårdplatser":24},
+        {"Verksamhetsområde":"Kirurgi","":"","WardGroup":"Kirugi","Avdelning":"70D","Antal öppna vårdplatser":24},
+        {"Verksamhetsområde":"Specialmedicin hur reumatol","":"","WardGroup":"reumat","Avdelning":"100B1","vårdplatser":7},
+        {"Verksamhetsområde":"Neuro","":"","WardGroup":"Neuro","Avdelning":"85D","vårdplatser":19},
+        {"Verksamhetsområde":"Hjärt- lungmedicin","":"","WardGroup":"Hj/Lng","Avdelning":"50E","vårdplatser":18},
+        {"Verksamhetsområde":"Blod och tumörsjukd.","":"","WardGroup":"Blod/Tumor","Avdelning":"100A","vårdplatser":16},
+        {"Verksamhetsområde":"Infektionssjukdomar","":"","WardGroup":"Infek","Avdelning":"50EX","vårdplatser":12},
+        {"Verksamhetsområde":"Ortopedi","":"","WardGroup":"Ort","Avdelning":"70A","vårdplatser":24},
+        {"Verksamhetsområde":"Specialmedicin hur reumatol","":"","WardGroup":"reumat","Avdelning":"100B2","vårdplatser":17},
+        {"Verksamhetsområde":"Psykiatri","":"","WardGroup":"Psyk","Avdelning":"3A","vårdplatser":12},
+        {"Verksamhetsområde":"Psykiatri","":"","WardGroup":"Psyk","Avdelning":"4A","vårdplatser":12},
+        {"Verksamhetsområde":"Neuro","":"","WardGroup":"Neuro","Avdelning":"85B","vårdplatser":29}
+] 
+}

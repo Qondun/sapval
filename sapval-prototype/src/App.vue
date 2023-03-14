@@ -4,8 +4,9 @@ import SortingMenu from './components/SortingMenu.vue'
 import RuleCategories from './components/RuleCategories.vue'
 import PatientCircle from './components/PatientCircle.vue'
 import MiniMenu from './components/MiniMenu.vue'
-import WardView from './components/WardView.vue'
-import { reactive, ref } from 'vue'
+import { reactive, ref } from 'vue';
+// import WardOverviewChart from './components/WardOverviewChart.vue';
+
 let state = reactive({ count: 0 })
 
 const layout = 0;
@@ -19,6 +20,7 @@ function increment() {
   state.count++
 }
 
+
 function updateBotState(e) {
   dynamicBot.state = e
 }
@@ -28,9 +30,8 @@ function updateBotState(e) {
   <!-- OVERVIEW PAGE -->
   <div v-if="layoutState==0" id="overviewGrid">
     <header class="overviewGridItem">
-      <WardView/>
       <MiniMenu v-model="layoutState"/>
-      {{ layout.state }}
+      <!-- <WardOverviewChart/> -->
     </header>
 
     <main class="overviewGridItem">
