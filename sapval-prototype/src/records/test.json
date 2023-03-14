@@ -1,0 +1,7 @@
+{
+    "accounts": [
+      {"name": "john", "pet": "2"},
+      {"name": "bob", "pet": "3"},
+      {"name": "moe", "pet": "4"}
+    ]
+  }
