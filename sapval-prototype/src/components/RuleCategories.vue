@@ -1,33 +1,45 @@
-<script>
+<script setup>
+    import { computed } from 'vue';
+    const props = defineProps({ modelValue: Number });
+    const emit = defineEmits(['update:modelValue']);
+
+    const val = computed({
+        get() {
+            return props.modelValue;
+        },
+        set(newVal) {
+            emit('update:modelValue', parseInt(newVal));
+        },
+    });
 </script>
 
 <template>
     <div id="categoryGrid">
-        <div class="categoryDiv">
+        <div class="categoryDiv" @click="val=3">
             <p>Riskprofil</p>
         </div>
-        <div class="categoryDiv">
+        <div class="categoryDiv" @click="val=3">
             <p>Interaktioner</p>
         </div>
-        <div class="categoryDiv">
+        <div class="categoryDiv" @click="val=3">
             <p>Njurfunktion</p>
         </div>
-        <div class="categoryDiv">
+        <div class="categoryDiv" @click="val=3">
             <p>Läkemedel och äldre</p>
         </div>
-        <div class="categoryDiv">
+        <div class="categoryDiv" @click="val=3">
             <p>Läkemedel och labvärden</p>
         </div>
-        <div class="categoryDiv">
+        <div class="categoryDiv" @click="val=3">
             <p>Läkemedel och diagnos</p>
         </div>
-        <div class="categoryDiv">
+        <div class="categoryDiv" @click="val=3">
             <p>Läkemedel och status</p>
         </div>
-        <div class="categoryDiv">
+        <div class="categoryDiv" @click="val=3">
             <p>Övriga läkemedelskombinationer</p>
         </div>
-        <div class="categoryDiv">
+        <div class="categoryDiv" @click="val=3">
             <p>Övrigt</p>
         </div>
     </div>

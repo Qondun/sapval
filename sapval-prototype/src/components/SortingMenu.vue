@@ -1,27 +1,29 @@
 <script setup>
-    //const dynamicBot = defineProps(['state'])
-    let lastSelectedTab = 0;
-    let tabSelectArr = [true, false, false, false];
-    function updateSelectedTab(tabNum){
-        //if(tabNum != lastSelectedTab) {
-            this.tabSelectArr[lastSelectedTab] = false;
-            this.tabSelectArr[tabNum] = true;
-            this.lastSelectedTab = tabNum;
-        //}
-    }
+    import { computed } from 'vue'
+    const props = defineProps({ modelValue: Number });
+    const emit = defineEmits(['update:modelValue']);
+
+    const val = computed({
+        get() {
+            return props.modelValue;
+        },
+        set(newVal) {
+            emit('update:modelValue', parseInt(newVal));
+        },
+    });
 </script>
 <template>
     <div id="menuBox">
-        <div class="menuItem" :class="{ selectedTab: tabSelectArr[0] }" @click="$emit('clickedMenu',0), updateSelectedTab(0)">
+        <div class="menuItem" :class="{ selectedTab: val==0 }" @click="val=0">
             <p>Översikt regler</p>
         </div>
-        <div class="menuItem" :class="{ selectedTab: tabSelectArr[1] }" @click="$emit('clickedMenu',1), updateSelectedTab(1)">
+        <div class="menuItem" :class="{ selectedTab: val==1 }" @click="val=1">
             <p>Kategorier regler</p>
         </div>    
-        <div class="menuItem" :class="{ selectedTab: tabSelectArr[2] }" @click="$emit('clickedMenu',2), updateSelectedTab(2)">
+        <div class="menuItem" :class="{ selectedTab: val==2 }" @click="val=2">
             <p>Varningar per allvarighetsgrad</p>
         </div>    
-        <div class="menuItem" :class="{ selectedTab: tabSelectArr[3] }" @click="$emit('clickedMenu',3), updateSelectedTab(3)">
+        <div class="menuItem" :class="{ selectedTab: val==3 }" @click="val=3">
             <p>Exempel</p>
         </div>
     </div>

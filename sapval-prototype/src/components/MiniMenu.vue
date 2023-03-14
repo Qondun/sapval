@@ -1,28 +1,36 @@
 <script setup>
-    let historyState = false;
-    
-    function changeState() {
-        historyState = !historyState
-    }
+    import { computed } from 'vue';
+    const props = defineProps({ modelValue: Number });
+    const emit = defineEmits(['update:modelValue']);
+
+    const val = computed({
+        get() {
+            return props.modelValue;
+        },
+        set(newVal) {
+            emit('update:modelValue', parseInt(newVal));
+        },
+    });
 </script>
 
 <template>
     <div id="miniMenuBounding">
         <div id="messages" class="miniMenuButton"> <!-- Create specific component for envelopes -->
-            Messages
+            <p>Meddelanden</p>
         </div>
-        <div v-if="!historyState" id="historyButton" class="miniMenuButton" @click="$emit('clickedHistory'), changeState()">
-            <p>Historik</p>
-        </div>
-        <div v-else id="closeButton" class="miniMenuButton" @click="$emit('clickedHistory'), changeState()"> 
+        <div v-if="val==1" id="closeButton" class="miniMenuButton" @click="val=0"> 
             <p>Stäng historik</p>
         </div>
+        <div v-else id="historyButton" class="miniMenuButton" @click="val=1">
+            <p>Historik</p>
+        </div>
+        
     </div>
 </template>
 
 <style>
     #miniMenuBounding {
-        width: 200px;
+        width: 250px;
         height: 50px;
         display: flex;
         justify-content: space-between;

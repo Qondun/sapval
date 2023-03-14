@@ -1,22 +1,22 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
 import TheWelcome from './components/TheWelcome.vue'
 import SortingMenu from './components/SortingMenu.vue'
 import RuleCategories from './components/RuleCategories.vue'
 import PatientCircle from './components/PatientCircle.vue'
 import MiniMenu from './components/MiniMenu.vue'
 import WardView from './components/WardView.vue'
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 let state = reactive({ count: 0 })
-let layout = reactive({ state: 0 })
-let dynamicBot = reactive ({ state: 0 }) //TODO: change the names
 
-console.log(layout.state)
+const layout = 0;
+const layoutState = ref(layout);
+
+var dynamicBot = 0;
+var dynamicBotState = ref(dynamicBot)
+
+
 function increment() {
   state.count++
-}
-function updateLayoutState(e) {
-  layout.state = !layout.state;
 }
 
 function updateBotState(e) {
@@ -26,20 +26,21 @@ function updateBotState(e) {
 
 <template>
   <!-- OVERVIEW PAGE -->
-  <div v-if="layout.state==0" id="overviewGrid">
+  <div v-if="layoutState==0" id="overviewGrid">
     <header class="overviewGridItem">
       <WardView/>
-      <MiniMenu @clickedHistory="updateLayoutState(layoutState)" :layoutState="layout.state"/>
+      <MiniMenu v-model="layoutState"/>
+      {{ layout.state }}
     </header>
 
     <main class="overviewGridItem">
-      <SortingMenu @clickedMenu="updateBotState" :botState="dynamicBot.state"/>
+      <SortingMenu @clickedMenu="updateBotState" :botState="dynamicBot.state" v-model="dynamicBotState"/>
     </main>
 
     <div id="dynamicBottom" class="overviewGridItem">
-      <TheWelcome v-if="dynamicBot.state==0" @clicked="increment" :count="state.count"/>
-      <RuleCategories v-else-if="dynamicBot.state==1"/>
-      <div v-else-if="dynamicBot.state==2" class="botDiv" style="background-color: green">
+      <TheWelcome v-if="dynamicBotState==0" @clicked="increment" :count="state.count"/>
+      <RuleCategories v-else-if="dynamicBotState==1" v-model="layoutState"/>
+      <div v-else-if="dynamicBotState==2" class="botDiv" style="background-color: green">
         <h1>3</h1>
       </div>
       <PatientCircle v-else/>
@@ -47,10 +48,27 @@ function updateBotState(e) {
   </div>
 
   <!-- HISTORY PAGE -->
-  <div v-else id="historyGrid">
+  <div v-else-if="layoutState==1" id="historyGrid">
     <h1>Historik</h1>
-    <MiniMenu @clickedHistory="updateLayoutState(layoutState)" :layoutState="layout.state" />
+    <MiniMenu @clickedHistory="updateLayoutState" v-model="layoutState" />
+    {{ layout.state }}
   </div>
+
+  <!-- SELECTION PAGE -->
+  <div v-else id="selectionGrid">
+    <!-- <MiniMenu @clickedHistory="updateLayoutState" :layoutState="layout.state"/> -->
+    <button style="height: 50px" @click="layoutState = 0">Backa</button>
+    <div class="selectionGridItem">
+      
+    </div>
+    <div class="selectionGridItem">
+      
+    </div>
+    <div class="selectionGridItem">
+      
+    </div>
+  </div>
+  
 </template>
 
 <style>
@@ -128,5 +146,21 @@ footer p {
   width: 100%;
   height: 100vh;
   background-color: var(--background-color);
+}
+
+#selectionGrid {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: space-around;
+  background-color: var(--background-color);
+}
+
+.selectionGridItem {
+  width: 30%;
+  height: 85%;
+  margin-top: 100px;
+  background-color: var(--buttonColor);
+  border: var(--buttonBorderRadius);
 }
 </style>
