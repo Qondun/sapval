@@ -23,7 +23,7 @@
         {"Verksamhetsområde":"Psykiatri","":"","WardGroup":"Psyk","Avdelning":"PAVA","vårdplatser":12},
         {"Verksamhetsområde":"Kirurgi","":"","WardGroup":"Kirugi","Avdelning":"70C","vårdplatser":24},
         {"Verksamhetsområde":"Blod och tumörsjukd.","":"","WardGroup":"Blod/Tumor","Avdelning":"101B","vårdplatser":24},
-        {"Verksamhetsområde":"Kirurgi","":"","WardGroup":"Kirugi","Avdelning":"70D","Antal öppna vårdplatser":24},
+        {"Verksamhetsområde":"Kirurgi","":"","WardGroup":"Kirugi","Avdelning":"70D","vårdplatser":24},
         {"Verksamhetsområde":"Specialmedicin hur reumatol","":"","WardGroup":"reumat","Avdelning":"100B1","vårdplatser":7},
         {"Verksamhetsområde":"Neuro","":"","WardGroup":"Neuro","Avdelning":"85D","vårdplatser":19},
         {"Verksamhetsområde":"Hjärt- lungmedicin","":"","WardGroup":"Hj/Lng","Avdelning":"50E","vårdplatser":18},

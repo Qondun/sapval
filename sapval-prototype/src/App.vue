@@ -1,11 +1,13 @@
 <script setup>
+
+import { Bar } from 'vue-chartjs'
 import TheWelcome from './components/TheWelcome.vue'
 import SortingMenu from './components/SortingMenu.vue'
 import RuleCategories from './components/RuleCategories.vue'
 import PatientCircle from './components/PatientCircle.vue'
 import MiniMenu from './components/MiniMenu.vue'
 import { reactive, ref } from 'vue';
-// import WardOverviewChart from './components/WardOverviewChart.vue';
+import WardOverviewChart from './components/WardOverviewChart.vue';
 
 let state = reactive({ count: 0 })
 
@@ -16,14 +18,11 @@ var dynamicBot = 0;
 var dynamicBotState = ref(dynamicBot)
 
 
-function increment() {
-  state.count++
-}
 
 
-function updateBotState(e) {
-  dynamicBot.state = e
-}
+
+
+
 </script>
 
 <template>
@@ -31,11 +30,11 @@ function updateBotState(e) {
   <div v-if="layoutState==0" id="overviewGrid">
     <header class="overviewGridItem">
       <MiniMenu v-model="layoutState"/>
-      <!-- <WardOverviewChart/> -->
+      <WardOverviewChart/>
     </header>
 
     <main class="overviewGridItem">
-      <SortingMenu @clickedMenu="updateBotState" :botState="dynamicBot.state" v-model="dynamicBotState"/>
+      <SortingMenu :botState="dynamicBot.state" v-model="dynamicBotState"/>
     </main>
 
     <div id="dynamicBottom" class="overviewGridItem">
