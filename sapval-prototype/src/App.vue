@@ -14,8 +14,8 @@ let state = reactive({ count: 0 })
 const layout = 0;
 const layoutState = ref(layout);
 
-var dynamicBot = 0;
-var dynamicBotState = ref(dynamicBot)
+const dynamicBot = 0;
+const dynamicBotState = ref(dynamicBot)
 
 
 
