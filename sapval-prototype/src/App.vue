@@ -8,6 +8,7 @@ import PatientCircle from './components/PatientCircle.vue'
 import MiniMenu from './components/MiniMenu.vue'
 import { reactive, ref } from 'vue';
 import WardOverviewChart from './components/WardOverviewChart.vue';
+import SelectionPage from './components/SelectionPage.vue'
 
 let state = reactive({ count: 0 })
 
@@ -55,18 +56,10 @@ const dynamicBotState = ref(dynamicBot)
   </div>
 
   <!-- SELECTION PAGE -->
-  <div v-else id="selectionGrid">
+  <div v-else id="selectionView">
     <!-- <MiniMenu @clickedHistory="updateLayoutState" :layoutState="layout.state"/> -->
-    <button style="height: 50px" @click="layoutState = 0">Backa</button>
-    <div class="selectionGridItem">
-      
-    </div>
-    <div class="selectionGridItem">
-      
-    </div>
-    <div class="selectionGridItem">
-      
-    </div>
+    <!-- <button style="height: 50px" @click="layoutState = 0">Backa</button> -->
+    <SelectionPage v-model="layoutState"/>
   </div>
   
 </template>
@@ -82,6 +75,7 @@ const dynamicBotState = ref(dynamicBot)
   --buttonBorderRadius: 10px;
   --buttonColor: #aeaeae;
   --buttonColorHover: #555;
+  --buttonSelected: #cecece;
   --generalBorders: 2px solid #000;
 }
 
@@ -148,19 +142,8 @@ footer p {
   background-color: var(--background-color);
 }
 
-#selectionGrid {
+#selectionView {
   width: 100%;
   height: 100vh;
-  display: flex;
-  justify-content: space-around;
-  background-color: var(--background-color);
-}
-
-.selectionGridItem {
-  width: 30%;
-  height: 85%;
-  margin-top: 100px;
-  background-color: var(--buttonColor);
-  border: var(--buttonBorderRadius);
 }
 </style>

@@ -58,7 +58,7 @@
         cursor: pointer;
     }
     .selectedTab {
-        background-color: #cecece; 
+        background-color: var(--buttonSelected); 
         border-bottom: none;
     }
     .selectedTab:hover {
