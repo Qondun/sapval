@@ -13,7 +13,7 @@
         },
     });
 
-    const list = [[1, [4,3,1]], [2, [3]], [3, [5,4,4,1]], [41, [3,2,2,1,1]]];
+    const list = [["Jenn", [4,3,1]], ["Mats", [3]], ["Ulrika", [5,4,4,1]], ["Celina", [3,2,2,1,1]]];
     onMounted(() => {
         let listDiv = document.getElementById("listDiv");
         list.forEach((patient) =>{
