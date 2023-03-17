@@ -67,6 +67,7 @@ const dynamicBotState = ref(dynamicBot)
 <style>
 :root{
   --background-color: #f3f3f3;
+  --sectionBackground: #e1e1e1;
   --severity1: #fff2cc;
   --severity2: #93c47d;
   --severity3: #cf4c22;
@@ -76,6 +77,7 @@ const dynamicBotState = ref(dynamicBot)
   --buttonColor: #aeaeae;
   --buttonColorHover: #555;
   --buttonSelected: #cecece;
+  --buttonSelectedHover: #bebebe;
   --generalBorders: 2px solid #000;
 }
 

@@ -62,6 +62,6 @@
         border-bottom: none;
     }
     .selectedTab:hover {
-        background-color: #bebebe;
+        background-color: var(--buttonSelectedHover);
     }
 </style>

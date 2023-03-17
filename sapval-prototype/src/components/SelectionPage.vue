@@ -28,7 +28,6 @@
             let alertList = patient[1];
             let alertBox = document.createElement('div');
             alertBox.classList.add("alertBox");
-            // alertBox.setAttribute("id","alertBox");
             alertList.forEach((alert) =>{
                 let singleAlertBox = document.createElement('div');
                 singleAlertBox.classList.add("singleAlert")
@@ -36,26 +35,51 @@
                 singleAlertText.innerHTML = alert;
                 singleAlertBox.appendChild(singleAlertText);
                 alertBox.appendChild(singleAlertBox);
+
+                /* Send information/id for alert */
+                singleAlertBox.addEventListener("click", function() {
+                    let alertBoxList = document.getElementsByClassName("alertBox");
+                    let alreadySelected = singleAlertBox.classList.contains("selected");
+                    for(var i = 0; i < alertBoxList.length; i++){
+                        alertBoxList[i].childNodes.forEach((singleAlert) =>{
+                            singleAlert.classList.remove("selected");
+                        });
+                    }
+                    if(!alreadySelected) {
+                        singleAlertBox.classList.add("selected");
+                        updateInfoDiv(singleAlertText.innerHTML);
+                    } else {
+                        cleanInfoDiv();
+                    }
+
+                });
             });
 
-            /* Event listener for expanding a patient */
-            patientBox.addEventListener("click", function() {
-                if(!patientBox.children[1].classList.contains("active")){
-                    listDiv.childNodes.forEach((patient) =>{
-                        patient.childNodes.forEach((item) => {
-                            item.classList.remove("active");
-                        });
+            /* Event listener to header (top part of card) for expanding a patient */
+            headerText.addEventListener("click", function() {
+                let alreadySelected = patientBox.children[1].classList.contains("selected");
+                listDiv.childNodes.forEach((patient) =>{
+                    patient.childNodes.forEach((item) => {
+                        item.classList.remove("selected");
+                        console.log(item.childNodes);
                     });
+                });
 
-                    patientBox.childNodes.forEach((item) =>{
-                        item.classList.toggle("active");
+                /* Unselect alerts when closing patient */
+                let alertBoxList = document.getElementsByClassName("alertBox");
+                for(var i = 0; i < alertBoxList.length; i++){
+                    alertBoxList[i].childNodes.forEach((singleAlert) =>{
+                        singleAlert.classList.remove("selected");
                     });
-                } else {
-                    listDiv.childNodes.forEach((patient) =>{
-                        patient.childNodes.forEach((item) => {
-                            item.classList.remove("active");
-                        });
-                    });    
+                }
+                cleanInfoDiv();
+                cleanPatientDiv();
+
+                if(!alreadySelected){
+                    patientBox.childNodes.forEach((item) =>{
+                        item.classList.add("selected");
+                        updatePatientDiv(patient[0]);
+                    });
                 }
             });
 
@@ -63,13 +87,51 @@
             listDiv.appendChild(patientBox)
         });
     }) 
+
+    function cleanInfoDiv() {
+        let infoDiv = document.getElementById("infoDiv");
+        while(infoDiv.firstChild) {
+            infoDiv.removeChild(infoDiv.firstChild);
+        }
+    }
+
+    function updateInfoDiv(alertInfo) {
+        cleanInfoDiv();
+        let infoDiv = document.getElementById("infoDiv");
+        let headerText = document.createElement("h1");
+        headerText.innerHTML = "Alert information";
+        infoDiv.appendChild(headerText);
+
+        let alertText = document.createElement("p");
+        alertText.innerHTML = "This will show information for alert " + alertInfo;
+        infoDiv.appendChild(alertText);
+    }
+
+    function cleanPatientDiv() {
+        let infoDiv = document.getElementById("patientDiv");
+        while(infoDiv.firstChild) {
+            infoDiv.removeChild(infoDiv.firstChild);
+        }
+    }
+
+    function updatePatientDiv(patientInfo) {
+        cleanPatientDiv();
+        let patientDiv = document.getElementById("patientDiv");
+        let headerText = document.createElement("h1");
+        headerText.innerHTML = "Patient information";
+        patientDiv.appendChild(headerText);
+
+        let alertText = document.createElement("p");
+        alertText.innerHTML = "This will show information for patient " + patientInfo;
+        patientDiv.appendChild(alertText);
+    }
 </script>
 
 <template>
     <div id="selectionGrid">
         <button style="height: 50px; position: absolute; left: 10px; top: 10px" @click="val=0">Backa</button>
         <div id="listDiv" class="selectionGridItem"></div>
-        <div id="alertDiv" class="selectionGridItem"></div>
+        <div id="infoDiv" class="selectionGridItem"></div>
         <div id="patientDiv" class="selectionGridItem"></div>
     </div>
 </template>
@@ -87,9 +149,8 @@
         width: 30%;
         height: 85%;
         margin-top: 100px;
-        background-color: var(--buttonColor);
+        background-color: var(--sectionBackground);
         border: var(--buttonBorderRadius);
-        color: white;
         overflow: scroll;
     }
 
@@ -103,29 +164,28 @@
         background-color: var(--buttonColor);
         border: var(--generalBorders);
         border-radius: var(--buttonBorderRadius);
+        cursor: pointer;
     }
 
     .patientBox h1:hover {
         background-color: var(--buttonColorHover);
     }
 
-    .patientBox h1.active {
+    .patientBox h1.selected {
         background-color: var(--buttonSelected);
     }
     
     .alertBox {
         width: 80%;
         height: 0;
-        /*max-height: 0;
-        transition: max-height 1s ease-out;*/
         opacity: 0;
-        /*display: none;*/
         transform: scaleY(0);    
         transform-origin: top;
         transition: transform 0.2s ease;
+        margin-bottom: 10px;
     }
 
-    .alertBox.active {
+    .alertBox.selected {
         height: auto;
         transform: scaleY(1);
         /*max-height: 2000px;
@@ -134,11 +194,24 @@
         /*display: block;*/
     }
 
+    .alertBox.selected:hover {
+        background-color: var(--buttonSelectedHover);
+    }
+
     .singleAlert {
         width: 100%;
         height: 50px;
         background-color: var(--buttonColor);
         border: var(--generalBorders);
         border-radius: var(--buttonBorderRadius);
+        cursor: pointer;
+    }
+
+    .singleAlert:hover {
+        background-color: var(--buttonColorHover);
+    }
+
+    .singleAlert.selected {
+        background-color: var(--buttonSelected);
     }
 </style>
