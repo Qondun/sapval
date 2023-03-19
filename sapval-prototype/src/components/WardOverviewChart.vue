@@ -3,7 +3,7 @@
 <script>
 import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, BarController } from 'chart.js'
-import wardsdata from '../records/wards.json';
+import wardsdata from '../records/inpatientWards.json';
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
@@ -31,9 +31,9 @@ export default {
         // Checking if everything works, delete this right after you see that everything works
         //console.log(this.ward);        
         this.ward.map((item) => {
-          console.log(item.Avdelning + " : " + item.vårdplatser);
-          this.chartData.labels.push(item.Avdelning)
-          this.chartData.datasets[0].data.push(parseInt(item.vårdplatser))
+          console.log(item.Avdelning + " : " + item.numPlatser);
+          this.chartData.labels.push(item.Address)
+          this.chartData.datasets[0].data.push(parseInt(item.numPlatser))
         })
     },
     //components: { BarController }

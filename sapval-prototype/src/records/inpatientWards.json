@@ -1,0 +1,242 @@
+{
+"wardsInfo": [
+ {
+   "KeyNamn": "30C",
+   "wardType": "Akut- och internmedicin",
+   "Address": "30C",
+   "numPlatser": 20,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "30E",
+   "wardType": "Akut- och internmedicin",
+   "Address": "30E",
+   "numPlatser": 25,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "100A",
+   "wardType": "Blod och tumörsjukd.",
+   "Address": "100A",
+   "numPlatser": 16,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "101A",
+   "wardType": "Blod och tumörsjukd.",
+   "Address": "101A",
+   "numPlatser": 18,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "101B",
+   "wardType": "Blod och tumörsjukd.",
+   "Address": "101B",
+   "numPlatser": 24,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "30A",
+   "wardType": "Geriatrik",
+   "Address": "30A",
+   "numPlatser": 24,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "30B",
+   "wardType": "Geriatrik",
+   "Address": "30B",
+   "numPlatser": 24,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "50G",
+   "wardType": "Hjärt- lungmedicin",
+   "Address": "50G",
+   "numPlatser": 15,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "50E",
+   "wardType": "Hjärt- lungmedicin",
+   "Address": "50E",
+   "numPlatser": 18,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "50F",
+   "wardType": "Hjärt- lungmedicin",
+   "Address": "50F",
+   "numPlatser": 27,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "50EX",
+   "wardType": "Infektionssjukdomar",
+   "Address": "50EX",
+   "numPlatser": 12,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "30F",
+   "wardType": "Infektionssjukdomar",
+   "Address": "30F",
+   "numPlatser": 28,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "70C",
+   "wardType": "Kirurgi",
+   "Address": "70C",
+   "numPlatser": 24,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "70D",
+   "wardType": "Kirurgi",
+   "Address": "70D",
+   "numPlatser": 24,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "70E",
+   "wardType": "Kirurgi",
+   "Address": "70E",
+   "numPlatser": 24,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "96C1",
+   "wardType": "Kvinnosjukvård",
+   "Address": "96C1",
+   "numPlatser": 12,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "85D",
+   "wardType": "Neuro",
+   "Address": "85D",
+   "numPlatser": 19,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "85E",
+   "wardType": "Neuro",
+   "Address": "85E",
+   "numPlatser": 25,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "85B",
+   "wardType": "Neuro",
+   "Address": "85B",
+   "numPlatser": 29,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "70A",
+   "wardType": "Ortopedi",
+   "Address": "70A",
+   "numPlatser": 24,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "70B",
+   "wardType": "Ortopedi",
+   "Address": "70B",
+   "numPlatser": 24,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "85F2",
+   "wardType": "Plastik- och kärlkirurgi",
+   "Address": "85F2",
+   "numPlatser": 12,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "3A",
+   "wardType": "Psykiatri",
+   "Address": "3A",
+   "numPlatser": 12,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "3B",
+   "wardType": "Psykiatri",
+   "Address": "3B",
+   "numPlatser": 12,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "4A",
+   "wardType": "Psykiatri",
+   "Address": "4A",
+   "numPlatser": 12,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "4B",
+   "wardType": "Psykiatri",
+   "Address": "4B",
+   "numPlatser": 12,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "PAVA",
+   "wardType": "Psykiatri",
+   "Address": "PAVA",
+   "numPlatser": 12,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "1",
+   "wardType": "Psykiatri",
+   "Address": "1",
+   "numPlatser": 24,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "85C",
+   "wardType": "Rehabilitering och smärtcentr",
+   "Address": "85C",
+   "numPlatser": 20,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "100B1",
+   "wardType": "Specialmedicin hur reumatol",
+   "Address": "100B1",
+   "numPlatser": 7,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "100B2",
+   "wardType": "Specialmedicin hur reumatol",
+   "Address": "100B2",
+   "numPlatser": 17,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "50D",
+   "wardType": "Thoraxkirurgi",
+   "Address": "50D",
+   "numPlatser": 27,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "50C",
+   "wardType": "Urologi",
+   "Address": "50C",
+   "numPlatser": 17,
+   "contactPerson": ""
+ },
+ {
+   "KeyNamn": "85F1",
+   "wardType": "Öron näs hals",
+   "Address": "85F1",
+   "numPlatser": 12,
+   "contactPerson": ""
+ }
+]
+}
