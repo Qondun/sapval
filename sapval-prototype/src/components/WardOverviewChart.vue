@@ -2,6 +2,7 @@
 
 <script>
 import { Bar } from 'vue-chartjs'
+import {defineStore} from "pinia"
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, BarController } from 'chart.js'
 import wardsdata from '../records/inpatientWards.json';
 
@@ -37,6 +38,7 @@ export default {
         })
     },
     //components: { BarController }
+    persist: true
 };
 </script>
 
