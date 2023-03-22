@@ -98,15 +98,15 @@ export default {
 
 
     // this.chartData.datasets[1].data.push(parseInt(wardWarningArray[0]))
-    this.chartData.datasets[0].data = wardWarningArray[0].map(x => x);
+    this.chartData.datasets[0].data = wardWarningArray[0].map(x => -x);
     console.log(wardWarningArray)
     console.log(this.chartData.datasets[0])
 
-    this.chartData.datasets[1].data = wardWarningArray[1].map(x => x);
+    this.chartData.datasets[1].data = wardWarningArray[1].map(x => -x);
     console.log(wardWarningArray)
     console.log(this.chartData.datasets[1])
 
-    this.chartData.datasets[2].data = wardWarningArray[2].map(x => x);
+    this.chartData.datasets[2].data = wardWarningArray[2].map(x => -x);
     console.log(wardWarningArray)
     console.log(this.chartData.datasets[2])
 
