@@ -23,7 +23,7 @@ export default {
         datasets: [ 
           { label: '1',
             data: [], 
-            backgroundColor: '#fff2cc'
+            backgroundColor: '#fff2cc',
           }, {
             label: '2',
             data: [],
@@ -45,7 +45,17 @@ export default {
           } ]
       },
       chartOptions: {
-        responsive: true
+        
+        responsive: true,
+        scales: {
+          x: {
+            stacked: true,
+          },
+          y: {
+            stacked: true
+          }
+        }
+        //stacked: true
       },
       
       ward: wardsdata.wardsInfo,
