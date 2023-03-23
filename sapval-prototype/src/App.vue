@@ -16,9 +16,10 @@ const layout = 0;
 const layoutState = ref(layout);
 
 const dynamicBot = 0;
-const dynamicBotState = ref(dynamicBot)
+const dynamicBotState = ref(dynamicBot);
 
-
+const selectionPage = "";
+const selectionPageState = ref(selectionPage);
 
 
 

@@ -1,6 +1,6 @@
 <script setup>
     import { computed, onMounted } from 'vue';
-    //import SelectionPageList from './SelectionPageList.vue'
+    import { getCategoryData, getPatientInformation } from '../records/dataFunctions';
     const props = defineProps({ modelValue: Number });
     const emit = defineEmits(['update:modelValue']);
 
@@ -13,26 +13,37 @@
         },
     });
 
-    const list = [["Jenn", [4,3,1]], ["Mats", [3]], ["Ulrika", [5,4,4,1]], ["Celina", [3,2,2,1,1]]];
+    //const list = [["Jenn", [4,3,1]], ["Mats", [3]], ["Ulrika", [5,4,4,1]], ["Celina", [3,2,2,1,1]]];
+    // let [patientIDSet,dataList] = getCategoryData("A. Riskprofil");
+    let [patientIDSet,dataList] = getCategoryData("B. Interaktioner");
+
     onMounted(() => {
         let listDiv = document.getElementById("listDiv");
-        list.forEach((patient) =>{
+        let patientIndex = 0; // not accessing all alerts
+
+        patientIDSet.forEach((patientID) =>{
+            
             /* Bounding box for each patient */
             let patientBox = document.createElement('div')
             patientBox.classList.add("patientBox");
+            patientBox.setAttribute("id",patientIndex);
             let headerText = document.createElement("h1");
-            headerText.innerHTML = patient[0];
-            patientBox.appendChild(headerText);
 
+            let patientData = getPatientInformation(patientID);
+            headerText.innerHTML = patientData['First Name'] + " " + patientData['Last Name'] + ", " + patientData['Age'];
+            patientBox.appendChild(headerText);
+            
             /* Add all alerts into bounding box for alerts */ 
-            let alertList = patient[1];
+            let alertList = dataList[patientIndex];
             let alertBox = document.createElement('div');
             alertBox.classList.add("alertBox");
+            let alertIndex = 0;
             alertList.forEach((alert) =>{
                 let singleAlertBox = document.createElement('div');
-                singleAlertBox.classList.add("singleAlert")
+                singleAlertBox.classList.add("singleAlert");
+                singleAlertBox.setAttribute("id",alertIndex);
                 let singleAlertText = document.createElement('p');
-                singleAlertText.innerHTML = alert;
+                singleAlertText.innerHTML = "Regel " + alert.Regel + ": " + alert.Regelkategori.substr(3,alert.Regelkategori.length);
                 singleAlertBox.appendChild(singleAlertText);
                 alertBox.appendChild(singleAlertBox);
 
@@ -47,12 +58,13 @@
                     }
                     if(!alreadySelected) {
                         singleAlertBox.classList.add("selected");
-                        updateInfoDiv(singleAlertText.innerHTML);
+                        updateInfoDiv(patientBox.id,singleAlertBox.id);
                     } else {
                         cleanInfoDiv();
                     }
 
                 });
+                alertIndex++;
             });
 
             /* Event listener to header (top part of card) for expanding a patient */
@@ -61,7 +73,6 @@
                 listDiv.childNodes.forEach((patient) =>{
                     patient.childNodes.forEach((item) => {
                         item.classList.remove("selected");
-                        console.log(item.childNodes);
                     });
                 });
 
@@ -78,13 +89,14 @@
                 if(!alreadySelected){
                     patientBox.childNodes.forEach((item) =>{
                         item.classList.add("selected");
-                        updatePatientDiv(patient[0]);
+                        updatePatientDiv(patientData);
                     });
                 }
             });
 
             patientBox.appendChild(alertBox);
-            listDiv.appendChild(patientBox)
+            listDiv.appendChild(patientBox);
+            patientIndex++;
         });
     }) 
 
@@ -95,16 +107,27 @@
         }
     }
 
-    function updateInfoDiv(alertInfo) {
+    function updateInfoDiv(patientIndex, alertIndex) {
         cleanInfoDiv();
         let infoDiv = document.getElementById("infoDiv");
         let headerText = document.createElement("h1");
-        headerText.innerHTML = "Alert information";
+        headerText.innerHTML = "Varningsinformation";
         infoDiv.appendChild(headerText);
 
         let alertText = document.createElement("p");
-        alertText.innerHTML = "This will show information for alert " + alertInfo;
+        alertText.innerHTML = "Här visas information för regel " + dataList[patientIndex][alertIndex].Regel;
         infoDiv.appendChild(alertText);
+
+        let alert = dataList[patientIndex][alertIndex];
+
+        for(var info in alert) {
+            let infoValue = alert[info];
+            if(infoValue){
+                let alertInfo = document.createElement("p");
+                alertInfo.innerHTML = info + ": " + infoValue;
+                infoDiv.appendChild(alertInfo);
+            }
+        }
     }
 
     function cleanPatientDiv() {
@@ -114,22 +137,29 @@
         }
     }
 
-    function updatePatientDiv(patientInfo) {
+    function updatePatientDiv(patientData) {
         cleanPatientDiv();
         let patientDiv = document.getElementById("patientDiv");
         let headerText = document.createElement("h1");
-        headerText.innerHTML = "Patient information";
+        headerText.innerHTML = "Patientinformation";
         patientDiv.appendChild(headerText);
 
-        let alertText = document.createElement("p");
-        alertText.innerHTML = "This will show information for patient " + patientInfo;
-        patientDiv.appendChild(alertText);
+        for(var info in patientData) {
+            let infoValue = patientData[info]
+            if(infoValue){
+                let patientInfo = document.createElement("p");
+                patientInfo.innerHTML = info + ": " + infoValue;
+                patientDiv.appendChild(patientInfo);
+            }
+        }
     }
 </script>
 
 <template>
     <div id="selectionGrid">
-        <button style="height: 50px; position: absolute; left: 10px; top: 10px" @click="val=0">Backa</button>
+        <div id="backButton" @click="val=0">
+            <p>Backa</p>
+        </div>
         <div id="listDiv" class="selectionGridItem"></div>
         <div id="infoDiv" class="selectionGridItem"></div>
         <div id="patientDiv" class="selectionGridItem"></div>
@@ -143,6 +173,23 @@
         display: flex;
         justify-content: space-around;
         background-color: var(--background-color);
+    }
+
+    #backButton {
+        height: 50px;
+        width: 70px;
+        text-align: center;
+        border-radius: var(--buttonBorderRadius);
+        padding: 6px;
+        background-color: var(--buttonColor);
+        position: absolute;
+        left: 10px;
+        top: 10px;
+    }
+
+    #backButton:hover {
+        cursor: pointer;
+        background-color: var(--buttonColorHover);
     }
 
     .selectionGridItem {
@@ -159,7 +206,7 @@
         height: auto;
     }
     .patientBox h1 {
-        width: 100%;
+        width: 98%;
         height: 80px;
         background-color: var(--buttonColor);
         border: var(--generalBorders);
@@ -213,5 +260,13 @@
 
     .singleAlert.selected {
         background-color: var(--buttonSelected);
+    }
+
+    #infoDiv, #patientDiv {
+        padding: 10px;
+    }
+
+    #infoDiv p, #patientDiv p {
+        margin-bottom: 10px;
     }
 </style>
