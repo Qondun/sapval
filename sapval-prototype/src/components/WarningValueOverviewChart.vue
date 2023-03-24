@@ -119,7 +119,7 @@ export default {
         this.chartData.labels = numRules.map(x => x)
         console.log(numRules)
 
-        let warningNumberArray = [...Array(5)].map(e => Array(numRulesLength).fill(1));
+        let warningNumberArray = [...Array(5)].map(e => Array(numRulesLength).fill(0));
         for (let i = 0; i < patientWarnings.WarningInfo.length; i++) {
             let obj = patientWarnings.WarningInfo[i];
             let severityLevel = 0

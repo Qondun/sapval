@@ -100,7 +100,7 @@ export default {
 
     //let len = wardNameList.length;
 
-    let wardWarningArray = [...Array(5)].map(e => Array(len).fill(1));
+    let wardWarningArray = [...Array(5)].map(e => Array(len).fill(0));
     // console.log(wardWarningArray)
 
 
