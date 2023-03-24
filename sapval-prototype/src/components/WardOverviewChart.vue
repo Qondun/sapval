@@ -80,7 +80,7 @@ export default {
     let wardNameList = [];
     var value = 0;
     let warningValueList = [];
-    let len= wardsdata.wardsInfo.length +1;
+    let len = wardsdata.wardsInfo.length + 1;
 
     //let warningValueList = {Array.apply(null, Array(65)).map(function () {})}
     let patientLocationList = Array.apply(null, Array(1500)).map(function () { })
@@ -99,9 +99,9 @@ export default {
     })
 
     //let len = wardNameList.length;
-    
+
     let wardWarningArray = [...Array(5)].map(e => Array(len).fill(1));
-    console.log(wardWarningArray)
+    // console.log(wardWarningArray)
 
 
     //list, in order of alerts, value saved is severity level
@@ -112,7 +112,7 @@ export default {
 
     for (let i = 0; i < this.patientInfo.length; i++) {
       let obj = this.patientInfo[i]
-      patientLocationList[obj['Person ID']]=obj.PatientLocation
+      patientLocationList[obj['Person ID']] = obj.PatientLocation
     }
     //console.log(patientLocationList)
 
@@ -123,7 +123,7 @@ export default {
 
       let severityLevel
 
-      if ( obj.Regel == null ) {
+      if (obj.Regel == null) {
         severityLevel = 0
       } else {
         severityLevel = Number(warningValueList[obj.Regel - 1]) - 1;
@@ -133,16 +133,16 @@ export default {
       let personNumber = obj.PersonID;
       let personLocation = patientLocationList[personNumber];
       let locationIndex = wardNameList.indexOf(personLocation)
-     // console.log(len)
-      if (locationIndex < 0){
-       // console.log(locationIndex)
+      // console.log(len)
+      if (locationIndex < 0) {
+        // console.log(locationIndex)
 
-        locationIndex = Number(len -1)
+        locationIndex = Number(len - 1)
         //console.log(locationIndex)
 
       }
-      if (severityLevel == NaN){
-        console.print("This alert is NaN")
+      if (severityLevel == NaN) {
+        // console.print("This alert is NaN")
         severityLevel = 1
       }
 
@@ -150,14 +150,14 @@ export default {
       //wardWarningArray[severityLevel-1][0]+=1
       //console.log(wardWarningArray) 
       //console.log(`s:${severityLevel} i:${locationIndex}`)
-      wardWarningArray[severityLevel][locationIndex] +=  1
+      wardWarningArray[severityLevel][locationIndex] += 1
 
-      
+
 
       //console.log(severityLevel);
       //console.log(personNumber)
 
-      
+
       //let patientLocationID = this.ward.getElementByID("Address").value;
 
 
@@ -178,47 +178,47 @@ export default {
     //console.log(wardWarningArray)
     //console.log(obj.PersonID);
     //}
-  //}
-     // wardWarningArray[obj.PersonID][warningValueList[obj.Regel - 1]] = wardWarningArray[obj.PersonID][warningValueList[obj.Regel - 1]] + 1;
+    //}
+    // wardWarningArray[obj.PersonID][warningValueList[obj.Regel - 1]] = wardWarningArray[obj.PersonID][warningValueList[obj.Regel - 1]] + 1;
 
-      //console.log(wardWarningArray)
-      // console.log(obj.PersonID);
+    //console.log(wardWarningArray)
+    // console.log(obj.PersonID);
 
 
 
     // patient.forEach(function(obj) { console.log(obj.); });
 
 
-  // console.log(len);
-  //let wardWarningArrayList = [len][wardWarningsArr]
-  // var wardWarningArray = [...Array(len)].map(e => Array(5).fill(1));
+    // console.log(len);
+    //let wardWarningArrayList = [len][wardWarningsArr]
+    // var wardWarningArray = [...Array(len)].map(e => Array(5).fill(1));
 
 
-  // this.chartData.datasets[1].data.push(parseInt(wardWarningArray[0]))
-  this.chartData.datasets[0].data = wardWarningArray[0].map(x => -x);
- // console.log(wardWarningArray)
+    // this.chartData.datasets[1].data.push(parseInt(wardWarningArray[0]))
+    this.chartData.datasets[0].data = wardWarningArray[0].map(x => -x);
+    // console.log(wardWarningArray)
     //console.log(this.chartData.datasets[0])
 
     this.chartData.datasets[1].data = wardWarningArray[1].map(x => -x);
-  //console.log(wardWarningArray)
-  //console.log(this.chartData.datasets[1])
+    //console.log(wardWarningArray)
+    //console.log(this.chartData.datasets[1])
 
-  this.chartData.datasets[2].data = wardWarningArray[2].map(x => -x);
-  //console.log(wardWarningArray)
-  //console.log(this.chartData.datasets[2])
+    this.chartData.datasets[2].data = wardWarningArray[2].map(x => -x);
+    //console.log(wardWarningArray)
+    //console.log(this.chartData.datasets[2])
 
-  this.chartData.datasets[3].data = wardWarningArray[3].map(x => x);
-  //console.log(wardWarningArray)
-  //console.log(this.chartData.datasets[3])
+    this.chartData.datasets[3].data = wardWarningArray[3].map(x => x);
+    //console.log(wardWarningArray)
+    //console.log(this.chartData.datasets[3])
 
-  this.chartData.datasets[4].data = wardWarningArray[4].map(x => x);
-  //console.log(wardWarningArray)
-  //console.log(this.chartData.datasets[4])
+    this.chartData.datasets[4].data = wardWarningArray[4].map(x => x);
+    //console.log(wardWarningArray)
+    //console.log(this.chartData.datasets[4])
 
 
-},
-//components: { BarController }
-persist: true
+  },
+  //components: { BarController }
+  persist: true
 };
 </script>
 

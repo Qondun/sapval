@@ -9,6 +9,7 @@ import MiniMenu from './components/MiniMenu.vue'
 import { reactive, ref } from 'vue';
 import WardOverviewChart from './components/WardOverviewChart.vue';
 import SelectionPage from './components/SelectionPage.vue'
+import WarningValueOverviewChart from './components/warningValueOverviewChart.vue'
 
 let state = reactive({ count: 0 })
 
@@ -29,28 +30,30 @@ const selectionPageState = ref(selectionPage);
 
 <template>
   <!-- OVERVIEW PAGE -->
-  <div v-if="layoutState==0" id="overviewGrid">
+  <div v-if="layoutState == 0" id="overviewGrid">
     <header class="overviewGridItem">
-      <MiniMenu v-model="layoutState"/>
-      <WardOverviewChart/>
+      <MiniMenu v-model="layoutState" />
+      <WardOverviewChart />
     </header>
 
     <main class="overviewGridItem">
-      <SortingMenu :botState="dynamicBot.state" v-model="dynamicBotState"/>
+      <SortingMenu :botState="dynamicBot.state" v-model="dynamicBotState" />
     </main>
 
     <div id="dynamicBottom" class="overviewGridItem">
-      <TheWelcome v-if="dynamicBotState==0" @clicked="increment" :count="state.count"/>
-      <RuleCategories v-else-if="dynamicBotState==1" v-model="layoutState"/>
-      <div v-else-if="dynamicBotState==2" class="botDiv" style="background-color: green">
+      <!-- <TheWelcome v-if="dynamicBotState == 0" @clicked="increment" :count="state.count"/> -->
+      <WarningValueOverviewChart v-if="dynamicBotState == 0" @clicked="increment" :count="state.count" />
+
+      <RuleCategories v-else-if="dynamicBotState == 1" v-model="layoutState" />
+      <div v-else-if="dynamicBotState == 2" class="botDiv" style="background-color: green">
         <h1>3</h1>
       </div>
-      <PatientCircle v-else/>
+      <PatientCircle v-else />
     </div>
   </div>
 
   <!-- HISTORY PAGE -->
-  <div v-else-if="layoutState==1" id="historyGrid">
+  <div v-else-if="layoutState == 1" id="historyGrid">
     <h1>Historik</h1>
     <MiniMenu @clickedHistory="updateLayoutState" v-model="layoutState" />
     {{ layout.state }}
@@ -60,13 +63,12 @@ const selectionPageState = ref(selectionPage);
   <div v-else id="selectionView">
     <!-- <MiniMenu @clickedHistory="updateLayoutState" :layoutState="layout.state"/> -->
     <!-- <button style="height: 50px" @click="layoutState = 0">Backa</button> -->
-    <SelectionPage v-model="layoutState"/>
+    <SelectionPage v-model="layoutState" />
   </div>
-  
 </template>
 
 <style>
-:root{
+:root {
   --background-color: #f3f3f3;
   --sectionBackground: #e1e1e1;
   --severity1: #fff2cc;
@@ -119,8 +121,7 @@ main {
   align-items: center;
   position: relative;
   border: var(--generalBorders);
-  border-right: 0
-  ;
+  border-right: 0;
   border-left: 0;
 }
 
@@ -135,6 +136,7 @@ footer {
   text-align: center;
   color: #000;
 }
+
 footer p {
   vertical-align: middle;
 }
