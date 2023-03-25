@@ -1,25 +1,110 @@
 <script setup>
     import { computed, onMounted } from 'vue';
     import { getCategoryData, getPatientInformation } from '../records/dataFunctions';
-    const props = defineProps({ modelValue: Number });
-    const emit = defineEmits(['update:modelValue']);
 
-    const val = computed({
+    let filterRange = []; // [Lower bound, Upper bound]
+    let filteredList = [];
+    let filterState = 0;
+
+    const props = defineProps({ 
+        layoutState: Number,
+        selectionPageState: String,
+        selectionStateVal: String 
+    });
+    const emit = defineEmits(['update:layoutState', 'update:selectionPageState', 'update:selectionStateVal']);
+
+    const layoutState = computed({
         get() {
-            return props.modelValue;
+            return props.layoutState;
         },
         set(newVal) {
-            emit('update:modelValue', parseInt(newVal));
+            emit('update:layoutState', parseInt(newVal));
         },
     });
 
-    //const list = [["Jenn", [4,3,1]], ["Mats", [3]], ["Ulrika", [5,4,4,1]], ["Celina", [3,2,2,1,1]]];
-    // let [patientIDSet,dataList] = getCategoryData("A. Riskprofil");
-    let [patientIDSet,dataList] = getCategoryData("B. Interaktioner");
+    const selectionPageState = computed({
+        get() {
+            return props.selectionPageState;
+        },
+        set(newVal) {
+            emit('update:selectionPageState', (newVal));
+        },
+    });
+    
+    const selectionStateVal = computed({
+        get() {
+            return props.selectionStateVal;
+        },
+        set(newVal) {
+            emit('update:selectionStateVal', (newVal));
+        },
+    });
+
+    let [patientIDSet,dataList] = getCategoryData(selectionStateVal.value);
 
     onMounted(() => {
+        setCategoryRange();
+        createFilteredList();
+        createFilterButtons();
+        createLayout();        
+    }) 
+
+    function setCategoryRange() {
+        switch (selectionStateVal.value) {
+            case "A. Riskprofil":
+                filterRange = [1,9];
+                break;
+            default:
+                //filterRange = [1,63];
+                filterRange = [1,9];
+        }
+    }
+
+    function createFilteredList() {
+        filteredList = [];
+        switch (filterState) {
+            case "1":
+                for(var patient in dataList) {
+                    for(var alert in patient) {
+                        if(alert.regel==filterState){
+                            filteredList.push(patient);
+                            break;
+                        }
+                    }
+                }
+                break;
+            default:
+                filteredList = dataList;
+        }
+    };
+
+    function createFilterButtons() {
+        let selectionGrid = document.getElementById("selectionGrid");
+        let filterButtonBox = document.createElement("div");
+        filterButtonBox.setAttribute("id","filterBox");
+        for(var i=filterRange[0]; i<=filterRange[1]; i++) {
+            let filterButton = document.createElement("div");
+            filterButton.classList.add("filterButton");
+            let filterButtonText = document.createElement("p");
+            filterButtonText.innerHTML = "Regel " + i;
+            filterButton.appendChild(filterButtonText);
+            filterButtonBox.appendChild(filterButton);
+        }
+        selectionGrid.appendChild(filterButtonBox);
+    }
+
+    function createLayout() {
+        cleanListDiv();
+        cleanListDiv();
+        cleanPatientDiv();
+        
         let listDiv = document.getElementById("listDiv");
         let patientIndex = 0; // not accessing all alerts
+
+        // let headerText = document.createElement("h1");
+        // headerText.innerHTML = selectionStateVal.value;
+        // headerText.classList.add("listHeader");
+        // listDiv.appendChild(headerText);
 
         patientIDSet.forEach((patientID) =>{
             
@@ -34,7 +119,7 @@
             patientBox.appendChild(headerText);
             
             /* Add all alerts into bounding box for alerts */ 
-            let alertList = dataList[patientIndex];
+            let alertList = filteredList[patientIndex];
             let alertBox = document.createElement('div');
             alertBox.classList.add("alertBox");
             let alertIndex = 0;
@@ -98,7 +183,14 @@
             listDiv.appendChild(patientBox);
             patientIndex++;
         });
-    }) 
+    }
+
+    function cleanListDiv() {
+        let listDiv = document.getElementById("listDiv");
+        while(listDiv.firstChild) {
+            listDiv.removeChild(listDiv.firstChild);
+        }
+    }
 
     function cleanInfoDiv() {
         let infoDiv = document.getElementById("infoDiv");
@@ -112,13 +204,14 @@
         let infoDiv = document.getElementById("infoDiv");
         let headerText = document.createElement("h1");
         headerText.innerHTML = "Varningsinformation";
+        headerText.classList.add("listHeader");
         infoDiv.appendChild(headerText);
 
         let alertText = document.createElement("p");
-        alertText.innerHTML = "Här visas information för regel " + dataList[patientIndex][alertIndex].Regel;
+        alertText.innerHTML = "Här visas information för regel " + filteredList[patientIndex][alertIndex].Regel;
         infoDiv.appendChild(alertText);
 
-        let alert = dataList[patientIndex][alertIndex];
+        let alert = filteredList[patientIndex][alertIndex];
 
         for(var info in alert) {
             let infoValue = alert[info];
@@ -142,6 +235,7 @@
         let patientDiv = document.getElementById("patientDiv");
         let headerText = document.createElement("h1");
         headerText.innerHTML = "Patientinformation";
+        headerText.classList.add("listHeader")
         patientDiv.appendChild(headerText);
 
         for(var info in patientData) {
@@ -157,8 +251,18 @@
 
 <template>
     <div id="selectionGrid">
-        <div id="backButton" @click="val=0">
+        <!-- <h1 class="listHeader">{{ selectionStateVal.value }}</h1>    -->
+        <div id="backButton" @click="layoutState=0">
             <p>Backa</p>
+        </div>
+        <div class="headerBox">
+            <h1 class="listHeader">{{ selectionStateVal.substr(2,selectionStateVal.length) }}</h1>
+        </div>
+        <div class="headerBox">
+            <h1 class="listHeader">Varningsinformation</h1>
+        </div>
+        <div class="headerBox">
+            <h1 class="listHeader">Patientinformation</h1>
         </div>
         <div id="listDiv" class="selectionGridItem"></div>
         <div id="infoDiv" class="selectionGridItem"></div>
@@ -172,11 +276,13 @@
         height: 100%;
         display: flex;
         justify-content: space-around;
+        flex-direction: row;
+        flex-wrap: wrap;
         background-color: var(--background-color);
     }
 
     #backButton {
-        height: 50px;
+        height: auto;
         width: 70px;
         text-align: center;
         border-radius: var(--buttonBorderRadius);
@@ -192,13 +298,48 @@
         background-color: var(--buttonColorHover);
     }
 
+    .listHeader {
+        position: absolute;
+    }
+
+    #filterBox {
+        width: auto;
+        height: 70px;
+        top: 10px;
+        display: flex;
+        justify-content: space-between;
+        position: absolute;
+    }
+
+    .filterButton {
+        width: auto;
+        height: 70px;
+        margin-right: 10px;
+        margin-left: 10px;
+        padding: 10px;
+        background-color: var(--buttonColor);
+        border-radius: var(--buttonBorderRadius);
+    }
+
+    .filterButton:hover {
+        background-color: var(--buttonColorHover);
+        cursor: pointer;
+    }
+
+    .headerBox { 
+        height: 20px;
+        width: 30%;
+        background-color: transparent;
+        bottom: -100px;
+    }
+
     .selectionGridItem {
         width: 30%;
         height: 85%;
-        margin-top: 100px;
         background-color: var(--sectionBackground);
         border: var(--buttonBorderRadius);
         overflow: scroll;
+        bottom: -50px;
     }
 
     .patientBox {

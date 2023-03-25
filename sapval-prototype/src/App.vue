@@ -9,7 +9,7 @@ import MiniMenu from './components/MiniMenu.vue'
 import { reactive, ref } from 'vue';
 import WardOverviewChart from './components/WardOverviewChart.vue';
 import SelectionPage from './components/SelectionPage.vue'
-import WarningValueOverviewChart from './components/warningValueOverviewChart.vue'
+import WarningValueOverviewChart from './components/WarningValueOverviewChart.vue'
 
 let state = reactive({ count: 0 })
 
@@ -22,8 +22,8 @@ const dynamicBotState = ref(dynamicBot);
 const selectionPage = "";
 const selectionPageState = ref(selectionPage);
 
-
-
+const selectionValue = "";
+const selectionStateVal = ref(selectionValue);
 
 
 </script>
@@ -44,7 +44,7 @@ const selectionPageState = ref(selectionPage);
       <!-- <TheWelcome v-if="dynamicBotState == 0" @clicked="increment" :count="state.count"/> -->
       <WarningValueOverviewChart v-if="dynamicBotState == 0" @clicked="increment" :count="state.count" />
 
-      <RuleCategories v-else-if="dynamicBotState == 1" v-model="layoutState" />
+      <RuleCategories v-else-if="dynamicBotState == 1" v-model:layoutState="layoutState" v-model:selectionPageState=selectionPageState v-model:selectionStateVal=selectionStateVal />
       <div v-else-if="dynamicBotState == 2" class="botDiv" style="background-color: green">
         <h1>3</h1>
       </div>
@@ -63,7 +63,7 @@ const selectionPageState = ref(selectionPage);
   <div v-else id="selectionView">
     <!-- <MiniMenu @clickedHistory="updateLayoutState" :layoutState="layout.state"/> -->
     <!-- <button style="height: 50px" @click="layoutState = 0">Backa</button> -->
-    <SelectionPage v-model="layoutState" />
+    <SelectionPage v-model:layoutState="layoutState" v-model:selectionPageState=selectionPageState v-model:selectionStateVal=selectionStateVal />
   </div>
 </template>
 
