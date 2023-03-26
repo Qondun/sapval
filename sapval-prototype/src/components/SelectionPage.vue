@@ -136,16 +136,11 @@
 
     function createLayout() {
         cleanListDiv();
-        cleanListDiv();
+        cleanInfoDiv();
         cleanPatientDiv();
         
         let listDiv = document.getElementById("listDiv");
         let patientIndex = 0; // not accessing all alerts
-
-        // let headerText = document.createElement("h1");
-        // headerText.innerHTML = selectionStateVal.value;
-        // headerText.classList.add("listHeader");
-        // listDiv.appendChild(headerText);
 
         filteredIDSet.forEach((patientID) =>{
             
@@ -362,7 +357,6 @@
         background-color: var(--buttonSelectedHover);
     }
     
-
     .headerBox { 
         height: 20px;
         width: 30%;
@@ -393,7 +387,6 @@
         width: 98%;
         height: 80px;
         background-color: var(--buttonColor);
-        border: var(--generalBorders);
         border-radius: var(--buttonBorderRadius);
         cursor: pointer;
         padding: 10px;
@@ -405,6 +398,7 @@
 
     .patientBox h1.selected {
         background-color: var(--buttonSelected);
+        border: var(--generalBorders);
     }
     
     .alertBox {
@@ -420,24 +414,17 @@
     .alertBox.selected {
         height: auto;
         transform: scaleY(1);
-        /*max-height: 2000px;
-        transition: max-height 1.5s ease-in;*/
         opacity: 1;
-        /*display: block;*/
-    }
-
-    .alertBox.selected:hover {
-        background-color: var(--buttonSelectedHover);
     }
 
     .singleAlert {
         width: 100%;
         height: 50px;
         background-color: var(--buttonColor);
-        border: var(--generalBorders);
         border-radius: var(--buttonBorderRadius);
         cursor: pointer;
         padding: 10px;
+        margin-top: 5px;
     }
 
     .singleAlert:hover {
@@ -446,6 +433,7 @@
 
     .singleAlert.selected {
         background-color: var(--buttonSelected);
+        border: var(--generalBorders);
     }
 
     #infoDiv, #patientDiv {
