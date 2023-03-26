@@ -1,9 +1,10 @@
 <script setup>
     import { computed, onMounted } from 'vue';
-    import { getCategoryData, getPatientInformation } from '../records/dataFunctions';
+    import { getCategoryData, getRuleData, getPatientInformation } from '../records/dataFunctions';
 
     let filterRange = []; // [Lower bound, Upper bound]
     let filteredList = [];
+    let filteredIDSet = new Set;
     let filterState = 0;
 
     const props = defineProps({ 
@@ -44,15 +45,43 @@
 
     onMounted(() => {
         setCategoryRange();
-        createFilteredList();
         createFilterButtons();
-        createLayout();        
+        setUp();
     }) 
+
+    function setUp() {
+        createFilteredList();
+        createLayout();        
+    }
 
     function setCategoryRange() {
         switch (selectionStateVal.value) {
             case "A. Riskprofil":
                 filterRange = [1,9];
+                break;
+            case "B. Interaktioner":
+                filterRange = [10,15];
+                break;
+            case "C. Njurfunktion":
+                filterRange = [16,33];
+                break;
+            case "D. Läkemedel och äldre":
+                filterRange = [34,40];
+                break;
+            case "E. Läkemedel och labvärden":
+                filterRange = [41,49];
+                break;
+            case "F. Läkemedel och diagnos":
+                filterRange = [50,51];
+                break;
+            case "G. Läkemedel och status":
+                filterRange = [52,55];
+                break;
+            case "H. Övriga läkemedelskombinationer":
+                filterRange = [56,58];
+                break;
+            case "I. Övrigt":
+                filterRange = [59,63];
                 break;
             default:
                 //filterRange = [1,63];
@@ -62,20 +91,15 @@
 
     function createFilteredList() {
         filteredList = [];
-        switch (filterState) {
-            case "1":
-                for(var patient in dataList) {
-                    for(var alert in patient) {
-                        if(alert.regel==filterState){
-                            filteredList.push(patient);
-                            break;
-                        }
-                    }
-                }
+        console.log("filterState: " + filterState)
+        switch(filterState) {
+            case 0:
+                [filteredIDSet,filteredList] = [patientIDSet,dataList];
                 break;
             default:
-                filteredList = dataList;
+                [filteredIDSet,filteredList] = getRuleData(filterState);
         }
+        
     };
 
     function createFilterButtons() {
@@ -85,10 +109,27 @@
         for(var i=filterRange[0]; i<=filterRange[1]; i++) {
             let filterButton = document.createElement("div");
             filterButton.classList.add("filterButton");
+            filterButton.setAttribute("id",i);
             let filterButtonText = document.createElement("p");
             filterButtonText.innerHTML = "Regel " + i;
             filterButton.appendChild(filterButtonText);
             filterButtonBox.appendChild(filterButton);
+            
+            filterButton.addEventListener("click", function(){
+                if(filterState == filterButton.id){
+                    filterState = 0;
+                    filterButtonBox.childNodes.forEach((button) =>{
+                        button.classList.remove("selected");
+                    });
+                } else {
+                    filterState = filterButton.id;
+                    filterButtonBox.childNodes.forEach((button) =>{
+                        button.classList.remove("selected");
+                    });
+                    filterButton.classList.add("selected")
+                }
+                setUp();
+            });
         }
         selectionGrid.appendChild(filterButtonBox);
     }
@@ -106,7 +147,7 @@
         // headerText.classList.add("listHeader");
         // listDiv.appendChild(headerText);
 
-        patientIDSet.forEach((patientID) =>{
+        filteredIDSet.forEach((patientID) =>{
             
             /* Bounding box for each patient */
             let patientBox = document.createElement('div')
@@ -202,10 +243,6 @@
     function updateInfoDiv(patientIndex, alertIndex) {
         cleanInfoDiv();
         let infoDiv = document.getElementById("infoDiv");
-        let headerText = document.createElement("h1");
-        headerText.innerHTML = "Varningsinformation";
-        headerText.classList.add("listHeader");
-        infoDiv.appendChild(headerText);
 
         let alertText = document.createElement("p");
         alertText.innerHTML = "Här visas information för regel " + filteredList[patientIndex][alertIndex].Regel;
@@ -233,10 +270,6 @@
     function updatePatientDiv(patientData) {
         cleanPatientDiv();
         let patientDiv = document.getElementById("patientDiv");
-        let headerText = document.createElement("h1");
-        headerText.innerHTML = "Patientinformation";
-        headerText.classList.add("listHeader")
-        patientDiv.appendChild(headerText);
 
         for(var info in patientData) {
             let infoValue = patientData[info]
@@ -256,13 +289,13 @@
             <p>Backa</p>
         </div>
         <div class="headerBox">
-            <h1 class="listHeader">{{ selectionStateVal.substr(2,selectionStateVal.length) }}</h1>
+            <p class="listHeader">{{ selectionStateVal.substr(2,selectionStateVal.length) }}</p>
         </div>
         <div class="headerBox">
-            <h1 class="listHeader">Varningsinformation</h1>
+            <p class="listHeader">Varningsinformation</p>
         </div>
         <div class="headerBox">
-            <h1 class="listHeader">Patientinformation</h1>
+            <p class="listHeader">Patientinformation</p>
         </div>
         <div id="listDiv" class="selectionGridItem"></div>
         <div id="infoDiv" class="selectionGridItem"></div>
@@ -282,7 +315,7 @@
     }
 
     #backButton {
-        height: auto;
+        height: 50px;
         width: 70px;
         text-align: center;
         border-radius: var(--buttonBorderRadius);
@@ -296,10 +329,6 @@
     #backButton:hover {
         cursor: pointer;
         background-color: var(--buttonColorHover);
-    }
-
-    .listHeader {
-        position: absolute;
     }
 
     #filterBox {
@@ -320,17 +349,31 @@
         background-color: var(--buttonColor);
         border-radius: var(--buttonBorderRadius);
     }
-
     .filterButton:hover {
         background-color: var(--buttonColorHover);
         cursor: pointer;
     }
 
+    .filterButton.selected {
+        background-color: var(--buttonSelected);
+        border: var(--generalBorders);
+    }
+    .filterButton.selected:hover {
+        background-color: var(--buttonSelectedHover);
+    }
+    
+
     .headerBox { 
         height: 20px;
         width: 30%;
         background-color: transparent;
-        bottom: -100px;
+        bottom: -92px;
+    }
+
+    .listHeader {
+        position: absolute;
+        color: #999;
+        font-size: 26pt;
     }
 
     .selectionGridItem {
@@ -353,6 +396,7 @@
         border: var(--generalBorders);
         border-radius: var(--buttonBorderRadius);
         cursor: pointer;
+        padding: 10px;
     }
 
     .patientBox h1:hover {
@@ -393,6 +437,7 @@
         border: var(--generalBorders);
         border-radius: var(--buttonBorderRadius);
         cursor: pointer;
+        padding: 10px;
     }
 
     .singleAlert:hover {
