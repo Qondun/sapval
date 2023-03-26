@@ -4,7 +4,7 @@
 
     let filterRange = []; // [Lower bound, Upper bound]
     let filteredList = [];
-    let filteredIDSet = new Set;
+    let filteredIDSet = new Set();
     let filterState = 0;
 
     const props = defineProps({ 
@@ -41,10 +41,10 @@
         },
     });
 
-    let [patientIDSet,dataList] = getCategoryData(selectionStateVal.value);
+    let [patientIDSet,dataList,ruleNumberSet] = getCategoryData(selectionStateVal.value);
 
     onMounted(() => {
-        setCategoryRange();
+        //setCategoryRange();
         createFilterButtons();
         setUp();
     }) 
@@ -54,40 +54,40 @@
         createLayout();        
     }
 
-    function setCategoryRange() {
-        switch (selectionStateVal.value) {
-            case "A. Riskprofil":
-                filterRange = [1,9];
-                break;
-            case "B. Interaktioner":
-                filterRange = [10,15];
-                break;
-            case "C. Njurfunktion":
-                filterRange = [16,33];
-                break;
-            case "D. Läkemedel och äldre":
-                filterRange = [34,40];
-                break;
-            case "E. Läkemedel och labvärden":
-                filterRange = [41,49];
-                break;
-            case "F. Läkemedel och diagnos":
-                filterRange = [50,51];
-                break;
-            case "G. Läkemedel och status":
-                filterRange = [52,55];
-                break;
-            case "H. Övriga läkemedelskombinationer":
-                filterRange = [56,58];
-                break;
-            case "I. Övrigt":
-                filterRange = [59,63];
-                break;
-            default:
-                //filterRange = [1,63];
-                filterRange = [1,9];
-        }
-    }
+    // function setCategoryRange() {
+    //     switch (selectionStateVal.value) {
+    //         case "A. Riskprofil":
+    //             filterRange = [1,9];
+    //             break;
+    //         case "B. Interaktioner":
+    //             filterRange = [10,15];
+    //             break;
+    //         case "C. Njurfunktion":
+    //             filterRange = [16,33];
+    //             break;
+    //         case "D. Läkemedel och äldre":
+    //             filterRange = [34,40];
+    //             break;
+    //         case "E. Läkemedel och labvärden":
+    //             filterRange = [41,49];
+    //             break;
+    //         case "F. Läkemedel och diagnos":
+    //             filterRange = [50,51];
+    //             break;
+    //         case "G. Läkemedel och status":
+    //             filterRange = [52,55];
+    //             break;
+    //         case "H. Övriga läkemedelskombinationer":
+    //             filterRange = [56,58];
+    //             break;
+    //         case "I. Övrigt":
+    //             filterRange = [59,63];
+    //             break;
+    //         default:
+    //             //filterRange = [1,63];
+    //             filterRange = [1,9];
+    //     }
+    // }
 
     function createFilteredList() {
         filteredList = [];
@@ -106,12 +106,12 @@
         let selectionGrid = document.getElementById("selectionGrid");
         let filterButtonBox = document.createElement("div");
         filterButtonBox.setAttribute("id","filterBox");
-        for(var i=filterRange[0]; i<=filterRange[1]; i++) {
+        ruleNumberSet.forEach((number) =>{
             let filterButton = document.createElement("div");
             filterButton.classList.add("filterButton");
-            filterButton.setAttribute("id",i);
+            filterButton.setAttribute("id",number);
             let filterButtonText = document.createElement("p");
-            filterButtonText.innerHTML = "Regel " + i;
+            filterButtonText.innerHTML = "Regel " + number;
             filterButton.appendChild(filterButtonText);
             filterButtonBox.appendChild(filterButton);
             
@@ -130,7 +130,7 @@
                 }
                 setUp();
             });
-        }
+        });
         selectionGrid.appendChild(filterButtonBox);
     }
 

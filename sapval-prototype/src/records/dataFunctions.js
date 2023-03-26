@@ -4,15 +4,17 @@ import { PatientAlertDrug } from './patientInformation.json'
 export function getCategoryData(categoryName) {
     var dataList = [];
     var patientIDSet = new Set();
+    var ruleNumberSet = new Set();
     WarningInfo.filter(obj=> obj.Regelkategori==categoryName).forEach((patient) =>{
         patientIDSet.add(patient.PersonID);
+        ruleNumberSet.add(patient.Regel);
     });
 
     patientIDSet.forEach((patient) =>{
         dataList.push(WarningInfo.filter(obj=> obj.PersonID==patient));
     });
 
-    return [patientIDSet,dataList];
+    return [patientIDSet,dataList,ruleNumberSet];
 }
 
 export function getRuleData(ruleNumber) {
