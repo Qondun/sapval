@@ -82,6 +82,7 @@ const selectionStateVal = ref(selectionValue);
   --buttonSelected: #cecece;
   --buttonSelectedHover: #bebebe;
   --generalBorders: 2px solid #000;
+  --unavailableButton: #dedede;
 }
 
 #overviewGrid {

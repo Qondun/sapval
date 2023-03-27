@@ -1,11 +1,14 @@
 <script setup>
     import { computed, onMounted } from 'vue';
-    import { getCategoryData, getRuleData, getPatientInformation } from '../records/dataFunctions';
+    import { getCategoryData, getRuleData, getPatientInformation, getRuleInformation } from '../records/dataFunctions';
 
     let filterRange = []; // [Lower bound, Upper bound]
+    let dataList = [];
     let filteredList = [];
+    let patientIDSet = new Set();
     let filteredIDSet = new Set();
     let filterState = 0;
+    let ruleNumberSet = [];
 
     const props = defineProps({ 
         layoutState: Number,
@@ -41,10 +44,9 @@
         },
     });
 
-    let [patientIDSet,dataList,ruleNumberSet] = getCategoryData(selectionStateVal.value);
-
     onMounted(() => {
-        //setCategoryRange();
+        setCategoryRange();
+        [patientIDSet,dataList,ruleNumberSet] = getCategoryData(filterRange);
         createFilterButtons();
         setUp();
     }) 
@@ -54,44 +56,44 @@
         createLayout();        
     }
 
-    // function setCategoryRange() {
-    //     switch (selectionStateVal.value) {
-    //         case "A. Riskprofil":
-    //             filterRange = [1,9];
-    //             break;
-    //         case "B. Interaktioner":
-    //             filterRange = [10,15];
-    //             break;
-    //         case "C. Njurfunktion":
-    //             filterRange = [16,33];
-    //             break;
-    //         case "D. Läkemedel och äldre":
-    //             filterRange = [34,40];
-    //             break;
-    //         case "E. Läkemedel och labvärden":
-    //             filterRange = [41,49];
-    //             break;
-    //         case "F. Läkemedel och diagnos":
-    //             filterRange = [50,51];
-    //             break;
-    //         case "G. Läkemedel och status":
-    //             filterRange = [52,55];
-    //             break;
-    //         case "H. Övriga läkemedelskombinationer":
-    //             filterRange = [56,58];
-    //             break;
-    //         case "I. Övrigt":
-    //             filterRange = [59,63];
-    //             break;
-    //         default:
-    //             //filterRange = [1,63];
-    //             filterRange = [1,9];
-    //     }
-    // }
+    function setCategoryRange() {
+        console.log("setCategoryRange")
+        switch (selectionStateVal.value) {
+            case "A. Riskprofil":
+                filterRange = [1,9];
+                break;
+            case "B. Interaktioner":
+                filterRange = [10,15];
+                break;
+            case "C. Njurfunktion":
+                filterRange = [16,33];
+                break;
+            case "D. Läkemedel och äldre":
+                filterRange = [34,40];
+                break;
+            case "E. Läkemedel och labvärden":
+                filterRange = [41,49];
+                break;
+            case "F. Läkemedel och diagnos":
+                filterRange = [50,51];
+                break;
+            case "G. Läkemedel och status":
+                filterRange = [52,55];
+                break;
+            case "H. Övriga läkemedelskombinationer":
+                filterRange = [56,58];
+                break;
+            case "I. Övrigt":
+                filterRange = [59,63];
+                break;
+            default:
+                filterRange = [1,63];
+                //filterRange = [1,9];
+        }
+    }
 
     function createFilteredList() {
         filteredList = [];
-        console.log("filterState: " + filterState)
         switch(filterState) {
             case 0:
                 [filteredIDSet,filteredList] = [patientIDSet,dataList];
@@ -106,31 +108,38 @@
         let selectionGrid = document.getElementById("selectionGrid");
         let filterButtonBox = document.createElement("div");
         filterButtonBox.setAttribute("id","filterBox");
-        ruleNumberSet.forEach((number) =>{
+        for(var ruleNr=filterRange[0]; ruleNr <= filterRange[1]; ruleNr++){
             let filterButton = document.createElement("div");
             filterButton.classList.add("filterButton");
-            filterButton.setAttribute("id",number);
+            filterButton.setAttribute("id",ruleNr);
             let filterButtonText = document.createElement("p");
-            filterButtonText.innerHTML = "Regel " + number;
+            filterButtonText.innerHTML = "Regel " + ruleNr;
             filterButton.appendChild(filterButtonText);
             filterButtonBox.appendChild(filterButton);
             
-            filterButton.addEventListener("click", function(){
-                if(filterState == filterButton.id){
-                    filterState = 0;
-                    filterButtonBox.childNodes.forEach((button) =>{
-                        button.classList.remove("selected");
-                    });
-                } else {
-                    filterState = filterButton.id;
-                    filterButtonBox.childNodes.forEach((button) =>{
-                        button.classList.remove("selected");
-                    });
-                    filterButton.classList.add("selected")
-                }
-                setUp();
-            });
-        });
+            console.log("id: " + filterButton.id);
+            console.table(ruleNumberSet)
+            console.log(ruleNumberSet.includes(parseInt(filterButton.id)))
+            if(ruleNumberSet.includes(parseInt(filterButton.id))){
+                filterButton.addEventListener("click", function(){
+                    if(filterState == filterButton.id){
+                        filterState = 0;
+                        filterButtonBox.childNodes.forEach((button) =>{
+                            button.classList.remove("selected");
+                        });
+                    } else {
+                        filterState = filterButton.id;
+                        filterButtonBox.childNodes.forEach((button) =>{
+                            button.classList.remove("selected");
+                        });
+                        filterButton.classList.add("selected")
+                    }
+                    setUp();
+                });
+            } else {
+                filterButton.classList.add("unavailable")
+            }
+        };
         selectionGrid.appendChild(filterButtonBox);
     }
 
@@ -164,7 +173,7 @@
                 singleAlertBox.classList.add("singleAlert");
                 singleAlertBox.setAttribute("id",alertIndex);
                 let singleAlertText = document.createElement('p');
-                singleAlertText.innerHTML = "Regel " + alert.Regel + ": " + alert.Regelkategori.substr(3,alert.Regelkategori.length);
+                singleAlertText.innerHTML = "Regel " + alert.Regel + ": " + getRuleInformation(alert.Regel);
                 singleAlertBox.appendChild(singleAlertText);
                 alertBox.appendChild(singleAlertBox);
 
@@ -356,6 +365,12 @@
     .filterButton.selected:hover {
         background-color: var(--buttonSelectedHover);
     }
+
+    .filterButton.unavailable {
+        background-color: var(--unavailableButton);
+        cursor: default;
+        color: #999;
+    }
     
     .headerBox { 
         height: 20px;
@@ -419,7 +434,8 @@
 
     .singleAlert {
         width: 100%;
-        height: 50px;
+        min-height: 50px;
+        height: auto;
         background-color: var(--buttonColor);
         border-radius: var(--buttonBorderRadius);
         cursor: pointer;
