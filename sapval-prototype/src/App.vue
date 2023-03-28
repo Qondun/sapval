@@ -10,6 +10,7 @@ import { reactive, ref } from 'vue';
 import WardOverviewChart from './components/WardOverviewChart.vue';
 import SelectionPage from './components/SelectionPage.vue'
 import WarningValueOverviewChart from './components/WarningValueOverviewChart.vue'
+import { Chart } from 'chart.js'
 
 let state = reactive({ count: 0 })
 
@@ -24,6 +25,11 @@ const selectionPageState = ref(selectionPage);
 
 const selectionValue = "";
 const selectionStateVal = ref(selectionValue);
+
+// This is a function to decrease by 1 a 2d array for updating the warningValueOverviewChart Chart. Array[[severityLevel-1][RuleNumber - 1]] 
+const warningNumberArray = [];
+//const decreaseWarningNumberArray = ref(WarningValueOverviewChart);
+const xxxWarning = ref(warningNumberArray);
 
 
 </script>
@@ -42,9 +48,10 @@ const selectionStateVal = ref(selectionValue);
 
     <div id="dynamicBottom" class="overviewGridItem">
       <!-- <TheWelcome v-if="dynamicBotState == 0" @clicked="increment" :count="state.count"/> -->
-      <WarningValueOverviewChart v-if="dynamicBotState == 0" @clicked="increment" :count="state.count" />
+      <WarningValueOverviewChart v-if="dynamicBotState == 0" ref="mywarnings" />
 
-      <RuleCategories v-else-if="dynamicBotState == 1" v-model:layoutState="layoutState" v-model:selectionPageState=selectionPageState v-model:selectionStateVal=selectionStateVal />
+      <RuleCategories v-else-if="dynamicBotState == 1" v-model:layoutState="layoutState"
+        v-model:selectionPageState=selectionPageState v-model:selectionStateVal=selectionStateVal />
       <div v-else-if="dynamicBotState == 2" class="botDiv" style="background-color: green">
         <h1>3</h1>
       </div>
@@ -63,7 +70,8 @@ const selectionStateVal = ref(selectionValue);
   <div v-else id="selectionView">
     <!-- <MiniMenu @clickedHistory="updateLayoutState" :layoutState="layout.state"/> -->
     <!-- <button style="height: 50px" @click="layoutState = 0">Backa</button> -->
-    <SelectionPage v-model:layoutState="layoutState" v-model:selectionPageState=selectionPageState v-model:selectionStateVal=selectionStateVal />
+    <SelectionPage v-model:layoutState="layoutState" v-model:selectionPageState=selectionPageState
+      v-model:selectionStateVal=selectionStateVal />
   </div>
 </template>
 

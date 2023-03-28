@@ -7,46 +7,34 @@ import wardsdata from '../records/inpatientWards.json';
 import patientWarnings from '../records/PatientWarnings.json';
 import warningList from '../records/warningList.json';
 import patientInformation from '../records/patientInformation.json';
-
-
+import { storeToRefs } from 'pinia'
+import { watch } from 'vue'
+import { useWarningsByRuleStore } from '../stores/warningsByRule'
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
-
 
 export default {
     name: "WarningValueOverviewChart",
     components: { Bar },
-    data: function () {
-        return {
-            chartData: {
-                labels: [],
-                datasets: [
-                    {
-                        label: '1',
-                        data: [],
-                        backgroundColor: '#fff2cc',
-                    }, {
-                        label: '2',
-                        data: [],
-                        backgroundColor: '#93c47d'
-                    }, {
-                        label: '3',
-                        data: [],
-                        backgroundColor: '#cf4c22'
-                    },
-                    {
-                        label: '4',
-                        data: [],
-                        backgroundColor: '#741b47'
-                    },
-                    {
-                        label: '5',
-                        data: [],
-                        backgroundColor: '#190263'
-                    }]
+    watch: {
+        chartData: {
+            handler(newData, oldData) {
+                // Maybe force chart to refresh here...?
+                // Note: if you resize the window the chart does refresh itself.
+                console.log("Data updated..")
             },
+            deep: true,
+        },
+    },
+    data: function () {
+        const warningsStore = useWarningsByRuleStore()
+        warningsStore.initialize()
+        const warningsStoreRef = storeToRefs(useWarningsByRuleStore())
+        console.log("allocated warningsStore")
+        return {
+            storeData: warningsStore,
+            chartData: warningsStoreRef.getChartData, // This should keep it responsive since its a reference?
             chartOptions: {
-
                 responsive: true,
                 scales: {
                     x: {
@@ -66,93 +54,17 @@ export default {
         }
 
     },
-
-
+    computed: {
+        // a computed getter
+        warningsChartData() {
+            // `this` points to the component instance
+            return this.storeData.getChartData
+        },
+        chartOptionsComputed() {
+            return this.chartOptions
+        }
+    },
     created: function () {
-        // Checking if everything works, delete this right after you see that everything works
-        // console.log(this.ward);  
-
-        let wardNameList = [];
-        var value = 0;
-        let warningValueList = [];
-        let len = wardsdata.wardsInfo.length + 1;
-
-        //let warningValueList = {Array.apply(null, Array(65)).map(function () {})}
-        let patientLocationList = Array.apply(null, Array(1500)).map(function () { })
-        //var wardWarningArray = [...Array(1500)].map(e => Array(6).fill(0));
-        //let wardWarningArray = [...Array(5)].map(e => Array(len).fill(1));
-
-
-
-
-        //wardList in order for graph
-        this.ward.map((item) => {
-            // console.log(item.Avdelning + " : " + item.numPlatser);
-            // this.chartData.labels.push(item.Address)
-            wardNameList.push(item.Address)
-            //console.log(wardNameList)
-            //this.chartData.datasets[0].data.push(parseInt(item.numPlatser))
-        })
-
-
-        let wardWarningArray = [...Array(5)].map(e => Array(len).fill(1));
-        // console.log(wardWarningArray)
-
-
-        //list, in order of alerts, value saved is severity level
-        this.warnings.map((item) => {
-            warningValueList.push(item.severityLevel)
-        })
-
-
-        for (let i = 0; i < this.patientInfo.length; i++) {
-            let obj = this.patientInfo[i]
-            patientLocationList[obj['Person ID']] = obj.PatientLocation
-        }
-        //console.log(patientLocationList)
-        let numRulesLength = warningValueList.length;
-        let numRules = Array.apply(null, Array(numRulesLength)).map(function (x, i) { return i; })
-        console.log("numRules", numRules)
-        for (let i = 0; i < numRules.length; i++) {
-            numRules[i] += 1
-        }
-        this.chartData.labels = numRules.map(x => x)
-        console.log(numRules)
-
-        let warningNumberArray = [...Array(5)].map(e => Array(numRulesLength).fill(0));
-        for (let i = 0; i < patientWarnings.WarningInfo.length; i++) {
-            let obj = patientWarnings.WarningInfo[i];
-            let severityLevel = 0
-            if (obj.Regel == null) {
-                severityLevel = 1
-            } else {
-                severityLevel = Number(warningValueList[obj.Regel - 1]) - 1;
-            }
-            warningNumberArray[severityLevel][obj.Regel - 1] += 1
-
-        }
-
-
-
-        this.chartData.datasets[0].data = warningNumberArray[0].map(x => x);
-        // console.log(wardWarningArray)
-        //console.log(this.chartData.datasets[0])
-
-        this.chartData.datasets[1].data = warningNumberArray[1].map(x => x);
-        //console.log(wardWarningArray)
-        //console.log(this.chartData.datasets[1])
-
-        this.chartData.datasets[2].data = warningNumberArray[2].map(x => x);
-        //console.log(wardWarningArray)
-        //console.log(this.chartData.datasets[2])
-
-        this.chartData.datasets[3].data = warningNumberArray[3].map(x => x);
-        //console.log(wardWarningArray)
-        //console.log(this.chartData.datasets[3])
-
-        this.chartData.datasets[4].data = warningNumberArray[4].map(x => x);
-        //console.log(wardWarningArray)
-        //console.log(this.chartData.datasets[4])
 
 
     },
@@ -162,7 +74,8 @@ export default {
 </script>
 
 <template>
-    <Bar id="warning-value-overview-chart" :options="chartOptions" :data="chartData" />
+    <Bar ref="theChart" id="warning-value-overview-chart" :options="chartOptionsComputed" :data="chartData" />
+    <button @click="this.storeData.decreaseWarningNumberArray(3, 2)" type="button">Test</button>
 </template>
 
 <style>
