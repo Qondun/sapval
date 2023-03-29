@@ -63,9 +63,6 @@ export const useWarningsByRuleStore = defineStore('warnings', {
 
             //let warningValueList = {Array.apply(null, Array(65)).map(function () {})}
             let patientLocationList = Array.apply(null, Array(1500)).map(function () { })
-            //var wardWarningArray = [...Array(1500)].map(e => Array(6).fill(0));
-            //let wardWarningArray = [...Array(5)].map(e => Array(len).fill(1));
-
 
 
 
@@ -96,7 +93,7 @@ export const useWarningsByRuleStore = defineStore('warnings', {
             //console.log(patientLocationList)
             numRulesLength = warningValueList.length;
             numRules = Array.apply(null, Array(numRulesLength)).map(function (x, i) { return i; })
-            console.log("numRules", numRules)
+            //console.log("numRules", numRules)
             for (let i = 0; i < numRules.length; i++) {
                 numRules[i] += 1
             }
@@ -104,7 +101,7 @@ export const useWarningsByRuleStore = defineStore('warnings', {
             console.log(numRules)
 
             let warningNumberArray = [...Array(5)].map(e => Array(numRulesLength).fill(0));
-            console.log("Warning Number Array", warningNumberArray)
+            // console.log("Warning Number Array", warningNumberArray)
             for (let i = 0; i < patientWarnings.WarningInfo.length; i++) {
                 let obj = patientWarnings.WarningInfo[i];
                 let severityLevel = 0

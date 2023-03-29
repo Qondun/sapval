@@ -10,7 +10,7 @@ import patientInformation from '../records/patientInformation.json';
 import { storeToRefs } from 'pinia'
 import { watch } from 'vue'
 import { useOverallWarningsStore } from '../stores/warningsOverall'
-import { useWarningsByWardStore } from '../stores/warningsByWard'
+//import { useWarningsByWardStore } from '../stores/warningsByWard'
 
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
@@ -29,13 +29,13 @@ export default {
         },
     },
     data: function () {
-        const warningsStore = useOverallWarningsStore()
-        warningsStore.initialize()
+        const overallWarningsStore = useOverallWarningsStore()
+        overallWarningsStore.initialize()
         const warningsStoreRef = storeToRefs(useOverallWarningsStore())
         console.log("allocated warningsStore for allWarningChart")
         return {
-            storeData: warningsStore,
-            chartData: warningsStoreRef.getChartData, // This should keep it responsive since its a reference?
+            storeData: overallWarningsStore,
+            chartData: warningsStoreRef.getChartData,  // This should keep it responsive since its a reference?
             chartOptions: {
                 responsive: true,
                 scales: {
@@ -55,6 +55,14 @@ export default {
 
         }
 
+    },
+    options: {
+        indexAxis: 'y',
+        plugins: {
+            legend: {
+                display: false
+            },
+        }
     },
     computed: {
         // a computed getter
