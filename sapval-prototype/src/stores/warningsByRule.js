@@ -22,13 +22,11 @@ export const useWarningsByRuleStore = defineStore('warnings', {
                     label: '3',
                     data: [],
                     backgroundColor: '#cf4c22'
-                },
-                {
+                }, {
                     label: '4',
                     data: [],
                     backgroundColor: '#741b47'
-                },
-                {
+                }, {
                     label: '5',
                     data: [],
                     backgroundColor: '#190263'

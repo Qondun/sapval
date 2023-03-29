@@ -11,6 +11,7 @@ import WardOverviewChart from './components/WardOverviewChart.vue';
 import SelectionPage from './components/SelectionPage.vue'
 import WarningValueOverviewChart from './components/WarningValueOverviewChart.vue'
 import { Chart } from 'chart.js'
+import AllWarningChart from './components/AllWarningChart.vue'
 
 let state = reactive({ count: 0 })
 
@@ -43,6 +44,7 @@ const xxxWarning = ref(warningNumberArray);
     </header>
 
     <main class="overviewGridItem">
+      <AllWarningChart />
       <SortingMenu :botState="dynamicBot.state" v-model="dynamicBotState" />
     </main>
 

@@ -54,6 +54,8 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
     }),
     getters: {
         getChartData: (state) => state.chartData,
+
+        getSumWarningArray: (state) => state.sumWarningArray,
     },
     actions: {
         initialize() {
@@ -62,8 +64,8 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
                 return
             }
             console.log("initializing wardwarningsData")
-            this.initialized = true
-
+            this.initialized = true;
+            let sumWarningArray = [0, 0, 0, 0, 0];
             let wardNameList = [];
             var value = 0;
             let warningValueList = [];
@@ -100,6 +102,9 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
                 } else {
                     severityLevel = Number(warningValueList[obj.Regel - 1]) - 1;
                 }
+
+                sumWarningArray[severityLevel] += 1;
+                // console.log(sumWarningArray)
 
                 //console.log(`regel: ${obj.Regel} sev level: ${severityLevel}`)
                 let personNumber = obj.PersonID;
