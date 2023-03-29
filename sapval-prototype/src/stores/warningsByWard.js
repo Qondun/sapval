@@ -66,7 +66,7 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
             }
             console.log("initializing wardwarningsData")
             this.initialized = true;
-            sumWarningArray = [0, 0, 0, 0, 0];
+            let sumWarningArray = [0, 0, 0, 0, 0];
             let wardNameList = [];
             var value = 0;
             let warningValueList = [];

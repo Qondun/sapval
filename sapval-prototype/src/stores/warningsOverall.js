@@ -65,29 +65,37 @@ export const useOverallWarningsStore = defineStore('overallWarnings', {
                 return
             }
             console.log("initializing the data")
+            console.log("wtf")
             this.initialized = true
             // Checking if everything works, delete this right after you see that everything works
             // console.log(this.ward);  
             const wardData = useWarningsByWardStore();
-            warningNumberArray = wardData.getSumWarningArray();
 
-            this.chartData.datasets[0].data = warningNumberArray[0].reduce((sum, num) => sum + num, 0);
+            //const warningsStore = useOverallWarningsStore()
+            wardData.initialize()
+            //const wardDataRef = storeToRefs(useWarningsByWardStore())
+            //console.log("allocated warningsStore for allWarningChart")
+
+            let warningNumberArray = wardData.getSumWarningArray;
+
+
+            this.chartData.datasets[0].data = warningNumberArray[0];
             // console.log(wardWarningArray)
             console.log('chartdata[0]' + this.chartData.datasets[0])
 
-            this.chartData.datasets[1].data = warningNumberArray[1].reduce((sum, num) => sum + num, 0);
+            this.chartData.datasets[1].data = warningNumberArray[1];
             //console.log(wardWarningArray)
             console.log(this.chartData.datasets[1])
 
-            this.chartData.datasets[2].data = warningNumberArray[2].reduce((sum, num) => sum + num, 0);
+            this.chartData.datasets[2].data = warningNumberArray[2];
             //console.log(wardWarningArray)
             console.log(this.chartData.datasets[2])
 
-            this.chartData.datasets[3].data = warningNumberArray[3].reduce((sum, num) => sum + num, 0);
+            this.chartData.datasets[3].data = warningNumberArray[3];
             //console.log(wardWarningArray)
             console.log(this.chartData.datasets[3])
 
-            this.chartData.datasets[4].data = warningNumberArray[4].reduce((sum, num) => sum + num, 0);
+            this.chartData.datasets[4].data = warningNumberArray[4];
             //console.log(wardWarningArray)
             console.log(this.chartData.datasets[4])
         },
