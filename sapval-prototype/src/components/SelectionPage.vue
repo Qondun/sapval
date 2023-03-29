@@ -1,6 +1,6 @@
 <script setup>
     import { computed, onMounted } from 'vue';
-    import { getCategoryData, getRuleData, getPatientInformation, getRuleInformation } from '../records/dataFunctions';
+    import { getCategoryData, getRuleData, getPatientInformation, getRuleInformation, numberForRule } from '../records/dataFunctions';
 
     let filterRange = []; // [Lower bound, Upper bound]
     let dataList = [];
@@ -109,17 +109,15 @@
         let filterButtonBox = document.createElement("div");
         filterButtonBox.setAttribute("id","filterBox");
         for(var ruleNr=filterRange[0]; ruleNr <= filterRange[1]; ruleNr++){
+            let ruleData = numberForRule(ruleNr);
             let filterButton = document.createElement("div");
             filterButton.classList.add("filterButton");
             filterButton.setAttribute("id",ruleNr);
             let filterButtonText = document.createElement("p");
-            filterButtonText.innerHTML = "Regel " + ruleNr;
+            filterButtonText.innerHTML = "Regel " + ruleNr + "<br>" + ruleData + " st";
             filterButton.appendChild(filterButtonText);
             filterButtonBox.appendChild(filterButton);
-            
-            console.log("id: " + filterButton.id);
-            console.table(ruleNumberSet)
-            console.log(ruleNumberSet.includes(parseInt(filterButton.id)))
+    
             if(ruleNumberSet.includes(parseInt(filterButton.id))){
                 filterButton.addEventListener("click", function(){
                     if(filterState == filterButton.id){
@@ -337,7 +335,7 @@
 
     #filterBox {
         width: auto;
-        height: 70px;
+        height: auto;
         top: 10px;
         display: flex;
         justify-content: space-between;

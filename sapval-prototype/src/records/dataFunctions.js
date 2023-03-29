@@ -43,3 +43,7 @@ export function getPatientInformation(patientID) {
 export function getRuleInformation(ruleNr) {
     return WarningData.filter(obj=> obj.warningNumber==ruleNr)[0].warningName;
 }
+
+export function numberForRule(ruleNr) {
+    return[WarningInfo.filter(obj=> obj.Regel==ruleNr).length]
+}
