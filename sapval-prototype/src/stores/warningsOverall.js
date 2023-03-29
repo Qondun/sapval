@@ -3,7 +3,7 @@ import wardsdata from '../records/inpatientWards.json';
 import patientWarnings from '../records/PatientWarnings.json';
 import warningList from '../records/warningList.json';
 import patientInformation from '../records/patientInformation.json';
-import { useWarningsByWardStore } from '../stores/warningsByWard'
+//import { useWarningsByWardStore } from '../stores/warningsByWard'
 
 export const useOverallWarningsStore = defineStore('overallWarnings', {
     state: () => ({
@@ -12,9 +12,9 @@ export const useOverallWarningsStore = defineStore('overallWarnings', {
             labels: [],
             datasets: [
                 {
-                    label: '3',
+                    label: '1',
                     data: [],
-                    backgroundColor: '#cf4c22',
+                    backgroundColor: '#fff2cc',
                     borderColor: 'rgb(201, 203, 207)',
                     borderWidth: 1
 
@@ -25,9 +25,10 @@ export const useOverallWarningsStore = defineStore('overallWarnings', {
                     borderColor: 'rgb(201, 203, 207)',
                     borderWidth: 1
                 }, {
-                    label: '1',
+
+                    label: '3',
                     data: [],
-                    backgroundColor: '#fff2cc',
+                    backgroundColor: '#cf4c22',
                     borderColor: 'rgb(201, 203, 207)',
                     borderWidth: 1
                 }, {
@@ -67,37 +68,66 @@ export const useOverallWarningsStore = defineStore('overallWarnings', {
             console.log("initializing the data")
             console.log("wtf")
             this.initialized = true
+            let totalWarningNumberArray = [0, 0, 0, 0, 0];
+            let warningValueList = [];
+
+
+            this.warnings.map((item) => {
+                warningValueList.push(item.severityLevel)
+            })
+
+            this.chartData.labels = "Overall"
+
+            for (let i = 0; i < patientWarnings.WarningInfo.length; i++) {
+                let obj = patientWarnings.WarningInfo[i];
+                //console.log(obj.PersonID)
+
+                let severityLevel
+
+                if (obj.Regel == null) {
+                    severityLevel = 0
+                } else {
+                    severityLevel = Number(warningValueList[obj.Regel - 1]) - 1;
+                }
+
+                totalWarningNumberArray[severityLevel] += 1;
+            }
+            console.log('warningNumberArray' + totalWarningNumberArray)
+
             // Checking if everything works, delete this right after you see that everything works
             // console.log(this.ward);  
-            const wardData = useWarningsByWardStore();
+            //const wardData = useWarningsByWardStore();
 
             //const warningsStore = useOverallWarningsStore()
-            wardData.initialize()
+            //  wardData.initialize()
             //const wardDataRef = storeToRefs(useWarningsByWardStore())
             //console.log("allocated warningsStore for allWarningChart")
 
-            let warningNumberArray = wardData.getSumWarningArray;
+            //let warningNumberArray = wardData.getSumWarningArray;
 
+            this.chartData.datasets.data = totalWarningNumberArray
 
-            this.chartData.datasets[0].data = warningNumberArray[0];
-            // console.log(wardWarningArray)
-            console.log('chartdata[0]' + this.chartData.datasets[0])
+            console.log('chartdatawarningNumberArray' + this.chartData.datasets.data)
 
-            this.chartData.datasets[1].data = warningNumberArray[1];
-            //console.log(wardWarningArray)
-            console.log(this.chartData.datasets[1])
+            // this.chartData.datasets[0].data = totalWarningNumberArray[0].map(x => x);
+            // // console.log(wardWarningArray)
+            // console.log('chartdata[0]' + this.chartData.datasets[0].data)
 
-            this.chartData.datasets[2].data = warningNumberArray[2];
-            //console.log(wardWarningArray)
-            console.log(this.chartData.datasets[2])
+            // this.chartData.datasets[1].data = totalWarningNumberArray[1].map(x => x);
+            // //console.log(wardWarningArray)
+            // console.log(this.chartData.datasets[1])
 
-            this.chartData.datasets[3].data = warningNumberArray[3];
-            //console.log(wardWarningArray)
-            console.log(this.chartData.datasets[3])
+            // this.chartData.datasets[2].data = totalWarningNumberArray[2].map(x => x);
+            // //console.log(wardWarningArray)
+            // console.log(this.chartData.datasets[2])
 
-            this.chartData.datasets[4].data = warningNumberArray[4];
-            //console.log(wardWarningArray)
-            console.log(this.chartData.datasets[4])
+            // this.chartData.datasets[3].data = totalWarningNumberArray[3].map(x => x);
+            // //console.log(wardWarningArray)
+            // console.log(this.chartData.datasets[3])
+
+            // this.chartData.datasets[4].data = totalWarningNumberArray[4].map(x => x);
+            // //console.log(wardWarningArray)
+            // console.log(this.chartData.datasets[4])
         },
 
         decreaseWarningNumberArray(severityLevel) {

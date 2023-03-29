@@ -105,7 +105,7 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
                 }
 
                 sumWarningArray[severityLevel] += 1;
-                // console.log(sumWarningArray)
+                console.log('warningarray from byward' + sumWarningArray)
 
                 //console.log(`regel: ${obj.Regel} sev level: ${severityLevel}`)
                 let personNumber = obj.PersonID;
