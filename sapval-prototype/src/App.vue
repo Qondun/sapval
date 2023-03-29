@@ -44,8 +44,10 @@ const xxxWarning = ref(warningNumberArray);
     </header>
 
     <main class="overviewGridItem">
+
       <AllWarningChart />
       <SortingMenu :botState="dynamicBot.state" v-model="dynamicBotState" />
+
     </main>
 
     <div id="dynamicBottom" class="overviewGridItem">
@@ -157,6 +159,8 @@ footer p {
   height: 100vh;
   background-color: var(--background-color);
 }
+
+
 
 #selectionView {
   width: 100%;

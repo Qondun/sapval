@@ -12,36 +12,9 @@ export const useOverallWarningsStore = defineStore('overallWarnings', {
             labels: [],
             datasets: [
                 {
-                    label: '1',
-                    data: [],
+                    labels: ['1', '2', '3', '4', '5'],
+                    data: 0,
                     backgroundColor: '#fff2cc',
-                    borderColor: 'rgb(201, 203, 207)',
-                    borderWidth: 1
-
-                }, {
-                    label: '2',
-                    data: [],
-                    backgroundColor: '#93c47d',
-                    borderColor: 'rgb(201, 203, 207)',
-                    borderWidth: 1
-                }, {
-
-                    label: '3',
-                    data: [],
-                    backgroundColor: '#cf4c22',
-                    borderColor: 'rgb(201, 203, 207)',
-                    borderWidth: 1
-                }, {
-                    label: '4',
-                    data: [],
-                    backgroundColor: '#741b47',
-                    borderColor: 'rgb(201, 203, 207)',
-                    borderWidth: 1
-
-                }, {
-                    label: '5',
-                    data: [],
-                    backgroundColor: '#190263',
                     borderColor: 'rgb(201, 203, 207)',
                     borderWidth: 1
 
@@ -65,7 +38,7 @@ export const useOverallWarningsStore = defineStore('overallWarnings', {
                 console.log("already initialized")
                 return
             }
-            console.log("initializing the data")
+            console.log("initializing the overallWarnings data")
             console.log("wtf")
             this.initialized = true
             let totalWarningNumberArray = [0, 0, 0, 0, 0];
@@ -80,7 +53,7 @@ export const useOverallWarningsStore = defineStore('overallWarnings', {
 
             for (let i = 0; i < patientWarnings.WarningInfo.length; i++) {
                 let obj = patientWarnings.WarningInfo[i];
-                //console.log(obj.PersonID)
+                console.log(obj.PersonID)
 
                 let severityLevel
 
@@ -105,9 +78,9 @@ export const useOverallWarningsStore = defineStore('overallWarnings', {
 
             //let warningNumberArray = wardData.getSumWarningArray;
 
-            this.chartData.datasets.data = totalWarningNumberArray
+            this.chartData.datasets[0].data = totalWarningNumberArray
 
-            console.log('chartdatawarningNumberArray' + this.chartData.datasets.data)
+            console.log('chartdatawarningNumberArray: ' + this.chartData.datasets.data)
 
             // this.chartData.datasets[0].data = totalWarningNumberArray[0].map(x => x);
             // // console.log(wardWarningArray)

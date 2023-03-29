@@ -89,13 +89,12 @@ export default {
 </template>
 
 <style>
-/* chart {
-    background-color: #c41a1a;
-    background: #FFFFFF;
-    border: none;
-    border-radius: 2px;
-    box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);
-    width: "640";
-    height: "480";
-} */
+chart {
+
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+
+
+}
 </style>
