@@ -155,7 +155,7 @@
             let patientBox = document.createElement('div')
             patientBox.classList.add("patientBox");
             patientBox.setAttribute("id",patientIndex);
-            let headerText = document.createElement("h1");
+            let headerText = document.createElement("h3");
 
             let patientData = getPatientInformation(patientID);
             headerText.innerHTML = patientData['First Name'] + " " + patientData['Last Name'] + ", " + patientData['Age'];
@@ -167,11 +167,16 @@
             alertBox.classList.add("alertBox");
             let alertIndex = 0;
             alertList.forEach((alert) =>{
+                let ruleInfo = getRuleInformation(alert.Regel);
                 let singleAlertBox = document.createElement('div');
                 singleAlertBox.classList.add("singleAlert");
+                let severityClassName = "sev" + ruleInfo.severityLevel.toString();
+                singleAlertBox.classList.add(severityClassName);
                 singleAlertBox.setAttribute("id",alertIndex);
                 let singleAlertText = document.createElement('p');
-                singleAlertText.innerHTML = "Regel " + alert.Regel + ": " + getRuleInformation(alert.Regel);
+
+                // Remake getRuleInformation to give alert name and severity level
+                singleAlertText.innerHTML = "Regel " + alert.Regel + ": " + ruleInfo.warningName;
                 singleAlertBox.appendChild(singleAlertText);
                 alertBox.appendChild(singleAlertBox);
 
@@ -291,7 +296,7 @@
             <p>Backa</p>
         </div>
         <div class="headerBox">
-            <p class="listHeader">{{ selectionStateVal.substr(2,selectionStateVal.length) }}</p>
+            <p class="listHeader">Kategori: {{ selectionStateVal.substr(2,selectionStateVal.length) }}</p>
         </div>
         <div class="headerBox">
             <p class="listHeader">Varningsinformation</p>
@@ -396,20 +401,21 @@
         width: 100%;
         height: auto;
     }
-    .patientBox h1 {
+    .patientBox h3 {
         width: 98%;
-        height: 80px;
+        height: 35px;
+        /* height: 80px; */
         background-color: var(--buttonColor);
         border-radius: var(--buttonBorderRadius);
         cursor: pointer;
-        padding: 10px;
+        padding: 3px;
     }
 
-    .patientBox h1:hover {
+    .patientBox h3:hover {
         background-color: var(--buttonColorHover);
     }
 
-    .patientBox h1.selected {
+    .patientBox h3.selected {
         background-color: var(--buttonSelected);
         border: var(--generalBorders);
     }
@@ -443,6 +449,22 @@
 
     .singleAlert:hover {
         background-color: var(--buttonColorHover);
+    }
+
+    .singleAlert.sev1 {
+        border-right: 10px var(--severity1) solid;
+    }
+    .singleAlert.sev2 {
+        border-right: 10px var(--severity2) solid;
+    }
+    .singleAlert.sev3 {
+        border-right: 10px var(--severity3) solid;
+    }
+    .singleAlert.sev4 {
+        border-right: 10px var(--severity4) solid;
+    }
+    .singleAlert.sev5 {
+        border-right: 10px var(--severity5) solid;
     }
 
     .singleAlert.selected {

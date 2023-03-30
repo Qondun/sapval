@@ -39,8 +39,9 @@ const xxxWarning = ref(warningNumberArray);
   <!-- OVERVIEW PAGE -->
   <div v-if="layoutState == 0" id="overviewGrid">
     <header class="overviewGridItem">
-      <MiniMenu v-model="layoutState" />
       <WardOverviewChart />
+      <WarningValueOverviewChart ref="mywarnings" />
+      <MiniMenu v-model="layoutState" />
     </header>
 
     <main class="overviewGridItem">
@@ -51,9 +52,7 @@ const xxxWarning = ref(warningNumberArray);
     </main>
 
     <div id="dynamicBottom" class="overviewGridItem">
-      <!-- <TheWelcome v-if="dynamicBotState == 0" @clicked="increment" :count="state.count"/> -->
-      <WarningValueOverviewChart v-if="dynamicBotState == 0" ref="mywarnings" />
-
+      <TheWelcome v-if="dynamicBotState == 0" @clicked="increment" :count="state.count"/>
       <RuleCategories v-else-if="dynamicBotState == 1" v-model:layoutState="layoutState"
         v-model:selectionPageState=selectionPageState v-model:selectionStateVal=selectionStateVal />
       <div v-else-if="dynamicBotState == 2" class="botDiv" style="background-color: green">

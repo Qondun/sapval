@@ -1,6 +1,6 @@
 
 <script>
-import { Bar } from 'vue-chartjs'
+import { Bar, getElementAtEvent } from 'vue-chartjs'
 import { defineStore } from "pinia"
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, BarController } from 'chart.js'
 import wardsdata from '../records/inpatientWards.json';
@@ -35,7 +35,7 @@ export default {
             storeData: warningsStore,
             chartData: warningsStoreRef.getChartData, // This should keep it responsive since its a reference?
             chartOptions: {
-                responsive: true,
+                responsive: false,
                 scales: {
                     x: {
                         stacked: true,
@@ -43,6 +43,11 @@ export default {
                     y: {
                         stacked: true
                     }
+                },
+                onClick: (event, item) => {
+                    console.table(event);
+                    // const idx = this.getElementAtEvent(event)[0]._index;
+                    // console.log(idx);
                 }
             },
 
@@ -71,6 +76,7 @@ export default {
     //components: { BarController }
     persist: true
 };
+
 </script>
 
 <template>
@@ -88,5 +94,10 @@ export default {
     width: "640";
     height: "480";
 } */
+#warning-value-overview-chart {
+    width: 48%;
+    float: left;
+    top: 33px;
+}
 </style>
 

@@ -20,12 +20,12 @@
         <div class="menuItem" :class="{ selectedTab: val==1 }" @click="val=1">
             <p>Kategorier regler</p>
         </div>    
-        <div class="menuItem" :class="{ selectedTab: val==2 }" @click="val=2">
+        <!-- <div class="menuItem" :class="{ selectedTab: val==2 }" @click="val=2">
             <p>Varningar per allvarighetsgrad</p>
         </div>    
         <div class="menuItem" :class="{ selectedTab: val==3 }" @click="val=3">
             <p>Exempel</p>
-        </div>
+        </div> -->
     </div>
 </template>
 <style>
@@ -34,10 +34,10 @@
         flex-flow: row wrap;
         height: 65%;
         width: 30%;
-        justify-content: flex-start;
+        justify-content: flex-end;
         position: absolute;
         bottom: 0;
-        right: 0;
+        right: 10px;
         z-index: 1;
         margin-bottom: -2px;
     }

@@ -33,7 +33,7 @@ export default {
       storeData: wardsStore,
       chartData: wardsStoreRef.getChartData,
       chartOptions: {
-        responsive: true,
+        responsive: false,
         scales: {
           x: {
             stacked: true,
@@ -88,5 +88,10 @@ export default {
     width: "640";
     height: "480";
 } */
+#ward-warning-chart {
+  width: 48%;
+  float: left;
+  top: 33px;
+}
 </style>
 
