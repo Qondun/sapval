@@ -451,25 +451,25 @@
         background-color: var(--buttonColorHover);
     }
 
-    .singleAlert.sev1 {
-        border-right: 10px var(--severity1) solid;
-    }
-    .singleAlert.sev2 {
-        border-right: 10px var(--severity2) solid;
-    }
-    .singleAlert.sev3 {
-        border-right: 10px var(--severity3) solid;
-    }
-    .singleAlert.sev4 {
-        border-right: 10px var(--severity4) solid;
-    }
-    .singleAlert.sev5 {
-        border-right: 10px var(--severity5) solid;
-    }
-
     .singleAlert.selected {
         background-color: var(--buttonSelected);
         border: var(--generalBorders);
+    }
+
+    .sev1, .selected.sev1 {
+        border-right: 10px var(--severity1) solid;
+    }
+    .sev2, .selected.sev2 {
+        border-right: 10px var(--severity2) solid;
+    }
+    .sev3, .selected.sev3 {
+        border-right: 10px var(--severity3) solid;
+    }
+    .sev4, .selected.sev4 {
+        border-right: 10px var(--severity4) solid;
+    }
+    .sev5, .selected.sev5 {
+        border-right: 10px var(--severity5) solid;
     }
 
     #infoDiv, #patientDiv {
