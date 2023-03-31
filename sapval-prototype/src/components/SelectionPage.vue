@@ -170,8 +170,6 @@
                 let ruleInfo = getRuleInformation(alert.Regel);
                 let singleAlertBox = document.createElement('div');
                 singleAlertBox.classList.add("singleAlert");
-                let severityClassName = "sev" + ruleInfo.severityLevel.toString();
-                singleAlertBox.classList.add(severityClassName);
                 singleAlertBox.setAttribute("id",alertIndex);
                 let singleAlertText = document.createElement('p');
 
@@ -179,6 +177,12 @@
                 singleAlertText.innerHTML = "Regel " + alert.Regel + ": " + ruleInfo.warningName;
                 singleAlertBox.appendChild(singleAlertText);
                 alertBox.appendChild(singleAlertBox);
+
+                let severityClassName = "sev" + ruleInfo.severityLevel.toString();
+                let severitLevelBox = document.createElement('div');
+                severitLevelBox.classList.add("severityBox");
+                severitLevelBox.classList.add(severityClassName);
+                singleAlertBox.appendChild(severitLevelBox);
 
                 /* Send information/id for alert */
                 singleAlertBox.addEventListener("click", function() {
@@ -442,9 +446,16 @@
         height: auto;
         background-color: var(--buttonColor);
         border-radius: var(--buttonBorderRadius);
+        /* border-top-right-radius: 0;
+        border-bottom-right-radius: 0; */
         cursor: pointer;
         padding: 10px;
         margin-top: 5px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .singleAlert p {
+        width: 90%;
     }
 
     .singleAlert:hover {
@@ -454,22 +465,34 @@
     .singleAlert.selected {
         background-color: var(--buttonSelected);
         border: var(--generalBorders);
+        padding: 9px;
     }
 
-    .sev1, .selected.sev1 {
-        border-right: 10px var(--severity1) solid;
+    .severityBox {
+        /* height: 100%; */
+        width: 13px;
+        float: right;
+        margin: -10px;
+        position: relative;
+        border-radius: inherit;
+        border: 1px black solid;
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
     }
-    .sev2, .selected.sev2 {
-        border-right: 10px var(--severity2) solid;
+    .sev1 {
+        background-color: var(--severity1);
     }
-    .sev3, .selected.sev3 {
-        border-right: 10px var(--severity3) solid;
+    .sev2 {
+        background-color: var(--severity2);
     }
-    .sev4, .selected.sev4 {
-        border-right: 10px var(--severity4) solid;
+    .sev3 {
+        background-color: var(--severity3);
     }
-    .sev5, .selected.sev5 {
-        border-right: 10px var(--severity5) solid;
+    .sev4 {
+        background-color: var(--severity4);
+    }
+    .sev5 {
+        background-color: var(--severity5);
     }
 
     #infoDiv, #patientDiv {
