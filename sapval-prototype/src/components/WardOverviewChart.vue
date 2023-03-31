@@ -9,7 +9,7 @@ import warningList from '../records/warningList.json';
 import patientInformation from '../records/patientInformation.json';
 import { storeToRefs } from 'pinia'
 import { watch } from 'vue'
-import { useWarningsByWardStore } from '../stores/warningsByWard'
+import { useWarningsByWardStore } from '../stores/warningsByWard';
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 

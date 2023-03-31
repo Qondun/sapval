@@ -12,9 +12,36 @@ export const useOverallWarningsStore = defineStore('overallWarnings', {
             labels: [],
             datasets: [
                 {
-                    labels: ['1', '2', '3', '4', '5'],
-                    data: 0,
+                    label: '1',
+                    data: Int16Array,
                     backgroundColor: '#fff2cc',
+                    borderColor: 'rgb(201, 203, 207)',
+                    borderWidth: 1
+                }, {
+                    label: '2',
+                    data: Int16Array,
+                    backgroundColor: '#93c47d',
+                    borderColor: 'rgb(201, 203, 207)',
+                    borderWidth: 1
+                }, {
+                    label: '3',
+                    data: Int16Array,
+                    backgroundColor: '#cf4c22',
+                    borderColor: 'rgb(201, 203, 207)',
+                    borderWidth: 1
+
+
+                }, {
+                    label: '4',
+                    data: Int16Array,
+                    backgroundColor: '#741b47',
+                    borderColor: 'rgb(201, 203, 207)',
+                    borderWidth: 1
+
+                }, {
+                    label: '5',
+                    data: Int16Array,
+                    backgroundColor: '#190263',
                     borderColor: 'rgb(201, 203, 207)',
                     borderWidth: 1
 
@@ -67,18 +94,13 @@ export const useOverallWarningsStore = defineStore('overallWarnings', {
             }
             console.log('warningNumberArray' + totalWarningNumberArray)
 
-            // Checking if everything works, delete this right after you see that everything works
-            // console.log(this.ward);  
-            //const wardData = useWarningsByWardStore();
 
-            //const warningsStore = useOverallWarningsStore()
-            //  wardData.initialize()
-            //const wardDataRef = storeToRefs(useWarningsByWardStore())
-            //console.log("allocated warningsStore for allWarningChart")
+            this.chartData.datasets[0].data = totalWarningNumberArray[0]
+            this.chartData.datasets[1].data = totalWarningNumberArray[1]
+            this.chartData.datasets[2].data = totalWarningNumberArray[2]
+            this.chartData.datasets[3].data = totalWarningNumberArray[3]
+            this.chartData.datasets[4].data = totalWarningNumberArray[4]
 
-            //let warningNumberArray = wardData.getSumWarningArray;
-
-            this.chartData.datasets[0].data = totalWarningNumberArray
 
             console.log('chartdatawarningNumberArray: ' + this.chartData.datasets.data)
 

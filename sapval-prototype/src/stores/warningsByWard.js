@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
 import wardsdata from '../records/inpatientWards.json';
 import patientWarnings from '../records/PatientWarnings.json';
 import warningList from '../records/warningList.json';
@@ -10,40 +10,64 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
         chartData: {
             labels: [],
             datasets: [
+
                 {
                     label: '3',
                     data: [],
                     backgroundColor: '#cf4c22',
                     borderColor: 'rgb(201, 203, 207)',
                     borderWidth: 1
-
-                }, {
-                    label: '2',
+                },
+                {
+                    label: '4',
                     data: [],
-                    backgroundColor: '#93c47d',
+                    backgroundColor: '#741b47',
                     borderColor: 'rgb(201, 203, 207)',
                     borderWidth: 1
-                }, {
-                    label: '1',
+                },
+                {
+                    label: '5',
+                    data: [],
+                    backgroundColor: '#190263',
+                    borderColor: 'rgb(201, 203, 207)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'd1',
                     data: [],
                     backgroundColor: '#fff2cc',
                     borderColor: 'rgb(201, 203, 207)',
                     borderWidth: 1
                 }, {
-                    label: '4',
+                    label: 'd2',
+                    data: [],
+                    backgroundColor: '#93c47d',
+                    borderColor: 'rgb(201, 203, 207)',
+                    borderWidth: 1
+                }, {
+                    label: 'd3',
+                    data: [],
+                    backgroundColor: '#cf4c22',
+                    borderColor: 'rgb(201, 203, 207)',
+                    borderWidth: 1
+
+
+                }, {
+                    label: 'd4',
                     data: [],
                     backgroundColor: '#741b47',
                     borderColor: 'rgb(201, 203, 207)',
                     borderWidth: 1
 
                 }, {
-                    label: '5',
+                    label: 'd5',
                     data: [],
                     backgroundColor: '#190263',
                     borderColor: 'rgb(201, 203, 207)',
                     borderWidth: 1
 
                 }]
+
         },
         // Do I need this in both places? 
         ward: wardsdata.wardsInfo,
@@ -79,7 +103,7 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
                 wardNameList.push(item.Address)
             })
 
-            let wardWarningArray = [...Array(5)].map(e => Array(len).fill(0));
+            let wardWarningArray = [...Array(10)].map(e => Array(len).fill(1));
 
             //list, in order of alerts, value saved is severity level
             this.warnings.map((item) => {
@@ -105,7 +129,7 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
                 }
 
                 sumWarningArray[severityLevel] += 1;
-                console.log('warningarray from byward' + sumWarningArray)
+                //      console.log('warningarray from byward' + sumWarningArray)
 
                 //console.log(`regel: ${obj.Regel} sev level: ${severityLevel}`)
                 let personNumber = obj.PersonID;
@@ -129,25 +153,39 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
             }
 
             // this.chartData.datasets[1].data.push(parseInt(wardWarningArray[0]))
-            this.chartData.datasets[2].data = wardWarningArray[0].map(x => -x);
+            this.chartData.datasets[0].data = wardWarningArray[2].map(x => x);
             // console.log(wardWarningArray)
             //console.log(this.chartData.datasets[0])
 
-            this.chartData.datasets[1].data = wardWarningArray[1].map(x => -x);
-            //console.log(wardWarningArray)
-            //console.log(this.chartData.datasets[1])
 
-            this.chartData.datasets[0].data = wardWarningArray[2].map(x => -x);
-            //console.log(wardWarningArray)
-            //console.log(this.chartData.datasets[2])
-
-            this.chartData.datasets[3].data = wardWarningArray[3].map(x => x);
+            this.chartData.datasets[1].data = wardWarningArray[3].map(x => x);
             //console.log(wardWarningArray)
             //console.log(this.chartData.datasets[3])
 
-            this.chartData.datasets[4].data = wardWarningArray[4].map(x => x);
+            this.chartData.datasets[2].data = wardWarningArray[4].map(x => x);
             //console.log(wardWarningArray)
             //console.log(this.chartData.datasets[4])
+
+            this.chartData.datasets[3].data = wardWarningArray[5].map(x => -x);
+            //console.log(wardWarningArray)
+            //console.log(this.chartData.datasets[1])
+
+            this.chartData.datasets[4].data = wardWarningArray[6].map(x => -x);
+            //console.log(wardWarningArray)
+            //console.log(this.chartData.datasets[2])
+
+            this.chartData.datasets[5].data = wardWarningArray[7].map(x => -x);
+            //console.log(wardWarningArray)
+            //console.log(this.chartData.datasets[1])
+
+            this.chartData.datasets[6].data = wardWarningArray[8].map(x => -x);
+            //console.log(wardWarningArray)
+            //console.log(this.chartData.datasets[2])
+
+            this.chartData.datasets[7].data = wardWarningArray[9].map(x => -x);
+            //console.log(wardWarningArray)
+            //console.log(this.chartData.datasets[1])
+
 
         },
         //TODO: need to move location array so the index can be sent to this function (it is above)

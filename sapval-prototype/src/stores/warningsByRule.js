@@ -11,6 +11,19 @@ export const useWarningsByRuleStore = defineStore('warnings', {
             labels: [],
             datasets: [
                 {
+                    label: '3',
+                    data: [],
+                    backgroundColor: '#cf4c22'
+                }, {
+                    label: '4',
+                    data: [],
+                    backgroundColor: '#741b47'
+                }, {
+                    label: '5',
+                    data: [],
+                    backgroundColor: '#190263'
+                },
+                {
                     label: '1',
                     data: [],
                     backgroundColor: '#fff2cc',
@@ -106,7 +119,7 @@ export const useWarningsByRuleStore = defineStore('warnings', {
             // required. So I need to create a function that  moves things into the array accordingly. 
 
 
-            let warningNumberArray = [...Array(5)].map(e => Array(numRulesLength).fill(0));
+            let warningNumberArray = [...Array(10)].map(e => Array(numRulesLength).fill(1));
             // console.log("Warning Number Array", warningNumberArray)
             for (let i = 0; i < patientWarnings.WarningInfo.length; i++) {
                 let obj = patientWarnings.WarningInfo[i];
@@ -140,23 +153,35 @@ export const useWarningsByRuleStore = defineStore('warnings', {
 
 
 
-            this.chartData.datasets[0].data = warningNumberArray[0].map(x => x);
+            this.chartData.datasets[0].data = warningNumberArray[2].map(x => x);
             // console.log(wardWarningArray)
             //console.log(this.chartData.datasets[0])
 
-            this.chartData.datasets[1].data = warningNumberArray[1].map(x => x);
+            this.chartData.datasets[1].data = warningNumberArray[3].map(x => x);
             //console.log(wardWarningArray)
             //console.log(this.chartData.datasets[1])
 
-            this.chartData.datasets[2].data = warningNumberArray[2].map(x => x);
+            this.chartData.datasets[2].data = warningNumberArray[4].map(x => x);
             //console.log(wardWarningArray)
             //console.log(this.chartData.datasets[2])
 
-            this.chartData.datasets[3].data = warningNumberArray[3].map(x => x);
+            this.chartData.datasets[3].data = warningNumberArray[5].map(x => -x);
             //console.log(wardWarningArray)
             //console.log(this.chartData.datasets[3])
 
-            this.chartData.datasets[4].data = warningNumberArray[4].map(x => x);
+            this.chartData.datasets[4].data = warningNumberArray[6].map(x => -x);
+            //console.log(wardWarningArray)
+            //console.log(this.chartData.datasets[4])
+
+            this.chartData.datasets[5].data = warningNumberArray[7].map(x => -x);
+            //console.log(wardWarningArray)
+            //console.log(this.chartData.datasets[2])
+
+            this.chartData.datasets[6].data = warningNumberArray[8].map(x => -x);
+            //console.log(wardWarningArray)
+            //console.log(this.chartData.datasets[3])
+
+            this.chartData.datasets[7].data = warningNumberArray[9].map(x => -x);
             //console.log(wardWarningArray)
             //console.log(this.chartData.datasets[4])
         },

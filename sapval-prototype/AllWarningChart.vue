@@ -56,14 +56,14 @@ export default {
         }
 
     },
-    options: {
-        indexAxis: 'y',
-        plugins: {
-            legend: {
-                display: false
-            },
-        }
-    },
+    //  options: {
+    //      indexAxis: 'y',
+    //      plugins: {
+    //          legend: {
+    //              display: false
+    //          },
+    //      }
+    //  },
     computed: {
         // a computed getter
         warningsChartData() {
