@@ -39,9 +39,16 @@ export default {
                 scales: {
                     x: {
                         stacked: true,
+
                     },
                     y: {
-                        stacked: true
+                        stacked: true,
+                        max: 200,
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false,
                     }
                 },
                 onClick: (event, item) => {

@@ -39,9 +39,16 @@ export default {
             stacked: true,
           },
           y: {
-            stacked: true
+            stacked: true,
+            max: 48,
+            suggestedMax: 46,
           }
-        }
+        },
+        plugins: {
+          legend: {
+            display: false,
+          }
+        },
       },
 
       ward: wardsdata.wardsInfo,
