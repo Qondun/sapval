@@ -88,7 +88,7 @@ export default {
 
 <template>
     <Bar ref="theChart" id="warning-value-overview-chart" :options="chartOptionsComputed" :data="chartData" />
-    <button @click="this.storeData.decreaseWarningNumberArray(3, 2)" type="button">Test</button>
+    <!-- <button @click="this.storeData.decreaseWarningNumberArray(3, 2)" type="button">Test</button> -->
 </template>
 
 <style>

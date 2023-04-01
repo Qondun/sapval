@@ -1,5 +1,6 @@
 <script setup>
-    import { computed, onMounted } from 'vue';
+    import { isInDestructureAssignment } from '@vue/compiler-core';
+import { computed, onMounted } from 'vue';
     import { getCategoryData, getRuleData, getPatientInformation, getRuleInformation, numberForRule } from '../records/dataFunctions';
 
     let filterRange = []; // [Lower bound, Upper bound]
@@ -179,10 +180,10 @@
                 alertBox.appendChild(singleAlertBox);
 
                 let severityClassName = "sev" + ruleInfo.severityLevel.toString();
-                let severitLevelBox = document.createElement('div');
-                severitLevelBox.classList.add("severityBox");
-                severitLevelBox.classList.add(severityClassName);
-                singleAlertBox.appendChild(severitLevelBox);
+                let severityLevelBox = document.createElement('div');
+                severityLevelBox.classList.add("severityBox");
+                severityLevelBox.classList.add(severityClassName);
+                singleAlertBox.appendChild(severityLevelBox);
 
                 /* Send information/id for alert */
                 singleAlertBox.addEventListener("click", function() {
@@ -226,7 +227,7 @@
                 if(!alreadySelected){
                     patientBox.childNodes.forEach((item) =>{
                         item.classList.add("selected");
-                        updatePatientDiv(patientData);
+                        updatePatientDiv(patientData, patientBox.id);
                     });
                 }
             });
@@ -254,21 +255,77 @@
     function updateInfoDiv(patientIndex, alertIndex) {
         cleanInfoDiv();
         let infoDiv = document.getElementById("infoDiv");
+        let alertInfo = filteredList[patientIndex][alertIndex];
+        let ruleInfo = getRuleInformation(alertInfo.Regel);
 
-        let alertText = document.createElement("p");
-        alertText.innerHTML = "Här visas information för regel " + filteredList[patientIndex][alertIndex].Regel;
+        let alertText = document.createElement("h1");
+        alertText.innerHTML = "Regel " + alertInfo.Regel;
         infoDiv.appendChild(alertText);
 
-        let alert = filteredList[patientIndex][alertIndex];
+        let alertInfoText = document.createElement("p");
+        alertInfoText.innerHTML = ruleInfo.warningName;
+        infoDiv.appendChild(alertInfoText);
+        
+        let severityLevelBox = document.createElement("div");
+        severityLevelBox.classList.add("severityLevelBox");
+        let severityClassName = "sev" + ruleInfo.severityLevel.toString();
+        severityLevelBox.classList.add(severityClassName);
+        let severityLevelText = document.createElement("p");
+        severityLevelText.innerHTML = ruleInfo.severityLevel;
+        severityLevelBox.appendChild(severityLevelText);
+        infoDiv.appendChild(severityLevelBox);
 
-        for(var info in alert) {
-            let infoValue = alert[info];
-            if(infoValue){
-                let alertInfo = document.createElement("p");
-                alertInfo.innerHTML = info + ": " + infoValue;
-                infoDiv.appendChild(alertInfo);
-            }
+        // Patient values
+        let mainInfoBox = document.createElement("div");
+        mainInfoBox.setAttribute("id","mainInfoBox");
+        let patientValueBox = document.createElement("div");
+        patientValueBox.setAttribute("id","patientValueBox");
+        patientValueBox.classList.add("infoBoxes");
+
+        mainInfoBox.appendChild(createDividingLine("Patientvärden"));
+
+        let patientValueArray = ["GFR", "K", "Ca", "Puls"];
+        patientValueArray.forEach((info) =>{
+            let patientInfo = document.createElement("p");
+            patientInfo.innerHTML = info + ": " + alertInfo[info];
+            patientValueBox.appendChild(patientInfo);
+        });
+        mainInfoBox.appendChild(patientValueBox);
+
+        // Drug information
+        mainInfoBox.appendChild(createDividingLine("Läkemedel"));
+
+        let drugInfoBox = document.createElement("div");
+        drugInfoBox.setAttribute("id","drugInfoBox");
+        drugInfoBox.classList.add("infoBoxes");   
+        let drugList = document.createElement("ul");
+        
+        alertInfo["RiskLM"][0].split(", ").forEach((drug) =>{
+            let singleDrug = document.createElement("li");
+            singleDrug.innerHTML = drug;
+            drugList.appendChild(singleDrug);
+        })
+        drugInfoBox.appendChild(drugList);
+        mainInfoBox.appendChild(drugInfoBox);
+
+        // Dosing information
+        mainInfoBox.appendChild(createDividingLine("Dosering"));
+
+        let dosingInfoBox = document.createElement("div");
+        dosingInfoBox.setAttribute("id","dosingInfoBox");
+        dosingInfoBox.classList.add("infoBoxes");   
+        let dosingText = document.createElement("p");
+        let dosingTextValue = alertInfo["Dosering"];
+        if(dosingTextValue) {
+            dosingText.innerHTML = dosingTextValue;
+        } else {
+            dosingText.innerHTML = "Ingen doseringsinformation."
         }
+        
+        dosingInfoBox.appendChild(dosingText);
+        mainInfoBox.appendChild(dosingInfoBox);
+
+        infoDiv.appendChild(mainInfoBox);
     }
 
     function cleanPatientDiv() {
@@ -278,18 +335,48 @@
         }
     }
 
-    function updatePatientDiv(patientData) {
+    function updatePatientDiv(patientData, patientIndex) {
         cleanPatientDiv();
         let patientDiv = document.getElementById("patientDiv");
+        
 
-        for(var info in patientData) {
-            let infoValue = patientData[info]
-            if(infoValue){
-                let patientInfo = document.createElement("p");
-                patientInfo.innerHTML = info + ": " + infoValue;
-                patientDiv.appendChild(patientInfo);
-            }
-        }
+        let alertText = document.createElement("h1");
+        alertText.innerHTML = patientData["First Name"] + " " + patientData["Last Name"] + ", " + patientData["Birthday"] + "-" + patientData["RandomFourDigitCode"];
+        patientDiv.appendChild(alertText);
+
+        // Ward information for patient
+        let wardInfoBox = document.createElement("div");
+        wardInfoBox.classList.add("infoBoxes");
+        patientDiv.appendChild(createDividingLine("Avdelningsinformation"));
+        let wardInfo = document.createElement("p");
+        wardInfo.innerHTML = "Avdelning: " + patientData["OA enhet"];
+        wardInfoBox.appendChild(wardInfo);
+
+        let patientInfo = document.createElement("p");
+        patientInfo.innerHTML = "Typ av verksamhet: " + patientData["MA verksamhet"];
+        wardInfoBox.appendChild(patientInfo);
+        patientDiv.appendChild(wardInfoBox);
+
+        // Comments for patient
+        
+        let commentBox = document.createElement("div");
+        commentBox.classList.add("infoBoxes");
+        patientDiv.appendChild(createDividingLine("Tidigare kommentarer"));
+        filteredList[patientIndex].forEach((alert) =>{
+            let comment = document.createElement("p");
+            comment.innerHTML = alert["Kommentar"];
+            commentBox.appendChild(comment);
+        });
+        patientDiv.appendChild(commentBox);
+
+    }
+
+    function createDividingLine(label) {
+        let fieldset = document.createElement("fieldset");
+        let legend = document.createElement("legend");
+        legend.innerHTML = label
+        fieldset.appendChild(legend);
+        return fieldset;
     }
 </script>
 
@@ -300,7 +387,7 @@
             <p>Backa</p>
         </div>
         <div class="headerBox">
-            <p class="listHeader">Kategori: {{ selectionStateVal.substr(2,selectionStateVal.length) }}</p>
+            <p v-if="selectionPageState=='Category'" class="listHeader">Kategori: {{ selectionStateVal.substr(2,selectionStateVal.length) }}</p>
         </div>
         <div class="headerBox">
             <p class="listHeader">Varningsinformation</p>
@@ -487,12 +574,15 @@
     }
     .sev3 {
         background-color: var(--severity3);
+        color: white;
     }
     .sev4 {
         background-color: var(--severity4);
+        color: white;
     }
     .sev5 {
         background-color: var(--severity5);
+        color: white;
     }
 
     #infoDiv, #patientDiv {
@@ -501,5 +591,53 @@
 
     #infoDiv p, #patientDiv p {
         margin-bottom: 10px;
+    }
+
+    .severityLevelBox {
+        width: 40px;
+        height: 40px;
+        border: var(--generalBorders);
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        text-align: center;
+        font-size: calc(1vw + 1vh);
+        line-height: 40px;
+    }
+    .severityLevelBox p {
+        margin-top: -2px;
+    }
+
+    .infoBoxes {
+        border-bottom: 2px solid;
+        border-color: #aeaeae;
+        padding: 10px;
+    }
+
+    #patientValueBox {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        margin-top: -10px;
+    }
+
+    #drugInfoBox {
+    }
+    #drugInfoBox p {
+        font-weight: bold;
+    }
+    #drugInfoBox ul {
+        margin-top: -10px;
+        margin-left: -15px;
+    }
+    
+    fieldset {
+        border: 2px solid transparent; 
+        border-top-color: #aeaeae; 
+        box-sizing: border-box; 
+    }
+    legend {
+        font-size: calc(0.6vw + 0.6vh);
+        color: #333;
     }
 </style>
