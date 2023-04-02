@@ -1,25 +1,37 @@
 <script setup>
     import { computed } from 'vue'
-    const props = defineProps({ modelValue: Number });
-    const emit = defineEmits(['update:modelValue']);
+    const props = defineProps({ dynamicBotState: Number, selectionPageState: String });
+    const emit = defineEmits(['update:dynamicBotState', 'update:selectionPageState']);
 
-    const val = computed({
+    const state = computed({
         get() {
-            return props.modelValue;
+            return props.dynamicBotState;
         },
-        set(newVal) {
-            emit('update:modelValue', parseInt(newVal));
+        set(newState) {
+            emit('update:dynamicBotState', parseInt(newState));
+        },
+    });
+    const pageState = computed({
+        get() {
+            return props.selectionPageState;
+        },
+        set(newState) {
+            emit('update:selectionPageState', newState);
         },
     });
 </script>
 <template>
     <div id="menuBox">
-        <div class="menuItem" :class="{ selectedTab: val==0 }" @click="val=0">
-            <p>Översikt regler</p>
+        <div class="menuItem" :class="{ selectedTab: pageState=='Ward' }" @click="pageState='Ward'">
+            <p>Avdelningar</p>
+        </div> 
+        <div class="menuItem" :class="{ selectedTab: pageState=='Category' }" @click="pageState='Category'">
+            <p>Kategorier</p>
+        </div> 
+        <div class="menuItem" :class="{ selectedTab: pageState=='Rule' }" @click="pageState='Rule' ">
+            <p>Regler</p>
         </div>
-        <div class="menuItem" :class="{ selectedTab: val==1 }" @click="val=1">
-            <p>Kategorier regler</p>
-        </div>    
+           
         <!-- <div class="menuItem" :class="{ selectedTab: val==2 }" @click="val=2">
             <p>Varningar per allvarighetsgrad</p>
         </div>    

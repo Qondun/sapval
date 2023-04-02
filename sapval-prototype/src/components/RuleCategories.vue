@@ -1,5 +1,7 @@
 <script setup>
     import { computed } from 'vue';
+    import { getCategoryData } from '../records/dataFunctions';
+    import { wardsInfo } from '../records/wards.json'
     const props = defineProps({ 
         layoutState: Number,
         selectionPageState: String,
@@ -33,41 +35,71 @@
             emit('update:selectionStateVal', (newVal));
         },
     });
+
 </script>
 
 <template>
-    <div id="categoryGrid">
-        <div class="categoryDiv" @click="layoutState=3, selectionPageState='Category', selectionStateVal='A. Riskprofil' ">
-            <p>Riskprofil</p>
+    <div v-if="selectionPageState=='Ward'" id="wardGrid">
+        <div v-for="ward in wardsInfo" :key="ward" class="wardDiv gridButton">
+            <p>Avdelning {{ ward.Avdelning }}</p>
         </div>
-        <div class="categoryDiv" @click="layoutState=3, selectionPageState='Category', selectionStateVal='B. Interaktioner'">
-            <p>Interaktioner</p>
+    </div>
+    <div v-else-if="selectionPageState=='Category'" id="categoryGrid">
+        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal='A. Riskprofil' ">
+            <p>Riskprofil {{ getCategoryData([1,9])[1].reduce((count, current) => count + current.length, 0) }}</p>
         </div>
-        <div class="categoryDiv" @click="layoutState=3, selectionPageState='Category', selectionStateVal='C. Njurfunktion'">
-            <p>Njurfunktion</p>
+        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal='B. Interaktioner'">
+            <p>Interaktioner {{ getCategoryData([10,15])[1].reduce((count, current) => count + current.length, 0) }}</p>
         </div>
-        <div class="categoryDiv" @click="layoutState=3, selectionPageState='Category', selectionStateVal='D. Läkemedel och äldre'">
-            <p>Läkemedel och äldre</p>
+        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal='C. Njurfunktion'">
+            <p>Njurfunktion {{ getCategoryData([16,33])[1].length }}</p>
         </div>
-        <div class="categoryDiv" @click="layoutState=3, selectionPageState='Category', selectionStateVal='E. Läkemedel och labvärden'">
-            <p>Läkemedel och labvärden</p>
+        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal='D. Läkemedel och äldre'">
+            <p>Läkemedel och äldre {{ getCategoryData([34,30])[1].reduce((count, current) => count + current.length, 0) }}</p>
         </div>
-        <div class="categoryDiv" @click="layoutState=3, selectionPageState='Category', selectionStateVal='F. Läkemedel och diagnos'">
-            <p>Läkemedel och diagnos</p>
+        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal='E. Läkemedel och labvärden'">
+            <p>Läkemedel och labvärden {{ getCategoryData([41,49])[1].reduce((count, current) => count + current.length, 0) }}</p>
         </div>
-        <div class="categoryDiv" @click="layoutState=3, selectionPageState='Category', selectionStateVal='G. Läkemedel och status'">
-            <p>Läkemedel och status</p>
+        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal='F. Läkemedel och diagnos'">
+            <p>Läkemedel och diagnos {{ getCategoryData([50,51])[1].length }}</p>
         </div>
-        <div class="categoryDiv" @click="layoutState=3, selectionPageState='Category', selectionStateVal='H. Övriga läkemedelskombinationer'">
-            <p>Övriga läkemedelskombinationer</p>
+        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal='G. Läkemedel och status'">
+            <p>Läkemedel och status {{ getCategoryData([52,55])[1].length }}</p>
         </div>
-        <div class="categoryDiv" @click="layoutState=3, selectionPageState='Category', selectionStateVal='I. Övrigt'">
-            <p>Övrigt</p>
+        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal='H. Övriga läkemedelskombinationer'">
+            <p>Övriga läkemedelskombinationer {{ getCategoryData([56,58])[1].length }}</p>
+        </div>
+        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal='I. Övrigt'">
+            <p>Övrigt {{ getCategoryData([59,63])[1].length }}</p>
+        </div>
+    </div>
+    <div v-else id="ruleGrid">
+        <div v-for="ruleNum in 63" :key="ruleNum" class="ruleDiv gridButton">
+            <p>Regel {{ ruleNum }}</p>
         </div>
     </div>
 </template>
 
 <style>
+.gridButton:hover {
+    background-color: var(--buttonColorHover);
+    cursor: pointer;
+}
+
+#wardGrid {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding: 5px;
+}
+
+.wardDiv {
+    background-color: var(--buttonColor);
+    border-radius: var(--buttonBorderRadius);
+    margin: 5px;
+}
+
 #categoryGrid {
     width: 90%;
     height: 90%;
@@ -83,8 +115,21 @@
     border-radius: var(--buttonBorderRadius);
 }
 
-.categoryDiv:hover {
-    background-color: var(--buttonColorHover);
-    cursor: pointer;
+#ruleGrid {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    padding: 5px;
 }
+
+.ruleDiv {
+    /* width: 9%;
+    height: 45px; */
+    background-color: var(--buttonColor);
+    border-radius: var(--buttonBorderRadius);
+    margin: 5px;
+}
+
+
 </style>

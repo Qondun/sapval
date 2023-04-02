@@ -154,22 +154,14 @@ import { computed, onMounted } from 'vue';
             
             /* Bounding box for each patient */
             let patientBox = document.createElement('div')
-            patientBox.classList.add('patientBox');
-            patientBox.setAttribute('id',patientIndex);
-
+            patientBox.classList.add("patientBox");
+            patientBox.setAttribute("id",patientIndex);
             let alertList = filteredList[patientIndex];
-            
-            let patientHeader = document.createElement('div');
-            patientHeader.classList.add('patientHeader');
             let headerText = document.createElement("h3");
 
             let patientData = getPatientInformation(patientID);
-            headerText.innerHTML = patientData['First Name'] + " " + patientData['Last Name'] + ", " + patientData['Age'];
-            let noAlert = document.createElement("h3");
-            noAlert.innerHTML = "Antal: " + alertList.length;
-            patientHeader.appendChild(headerText);
-            patientHeader.appendChild(noAlert);
-            patientBox.appendChild(patientHeader);
+            headerText.innerHTML = patientData['First Name'] + " " + patientData['Last Name'] + ", " + patientData['Age'] + " Varningar: " + alertList.length;
+            patientBox.appendChild(headerText);
 
             /* Add all alerts into bounding box for alerts */ 
             let alertBox = document.createElement('div');
@@ -214,13 +206,10 @@ import { computed, onMounted } from 'vue';
             });
 
             /* Event listener to header (top part of card) for expanding a patient */
-            patientHeader.addEventListener("click", function() {
-                let alreadySelected = patientBox.children[0].classList.contains("selected");
-                listDiv.childNodes.forEach((patientBox) =>{
-                    patientBox.children[0].classList.remove('selected');
-                    console.log("class: " + patientBox.children[0].classList)
-                    patientBox.children[1].classList.remove('selected');
-                    patientBox.children[1].childNodes.forEach((item) => {
+            headerText.addEventListener("click", function() {
+                let alreadySelected = patientBox.children[1].classList.contains("selected");
+                listDiv.childNodes.forEach((patient) =>{
+                    patient.childNodes.forEach((item) => {
                         item.classList.remove("selected");
                     });
                 });
@@ -506,24 +495,21 @@ import { computed, onMounted } from 'vue';
         width: 100%;
         height: auto;
     }
-    .patientHeader {
+    .patientBox h3 {
         width: 98%;
         height: 35px;
         /* height: 80px; */
         background-color: var(--buttonColor);
         border-radius: var(--buttonBorderRadius);
         cursor: pointer;
-        padding: 4px 6px 4px 6px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
+        padding: 3px;
     }
 
-    .patientHeader:hover {
+    .patientBox h3:hover {
         background-color: var(--buttonColorHover);
     }
 
-    .patientHeader.selected {
+    .patientBox h3.selected {
         background-color: var(--buttonSelected);
         border: var(--generalBorders);
     }
@@ -573,6 +559,7 @@ import { computed, onMounted } from 'vue';
     }
 
     .severityBox {
+        /* height: 100%; */
         width: 13px;
         float: right;
         margin: -10px;
