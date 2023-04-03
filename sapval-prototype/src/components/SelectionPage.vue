@@ -356,10 +356,12 @@ function updatePatientDiv(patientData, patientIndex) {
     cleanPatientDiv();
     let patientDiv = document.getElementById("patientDiv");
 
-
-    // let alertText = document.createElement("h1");
-    // alertText.innerHTML = patientData["First Name"] + " " + patientData["Last Name"] + ", " + patientData["Birthday"] + "-" + patientData["RandomFourDigitCode"];
-    // patientDiv.appendChild(alertText);
+    let alertText = document.createElement("h1");
+    alertText.innerHTML = patientData["First Name"] + " " + patientData["Last Name"];
+    patientDiv.appendChild(alertText);
+    let patientAge = document.createElement("p");
+    patientAge.innerHTML = patientData["Birthday"]+ "-" + patientData["RandomFourDigitCode"] + " (" + patientData["Age"] + " år)";
+    patientDiv.appendChild(patientAge);
 
     // Ward information for patient
     let wardInfoBox = document.createElement("div");
@@ -368,13 +370,6 @@ function updatePatientDiv(patientData, patientIndex) {
     let wardInfo = document.createElement("p");
     wardInfo.innerHTML = "Avdelning: " + patientData["OA enhet"];
     wardInfoBox.appendChild(wardInfo);
-
-    let alertText = document.createElement("h1");
-    alertText.innerHTML = patientData["First Name"] + " " + patientData["Last Name"];
-    patientDiv.appendChild(alertText);
-    let patientAge = document.createElement("p");
-    patientAge.innerHTML = patientData["Birthday"]+ "-" + patientData["RandomFourDigitCode"] + " (" + patientData["Age"] + " år)";
-    patientDiv.appendChild(patientAge);
     let patientInfo = document.createElement("p");
     patientInfo.innerHTML = "Typ av verksamhet: " + patientData["MA verksamhet"];
     wardInfoBox.appendChild(patientInfo);
@@ -391,7 +386,6 @@ function updatePatientDiv(patientData, patientIndex) {
         commentBox.appendChild(comment);
     });
     patientDiv.appendChild(commentBox);
-
 }
 
 function createDividingLine(label) {
