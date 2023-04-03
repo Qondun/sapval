@@ -1,508 +1,624 @@
 {
-"WarningInfo": [
- {
-   "warningNumber": 1,
-   "severityLevel": 4,
-   "warningName": "Låg andningsfrekvens + oxikodon",
-   "relevantInformation": "Är aktuella läkemedel administrerade?",
-   "CentralApotekarenToDo": "Om aktivt ställningstagande finns: släck varningen permanent.",
-   "ruleType": "Riskprofil"
- },
- {
-   "warningNumber": 2,
-   "severityLevel": 3,
-   "warningName": "risk score 3 för blödning AND patienten has PPI",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "",
-   "ruleType": "Riskprofil"
- },
- {
-   "warningNumber": 3,
-   "severityLevel": 2,
-   "warningName": "risk score 3 för antikolinerga effekter AND patient is > 75 år",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "",
-   "ruleType": "Riskprofil"
- },
- {
-   "warningNumber": 4,
-   "severityLevel": 1,
-   "warningName": "risk score 3 för QT-förlängning",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "",
-   "ruleType": "Riskprofil"
- },
- {
-   "warningNumber": 5,
-   "severityLevel": 4,
-   "warningName": "risk score 3 för sedation",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "",
-   "ruleType": "Riskprofil"
- },
- {
-   "warningNumber": 6,
-   "severityLevel": 3,
-   "warningName": "risk score 3 för njurfunktionspåverkan",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "",
-   "ruleType": "Riskprofil"
- },
- {
-   "warningNumber": 7,
-   "severityLevel": 2,
-   "warningName": "risk score 3 för förstoppning AND patienten har läkemedel mot förstoppning",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "",
-   "ruleType": "Riskprofil"
- },
- {
-   "warningNumber": 8,
-   "severityLevel": 1,
-   "warningName": "risk score 3 för ortostatism",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "",
-   "ruleType": "Riskprofil"
- },
- {
-   "warningNumber": 9,
-   "severityLevel": 4,
-   "warningName": "risk score 3 för kramper ",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "",
-   "ruleType": "Riskprofil"
- },
- {
-   "warningNumber": 10,
-   "severityLevel": 3,
-   "warningName": "Ytterligare D-interaktion enligt janusmed",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "Om regel nr. 10 är uppfylld, ange interaktion i kommentarsfält (enligt format ”10: läkemedel x vs läkemedel y”).\nNotera om något av läkemedel som ger upphov till en interaktion är insatt under vårdtiden (10)",
-   "ruleType": "Interaktioner"
- },
- {
-   "warningNumber": 11,
-   "severityLevel": 2,
-   "warningName": "PPI (omeprazol, esomeprazol) + clopidogrel",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "",
-   "ruleType": "Interaktioner"
- },
- {
-   "warningNumber": 12,
-   "severityLevel": 1,
-   "warningName": "Kalium + kaliumsparande diuretika ",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "",
-   "ruleType": "Interaktioner"
- },
- {
-   "warningNumber": 13,
-   "severityLevel": 4,
-   "warningName": "Diltiazem/verapamil + beta blockare",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "",
-   "ruleType": "Interaktioner"
- },
- {
-   "warningNumber": 14,
-   "severityLevel": 3,
-   "warningName": "Kinoloner/tetracykliner + metalljon",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "Är läkemedlena dosseparerade?",
-   "ruleType": "Interaktioner"
- },
- {
-   "warningNumber": 15,
-   "severityLevel": 2,
-   "warningName": "Litium i kombination med NSAID/ACE/diuretika/Aciklovir",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "",
-   "ruleType": "Interaktioner"
- },
- {
-   "warningNumber": 16,
-   "severityLevel": 1,
-   "warningName": "Digoxin         C01AA05        < 70 ml/min",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\nNotera patientens eGFR i kommentar om uppfylld regel.",
-   "ruleType": "Njufunktion"
- },
- {
-   "warningNumber": 17,
-   "severityLevel": 4,
-   "warningName": "Metformin        A10BA02         < 60 ml/min        Dos ≥ 3 g/dag?",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\nNotera patientens eGFR i kommentar om uppfylld regel.",
-   "ruleType": "Njufunktion"
- },
- {
-   "warningNumber": 18,
-   "severityLevel": 3,
-   "warningName": "Ciprofloxacin         J01MA02        < 60 ml/min        Dos ≥ 1500 mg/dag?",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\nNotera patientens eGFR i kommentar om uppfylld regel.",
-   "ruleType": "Njufunktion"
- },
- {
-   "warningNumber": 19,
-   "severityLevel": 2,
-   "warningName": "Metotrexat        L01BA01        < 60 ml/min        Dos ≥ 25 mg/vecka?",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\nNotera patientens eGFR i kommentar om uppfylld regel.",
-   "ruleType": "Njufunktion"
- },
- {
-   "warningNumber": 20,
-   "severityLevel": 1,
-   "warningName": "Lixiana        B01AF03        < 50 ml/min        Dos > 30 mg/dag?",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\nNotera patientens eGFR i kommentar om uppfylld regel.",
-   "ruleType": "Njufunktion"
- },
- {
-   "warningNumber": 21,
-   "severityLevel": 4,
-   "warningName": "NSAID        M01A        < 50 ml/min",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\nNotera patientens eGFR i kommentar om uppfylld regel.",
-   "ruleType": "Njufunktion"
- },
- {
-   "warningNumber": 22,
-   "severityLevel": 3,
-   "warningName": "Pipperacillin-tazobactam        J01CR05        < 40 ml/min        Dos> 4g var 8e timme?",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\nNotera patientens eGFR i kommentar om uppfylld regel.",
-   "ruleType": "Njufunktion"
- },
- {
-   "warningNumber": 23,
-   "severityLevel": 2,
-   "warningName": "Bisfosfonat        M05BA        < 35 ml/min        KONTRAINDICERAT",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\nNotera patientens eGFR i kommentar om uppfylld regel.",
-   "ruleType": "Njufunktion"
- },
- {
-   "warningNumber": 24,
-   "severityLevel": 1,
-   "warningName": "Atenolol        C07AB03        < 35 ml/min        Dos > 50 mg/dag?",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\nNotera patientens eGFR i kommentar om uppfylld regel.",
-   "ruleType": "Njufunktion"
- },
- {
-   "warningNumber": 25,
-   "severityLevel": 4,
-   "warningName": "SU-preparat        A10BB        < 30 ml/min        KONTRAINDICERAT*",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\nNotera patientens eGFR i kommentar om uppfylld regel.",
-   "ruleType": "Njufunktion"
- },
- {
-   "warningNumber": 26,
-   "severityLevel": 3,
-   "warningName": "Eliquis        B01AF02        < 30 ml/min        Dos ≥ 10 mg/dag?",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\nNotera patientens eGFR i kommentar om uppfylld regel.",
-   "ruleType": "Njufunktion"
- },
- {
-   "warningNumber": 27,
-   "severityLevel": 2,
-   "warningName": "Pradaxa        B01AE07        < 30 ml/min        KONTRAINDICERAT",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\nNotera patientens eGFR i kommentar om uppfylld regel.",
-   "ruleType": "Njufunktion"
- },
- {
-   "warningNumber": 28,
-   "severityLevel": 1,
-   "warningName": "Spironolakton/Eplerenon        C03DA01, C03DA04        < 30 ml/min        KONTRAINDICERAT",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\nNotera patientens eGFR i kommentar om uppfylld regel.",
-   "ruleType": "Njufunktion"
- },
- {
-   "warningNumber": 29,
-   "severityLevel": 4,
-   "warningName": "Metotrexat        L01BA01        < 30 ml/min        KONTRAINDICERAT",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\nNotera patientens eGFR i kommentar om uppfylld regel.",
-   "ruleType": "Njufunktion"
- },
- {
-   "warningNumber": 30,
-   "severityLevel": 3,
-   "warningName": "Metformin        A10BA02        < 30 ml/min        KONTRAINDICERAT",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\nNotera patientens eGFR i kommentar om uppfylld regel.",
-   "ruleType": "Njufunktion"
- },
- {
-   "warningNumber": 31,
-   "severityLevel": 2,
-   "warningName": "Allopurinol        M04AA01        < 20 ml/min        Dos > 200 mg/dag?",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\nNotera patientens eGFR i kommentar om uppfylld regel.",
-   "ruleType": "Njufunktion"
- },
- {
-   "warningNumber": 32,
-   "severityLevel": 1,
-   "warningName": "Xarelto        B01AF01        < 15 ml/min        KONTRAINDICERAT",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\nNotera patientens eGFR i kommentar om uppfylld regel.",
-   "ruleType": "Njufunktion"
- },
- {
-   "warningNumber": 33,
-   "severityLevel": 4,
-   "warningName": "Eliquis        B01AF02        < 15 ml/min        KONTRAINDICERAT",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\nNotera patientens eGFR i kommentar om uppfylld regel.",
-   "ruleType": "Njufunktion"
- },
- {
-   "warningNumber": 34,
-   "severityLevel": 3,
-   "warningName": "Haloperidol över 2 mg/dag AND patient > 75 år",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "",
-   "ruleType": "Läkemedel och doser"
- },
- {
-   "warningNumber": 35,
-   "severityLevel": 2,
-   "warningName": "Quetiapin över 75 mg/dag AND patient > 75 år",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "",
-   "ruleType": "Läkemedel och doser"
- },
- {
-   "warningNumber": 36,
-   "severityLevel": 1,
-   "warningName": "Risperidon över 1.5 mg/dag AND patient > 75 år",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "",
-   "ruleType": "Läkemedel och doser"
- },
- {
-   "warningNumber": 37,
-   "severityLevel": 4,
-   "warningName": "Oxacepam över 30 mg/dag AND patient > 75 år",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "",
-   "ruleType": "Läkemedel och doser"
- },
- {
-   "warningNumber": 38,
-   "severityLevel": 3,
-   "warningName": "Zopiklon över 7.5 mg/dag AND patient > 75 år",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "",
-   "ruleType": "Läkemedel och doser"
- },
- {
-   "warningNumber": 39,
-   "severityLevel": 2,
-   "warningName": "Citalopram över 20 mg/dag AND patient > 75 år",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "",
-   "ruleType": "Läkemedel och doser"
- },
- {
-   "warningNumber": 40,
-   "severityLevel": 1,
-   "warningName": "Escitalopram över 10 mg/dag AND patient > 75 år",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "",
-   "ruleType": "Läkemedel och doser"
- },
- {
-   "warningNumber": 41,
-   "severityLevel": 4,
-   "warningName": "Patienten har diuretika AND tiazid-diuretika och diagnosen gikt",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\nNotera detta som:\n ”1” om risken inte kvarstod tillfälle 2,\n”2” om risken kvarstod tillfälle 2,\n”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället. ",
-   "ruleType": "Läkemedel och labvärden"
- },
- {
-   "warningNumber": 42,
-   "severityLevel": 3,
-   "warningName": "Patienten har diuretika AND tiazid-diuretika och Lågt kalium (under 3.5) OR Patienten har diuretika AND Loop-diuretika och lågt kalium (under 3.5)",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\nNotera detta som:\n ”1” om risken inte kvarstod tillfälle 2,\n”2” om risken kvarstod tillfälle 2,\n”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället. ",
-   "ruleType": "Läkemedel och labvärden"
- },
- {
-   "warningNumber": 43,
-   "severityLevel": 2,
-   "warningName": "Patienten har diuretika AND Kaliumsparande diuretika och högt kalium (över 5.5)",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\nNotera detta som:\n ”1” om risken inte kvarstod tillfälle 2,\n”2” om risken kvarstod tillfälle 2,\n”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället. ",
-   "ruleType": "Läkemedel och labvärden"
- },
- {
-   "warningNumber": 44,
-   "severityLevel": 1,
-   "warningName": "Patienten har beta-betablockerare AND Icke-selektiva beta-blockare (Propranolol, karvedilol, timolol, andra ögondroppar) och astma",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\nNotera detta som:\n ”1” om risken inte kvarstod tillfälle 2,\n”2” om risken kvarstod tillfälle 2,\n”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället. ",
-   "ruleType": "Läkemedel och labvärden"
- },
- {
-   "warningNumber": 45,
-   "severityLevel": 4,
-   "warningName": "Patienten har beta-betablockerare AND Betablockerare och bradykardi (<50 slag/min)",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\nNotera detta som:\n ”1” om risken inte kvarstod tillfälle 2,\n”2” om risken kvarstod tillfälle 2,\n”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället. ",
-   "ruleType": "Läkemedel och labvärden"
- },
- {
-   "warningNumber": 46,
-   "severityLevel": 3,
-   "warningName": "Patienten har digoxin AND digoxin och bradykardi (<50slag/min)",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\nNotera detta som:\n ”1” om risken inte kvarstod tillfälle 2,\n”2” om risken kvarstod tillfälle 2,\n”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället. ",
-   "ruleType": "Läkemedel och labvärden"
- },
- {
-   "warningNumber": 47,
-   "severityLevel": 2,
-   "warningName": "RAAS-blockas och högt kalium (över 5.5) AND patienten på RAAS-blockerande läkemedel",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\nNotera detta som:\n ”1” om risken inte kvarstod tillfälle 2,\n”2” om risken kvarstod tillfälle 2,\n”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället. ",
-   "ruleType": "Läkemedel och labvärden"
- },
- {
-   "warningNumber": 48,
-   "severityLevel": 1,
-   "warningName": "ACE och ARB i kombination AND patienten på RAAS-blockerande läkemedel",
-   "relevantInformation": "Läkemedel inblandade i varningen",
-   "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\nNotera detta som:\n ”1” om risken inte kvarstod tillfälle 2,\n”2” om risken kvarstod tillfälle 2,\n”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället. ",
-   "ruleType": "Läkemedel och labvärden"
- },
- {
-   "warningNumber": 49,
-   "severityLevel": 4,
-   "warningName": "Intravenös antibiotika/antimykotika AND Stående kortisonbehandling (insatt innan vårdperioden) och iv. Antibiotika (Förändrades kortisonbehandlingen när IV. Antibiotika sattes in.",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\nNotera detta som:\n ”1” om risken inte kvarstod tillfälle 2,\n”2” om risken kvarstod tillfälle 2,\n”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället. ",
-   "ruleType": "Läkemedel och diagnos"
- },
- {
-   "warningNumber": 50,
-   "severityLevel": 3,
-   "warningName": "Intravenös antibiotika/antimykotika AND Immunosuppresiv behandling (ATC: L04A) och iv. Antibiotika. Notera när immunosuppresiv behandling startade ",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\nNotera detta som:\n ”1” om risken inte kvarstod tillfälle 2,\n”2” om risken kvarstod tillfälle 2,\n”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället. ",
-   "ruleType": "Läkemedel och diagnos"
- },
- {
-   "warningNumber": 51,
-   "severityLevel": 2,
-   "warningName": "Intravenös antibiotika/antimykotika AND Hög dos trimetoprim/sulfa och ingen koncentrationsbestämning efter 2 dagar",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\nNotera detta som:\n ”1” om risken inte kvarstod tillfälle 2,\n”2” om risken kvarstod tillfälle 2,\n”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället. ",
-   "ruleType": "Läkemedel och status"
- },
- {
-   "warningNumber": 52,
-   "severityLevel": 1,
-   "warningName": "Intravenös antibiotika/antimykotika AND Voriconazole (ATC: J02C03) utan koncentrationsbestämning",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\nNotera detta som:\n ”1” om risken inte kvarstod tillfälle 2,\n”2” om risken kvarstod tillfälle 2,\n”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället. ",
-   "ruleType": "Läkemedel och status"
- },
- {
-   "warningNumber": 53,
-   "severityLevel": 4,
-   "warningName": "Patienten har kalciumläkemedel AND Kalcium tillägg och högt calciumvärde (över 2.5) ",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\nNotera detta som:\n ”1” om risken inte kvarstod tillfälle 2,\n”2” om risken kvarstod tillfälle 2,\n”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället. ",
-   "ruleType": "Läkemedel och status"
- },
- {
-   "warningNumber": 54,
-   "severityLevel": 3,
-   "warningName": "Patienten har p.o. antidiabetika and eroral antidiabetika och fp-glukos under 3?",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\nNotera detta som:\n ”1” om risken inte kvarstod tillfälle 2,\n”2” om risken kvarstod tillfälle 2,\n”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället. ",
-   "ruleType": "Läkemedel och status"
- },
- {
-   "warningNumber": 55,
-   "severityLevel": 2,
-   "warningName": "Patienten har litium AND Litium behandling och ingen koncentrationsbestämning de senaste 2 månaderna",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\nNotera detta som:\n ”1” om risken inte kvarstod tillfälle 2,\n”2” om risken kvarstod tillfälle 2,\n”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället. ",
-   "ruleType": "Läkemedel och status"
- },
- {
-   "warningNumber": 56,
-   "severityLevel": 1,
-   "warningName": "Patienten har långverkande nitrater AND doseringen är två gånger om dagen",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\nNotera detta som:\n ”1” om risken inte kvarstod tillfälle 2,\n”2” om risken kvarstod tillfälle 2,\n”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället. ",
-   "ruleType": "Övriga Läkemedelskombinationer"
- },
- {
-   "warningNumber": 57,
-   "severityLevel": 4,
-   "warningName": "Patienten har pioglitazon AND pioglitazon och diagnosen hjärtsvikt",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\nNotera detta som:\n ”1” om risken inte kvarstod tillfälle 2,\n”2” om risken kvarstod tillfälle 2,\n”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället. ",
-   "ruleType": "Övriga Läkemedelskombinationer"
- },
- {
-   "warningNumber": 58,
-   "severityLevel": 3,
-   "warningName": "Patienten har warfarin AND warfarin behandling och INR över 4",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\nNotera detta som:\n ”1” om risken inte kvarstod tillfälle 2,\n”2” om risken kvarstod tillfälle 2,\n”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället. ",
-   "ruleType": "Övriga Läkemedelskombinationer"
- },
- {
-   "warningNumber": 59,
-   "severityLevel": 2,
-   "warningName": "Patienten kaliumläkemedel AND Kalium behandling och högt kalium (över 5.5)",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\nNotera detta som:\n ”1” om risken inte kvarstod tillfälle 2,\n”2” om risken kvarstod tillfälle 2,\n”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället. ",
-   "ruleType": "Övrigt"
- },
- {
-   "warningNumber": 60,
-   "severityLevel": 1,
-   "warningName": "Patienten har parenteral nutrition AND Parenteral nutrition och högt kalium (över 5.5)",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\nNotera detta som:\n ”1” om risken inte kvarstod tillfälle 2,\n”2” om risken kvarstod tillfälle 2,\n”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället. ",
-   "ruleType": "Övrigt"
- },
- {
-   "warningNumber": 61,
-   "severityLevel": 4,
-   "warningName": "Patienten har opioider AND Behandling med opioider och en andningsfrekvens på mindre än 15 andetag per minut?",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\nNotera detta som:\n ”1” om risken inte kvarstod tillfälle 2,\n”2” om risken kvarstod tillfälle 2,\n”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället. ",
-   "ruleType": "Övrigt"
- },
- {
-   "warningNumber": 62,
-   "severityLevel": 3,
-   "warningName": "Patienten alfa-blockare eller kalciumblockare AND Alfa-blockare (ATC:C02CA) och ett blodtryck under 110 mmHg OR Patienten alfa-blockare eller kalciumblockare AND Kalciumkanalsblockare (ATC: C08) och ett blodtryck under 110 mmHg",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\nNotera detta som:\n ”1” om risken inte kvarstod tillfälle 2,\n”2” om risken kvarstod tillfälle 2,\n”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället. ",
-   "ruleType": "Övrigt"
- },
- {
-   "warningNumber": 63,
-   "severityLevel": 2,
-   "warningName": "Patienten har Vankomycin AND Behandlas patienten med Vancomycin utan koncentrationsbestämning efter 2 dagar.",
-   "relevantInformation": "",
-   "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\nNotera detta som:\n ”1” om risken inte kvarstod tillfälle 2,\n”2” om risken kvarstod tillfälle 2,\n”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället. ",
-   "ruleType": "Övrigt"
- }
-]
+  "WarningInfo": [
+    {
+      "warningNumber": 1,
+      "severityLevel": 1,
+      "warningName": "Risk score 3 för serotonergt",
+      "relevantInformation": "Är aktuella läkemedel administrerade?",
+      "CentralApotekarenToDo": "Om aktivt ställningstagande finns: släck varningen permanent.",
+      "ruleType": "Riskprofil",
+      "ruleTypeID": 0,
+      "Interaction": 1
+    },
+    {
+      "warningNumber": 2,
+      "severityLevel": 2,
+      "warningName": "Risk score 3 för blödning OCH patienten har inte PPI",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "",
+      "ruleType": "Riskprofil",
+      "ruleTypeID": 0,
+      "Interaction": 1
+    },
+    {
+      "warningNumber": 3,
+      "severityLevel": 1,
+      "warningName": "Risk score 3 för antikolinerga effekter OCH patient is > 75 år",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "",
+      "ruleType": "Riskprofil",
+      "ruleTypeID": 0,
+      "Interaction": 1
+    },
+    {
+      "warningNumber": 4,
+      "severityLevel": 2,
+      "warningName": "Risk score 3 för QT-förlängning",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "",
+      "ruleType": "Riskprofil",
+      "ruleTypeID": 0,
+      "Interaction": 1
+    },
+    {
+      "warningNumber": 5,
+      "severityLevel": 1,
+      "warningName": "Risk score 3 för sedation",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "",
+      "ruleType": "Riskprofil",
+      "ruleTypeID": 0,
+      "Interaction": 1
+    },
+    {
+      "warningNumber": 6,
+      "severityLevel": 1,
+      "warningName": "Risk score 3 för njurfunktionspåverkan",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "",
+      "ruleType": "Riskprofil",
+      "ruleTypeID": 0,
+      "Interaction": 1
+    },
+    {
+      "warningNumber": 7,
+      "severityLevel": 1,
+      "warningName": "Risk score 3 för förstoppning OCH patienten har inget läkemedel mot förstoppning",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "",
+      "ruleType": "Riskprofil",
+      "ruleTypeID": 0,
+      "Interaction": 1
+    },
+    {
+      "warningNumber": 8,
+      "severityLevel": 1,
+      "warningName": "Risk score 3 för ortostatism",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "",
+      "ruleType": "Riskprofil",
+      "ruleTypeID": 0,
+      "Interaction": 1
+    },
+    {
+      "warningNumber": 9,
+      "severityLevel": 1,
+      "warningName": "Risk score 3 för kramper",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "",
+      "ruleType": "Riskprofil",
+      "ruleTypeID": 0,
+      "Interaction": 1
+    },
+    {
+      "warningNumber": 10,
+      "severityLevel": 2,
+      "warningName": "Ytterligare D-interaktion enligt janusmed",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "Om regel nr. 10 är uppfylld, ange interaktion i kommentarsfält (enligt format ”10: läkemedel x vs läkemedel y”).\n Notera om något av läkemedel som ger upphov till en interaktion är insatt under vårdtiden (10)",
+      "ruleType": "Interaktioner",
+      "ruleTypeID": 1,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 11,
+      "severityLevel": 1,
+      "warningName": "PPI (omeprazol, esomeprazol) + clopidogrel",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "",
+      "ruleType": "Interaktioner",
+      "ruleTypeID": 1,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 12,
+      "severityLevel": 2,
+      "warningName": "Kalium + kaliumsparande diuretika",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "",
+      "ruleType": "Interaktioner",
+      "ruleTypeID": 1,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 13,
+      "severityLevel": 3,
+      "warningName": "Diltiazem/verapamil + beta blockare",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "",
+      "ruleType": "Interaktioner",
+      "ruleTypeID": 1,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 14,
+      "severityLevel": 2,
+      "warningName": "Kinoloner/tetracykliner + metalljon",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "Är läkemedlena dosseparerade?",
+      "ruleType": "Interaktioner",
+      "ruleTypeID": 1,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 15,
+      "severityLevel": 2,
+      "warningName": "Litium i kombination med NSAID/ACE/diuretika/Aciklovir",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "",
+      "ruleType": "Interaktioner",
+      "ruleTypeID": 1,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 16,
+      "severityLevel": 1,
+      "warningName": "Digoxin C01AA05 < 70 ml/min",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\n Notera patientens eGFR i kommentar om uppfylld regel.",
+      "ruleType": "Njurfunktion",
+      "ruleTypeID": 2,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 17,
+      "severityLevel": 1,
+      "warningName": "Metformin A10BA02 < 60 ml/min Dos ≥ 3 g/dag?",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\n Notera patientens eGFR i kommentar om uppfylld regel.",
+      "ruleType": "Njurfunktion",
+      "ruleTypeID": 2,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 18,
+      "severityLevel": 1,
+      "warningName": "Ciprofloxacin J01MA02 < 60 ml/min Dos ≥ 1500 mg/dag?",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\n Notera patientens eGFR i kommentar om uppfylld regel.",
+      "ruleType": "Njurfunktion",
+      "ruleTypeID": 2,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 19,
+      "severityLevel": 3,
+      "warningName": "Metotrexat L01BA01 < 60 ml/min Dos ≥ 25 mg/vecka?",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\n Notera patientens eGFR i kommentar om uppfylld regel.",
+      "ruleType": "Njurfunktion",
+      "ruleTypeID": 2,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 20,
+      "severityLevel": 1,
+      "warningName": "Lixiana B01AF03 < 50 ml/min Dos > 30 mg/dag?",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\n Notera patientens eGFR i kommentar om uppfylld regel.",
+      "ruleType": "Njurfunktion",
+      "ruleTypeID": 2,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 21,
+      "severityLevel": 2,
+      "warningName": "NSAID M01A < 50 ml/min",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\n Notera patientens eGFR i kommentar om uppfylld regel.",
+      "ruleType": "Njurfunktion",
+      "ruleTypeID": 2,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 22,
+      "severityLevel": 2,
+      "warningName": "Pipperacillin-tazobactam J01CR05 < 40 ml/min Dos> 4g var 8e timme?",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\n Notera patientens eGFR i kommentar om uppfylld regel.",
+      "ruleType": "Njurfunktion",
+      "ruleTypeID": 2,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 23,
+      "severityLevel": 1,
+      "warningName": "Bisfosfonat M05BA < 35 ml/min KONTRAINDICERAT",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\n Notera patientens eGFR i kommentar om uppfylld regel.",
+      "ruleType": "Njurfunktion",
+      "ruleTypeID": 2,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 24,
+      "severityLevel": 1,
+      "warningName": "Atenolol C07AB03 < 35 ml/min Dos > 50 mg/dag?",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\n Notera patientens eGFR i kommentar om uppfylld regel.",
+      "ruleType": "Njurfunktion",
+      "ruleTypeID": 2,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 25,
+      "severityLevel": 1,
+      "warningName": "SU-preparat A10BB < 30 ml/min KONTRAINDICERAT*",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\n Notera patientens eGFR i kommentar om uppfylld regel.",
+      "ruleType": "Njurfunktion",
+      "ruleTypeID": 2,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 26,
+      "severityLevel": 2,
+      "warningName": "Eliquis B01AF02 < 30 ml/min Dos ≥ 10 mg/dag?",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\n Notera patientens eGFR i kommentar om uppfylld regel.",
+      "ruleType": "Njurfunktion",
+      "ruleTypeID": 2,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 27,
+      "severityLevel": 2,
+      "warningName": "Pradaxa B01AE07 < 30 ml/min KONTRAINDICERAT",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\n Notera patientens eGFR i kommentar om uppfylld regel.",
+      "ruleType": "Njurfunktion",
+      "ruleTypeID": 2,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 28,
+      "severityLevel": 2,
+      "warningName": "Spironolakton/Eplerenon C03DA01, C03DA04 < 30 ml/min KONTRAINDICERAT",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\n Notera patientens eGFR i kommentar om uppfylld regel.",
+      "ruleType": "Njurfunktion",
+      "ruleTypeID": 2,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 29,
+      "severityLevel": 2,
+      "warningName": "Metotrexat L01BA01 < 30 ml/min KONTRAINDICERAT",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\n Notera patientens eGFR i kommentar om uppfylld regel.",
+      "ruleType": "Njurfunktion",
+      "ruleTypeID": 2,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 30,
+      "severityLevel": 2,
+      "warningName": "Metformin A10BA02 < 30 ml/min KONTRAINDICERAT",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\n Notera patientens eGFR i kommentar om uppfylld regel.",
+      "ruleType": "Njurfunktion",
+      "ruleTypeID": 2,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 31,
+      "severityLevel": 1,
+      "warningName": "Allopurinol M04AA01 < 20 ml/min Dos > 200 mg/dag?",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\n Notera patientens eGFR i kommentar om uppfylld regel.",
+      "ruleType": "Njurfunktion",
+      "ruleTypeID": 2,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 32,
+      "severityLevel": 3,
+      "warningName": "Xarelto B01AF01 < 15 ml/min KONTRAINDICERAT",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\n Notera patientens eGFR i kommentar om uppfylld regel.",
+      "ruleType": "Njurfunktion",
+      "ruleTypeID": 2,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 33,
+      "severityLevel": 3,
+      "warningName": "Eliquis B01AF02 < 15 ml/min KONTRAINDICERAT",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "Har patienten nedsatt njurfunktion dvs GFR under 70 innan tillfälle 1? Kontrollera om patienten står på något läkemedel som kräver högre njurfunktion än den patienten noterat. I tabellen visas läkemedel och njurfunktionsberoende. (Regel 16-33)\n Notera patientens eGFR i kommentar om uppfylld regel.",
+      "ruleType": "Njurfunktion",
+      "ruleTypeID": 2,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 34,
+      "severityLevel": 1,
+      "warningName": "Haloperidol över 2 mg/dag OCH patient > 75 år",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "",
+      "ruleType": "Läkemedel och doser",
+      "ruleTypeID": 3,
+      "Interaction": 1
+    },
+    {
+      "warningNumber": 35,
+      "severityLevel": 1,
+      "warningName": "Quetiapin över 75 mg/dag OCH patient > 75 år",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "",
+      "ruleType": "Läkemedel och doser",
+      "ruleTypeID": 3,
+      "Interaction": 1
+    },
+    {
+      "warningNumber": 36,
+      "severityLevel": 1,
+      "warningName": "Risperidon över 1.5 mg/dag OCH patient > 75 år",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "",
+      "ruleType": "Läkemedel och doser",
+      "ruleTypeID": 3,
+      "Interaction": 1
+    },
+    {
+      "warningNumber": 37,
+      "severityLevel": 1,
+      "warningName": "Oxacepam över 30 mg/dag OCH patient > 75 år",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "",
+      "ruleType": "Läkemedel och doser",
+      "ruleTypeID": 3,
+      "Interaction": 1
+    },
+    {
+      "warningNumber": 38,
+      "severityLevel": 1,
+      "warningName": "Zopiklon över 7.5 mg/dag OCH patient > 75 år",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "",
+      "ruleType": "Läkemedel och doser",
+      "ruleTypeID": 3,
+      "Interaction": 1
+    },
+    {
+      "warningNumber": 39,
+      "severityLevel": 1,
+      "warningName": "Citalopram över 20 mg/dag OCH patient > 75 år",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "",
+      "ruleType": "Läkemedel och doser",
+      "ruleTypeID": 3,
+      "Interaction": 1
+    },
+    {
+      "warningNumber": 40,
+      "severityLevel": 1,
+      "warningName": "Escitalopram över 10 mg/dag OCH patient > 75 år",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "",
+      "ruleType": "Läkemedel och doser",
+      "ruleTypeID": 3,
+      "Interaction": 1
+    },
+    {
+      "warningNumber": 41,
+      "severityLevel": 1,
+      "warningName": "Patienten har tiaziddiuretika OCH diagnosen gikt",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\n Notera detta som:\n  ”1” om risken inte kvarstod tillfälle 2,\n ”2” om risken kvarstod tillfälle 2,\n ”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället.",
+      "ruleType": "Läkemedel och labvärden",
+      "ruleTypeID": 4,
+      "Interaction": 1
+    },
+    {
+      "warningNumber": 42,
+      "severityLevel": 3,
+      "warningName": "Patienten har diuretika OCH Lågt kalium (under 3.5)",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\n Notera detta som:\n  ”1” om risken inte kvarstod tillfälle 2,\n ”2” om risken kvarstod tillfälle 2,\n ”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället.",
+      "ruleType": "Läkemedel och labvärden",
+      "ruleTypeID": 4,
+      "Interaction": 3
+    },
+    {
+      "warningNumber": 43,
+      "severityLevel": 3,
+      "warningName": "Patienten har kaliumsparande diuretika OCH högt kalium (över 5.5)",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\n Notera detta som:\n  ”1” om risken inte kvarstod tillfälle 2,\n ”2” om risken kvarstod tillfälle 2,\n ”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället.",
+      "ruleType": "Läkemedel och labvärden",
+      "ruleTypeID": 4,
+      "Interaction": 3
+    },
+    {
+      "warningNumber": 44,
+      "severityLevel": 1,
+      "warningName": "Patienten har icke-selektiva beta-blockare (Propranolol, karvedilol, timolol, andra ögondroppar) OCH astma",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\n Notera detta som:\n  ”1” om risken inte kvarstod tillfälle 2,\n ”2” om risken kvarstod tillfälle 2,\n ”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället.",
+      "ruleType": "Läkemedel och labvärden",
+      "ruleTypeID": 4,
+      "Interaction": 1
+    },
+    {
+      "warningNumber": 45,
+      "severityLevel": 2,
+      "warningName": "Patienten har betablockerare OCH bradykardi (<50 slag/min)",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\n Notera detta som:\n  ”1” om risken inte kvarstod tillfälle 2,\n ”2” om risken kvarstod tillfälle 2,\n ”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället.",
+      "ruleType": "Läkemedel och labvärden",
+      "ruleTypeID": 4,
+      "Interaction": 1
+    },
+    {
+      "warningNumber": 46,
+      "severityLevel": 2,
+      "warningName": "Patienten har digoxin OCH bradykardi (<50slag/min)",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\n Notera detta som:\n  ”1” om risken inte kvarstod tillfälle 2,\n ”2” om risken kvarstod tillfälle 2,\n ”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället.",
+      "ruleType": "Läkemedel och labvärden",
+      "ruleTypeID": 4,
+      "Interaction": 1
+    },
+    {
+      "warningNumber": 47,
+      "severityLevel": 2,
+      "warningName": "RAAS-blockerande läkemedel OCH högt kalium (över 5.5)",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\n Notera detta som:\n  ”1” om risken inte kvarstod tillfälle 2,\n ”2” om risken kvarstod tillfälle 2,\n ”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället.",
+      "ruleType": "Läkemedel och labvärden",
+      "ruleTypeID": 4,
+      "Interaction": 3
+    },
+    {
+      "warningNumber": 48,
+      "severityLevel": 2,
+      "warningName": "ACE OCH ARB i kombination",
+      "relevantInformation": "Läkemedel inblandade i varningen",
+      "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\n Notera detta som:\n  ”1” om risken inte kvarstod tillfälle 2,\n ”2” om risken kvarstod tillfälle 2,\n ”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället.",
+      "ruleType": "Läkemedel och labvärden",
+      "ruleTypeID": 4,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 49,
+      "severityLevel": 1,
+      "warningName": "IV antibiotika/antimykotika OCH stående kortisonbehandling (insatt innan vårdperioden)",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\n Notera detta som:\n  ”1” om risken inte kvarstod tillfälle 2,\n ”2” om risken kvarstod tillfälle 2,\n ”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället.",
+      "ruleType": "Läkemedel och diagnos",
+      "ruleTypeID": 5,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 50,
+      "severityLevel": 1,
+      "warningName": "Intravenös antibiotika/antimykotika OCH Immunosuppresiv behandling (ATC: L04A)",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\n Notera detta som:\n  ”1” om risken inte kvarstod tillfälle 2,\n ”2” om risken kvarstod tillfälle 2,\n ”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället.",
+      "ruleType": "Läkemedel och diagnos",
+      "ruleTypeID": 5,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 51,
+      "severityLevel": 1,
+      "warningName": "Hög dos trimetoprim/sulfa OCH ingen koncentrationsbestämning efter 2 dagar",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\n Notera detta som:\n  ”1” om risken inte kvarstod tillfälle 2,\n ”2” om risken kvarstod tillfälle 2,\n ”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället.",
+      "ruleType": "Läkemedel och status",
+      "ruleTypeID": 6,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 52,
+      "severityLevel": 1,
+      "warningName": "Voriconazole (ATC: J02C03) UTAN koncentrationsbestämning",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\n Notera detta som:\n  ”1” om risken inte kvarstod tillfälle 2,\n ”2” om risken kvarstod tillfälle 2,\n ”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället.",
+      "ruleType": "Läkemedel och status",
+      "ruleTypeID": 6,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 53,
+      "severityLevel": 1,
+      "warningName": "Patienten har kalciumläkemedel OCH högt calciumvärde (över 2.5)",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\n Notera detta som:\n  ”1” om risken inte kvarstod tillfälle 2,\n ”2” om risken kvarstod tillfälle 2,\n ”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället.",
+      "ruleType": "Läkemedel och status",
+      "ruleTypeID": 6,
+      "Interaction": 3
+    },
+    {
+      "warningNumber": 54,
+      "severityLevel": 1,
+      "warningName": "Patienten har p.o. antidiabetika OCH fp-glukos under 3?",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\n Notera detta som:\n  ”1” om risken inte kvarstod tillfälle 2,\n ”2” om risken kvarstod tillfälle 2,\n ”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället.",
+      "ruleType": "Läkemedel och status",
+      "ruleTypeID": 6,
+      "Interaction": 3
+    },
+    {
+      "warningNumber": 55,
+      "severityLevel": 1,
+      "warningName": "Patienten har litiumbehandling OCH ingen koncentrationsbestämning de senaste 2 månaderna",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\n Notera detta som:\n  ”1” om risken inte kvarstod tillfälle 2,\n ”2” om risken kvarstod tillfälle 2,\n ”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället.",
+      "ruleType": "Läkemedel och status",
+      "ruleTypeID": 6,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 56,
+      "severityLevel": 1,
+      "warningName": "Patienten har långverkande nitrater OCH doseringen är två gånger om dagen",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\n Notera detta som:\n  ”1” om risken inte kvarstod tillfälle 2,\n ”2” om risken kvarstod tillfälle 2,\n ”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället.",
+      "ruleType": "Övriga Läkemedelskombinationer",
+      "ruleTypeID": 7,
+      "Interaction": 2
+    },
+    {
+      "warningNumber": 57,
+      "severityLevel": 1,
+      "warningName": "Patienten har pioglitazon OCH diagnosen hjärtsvikt",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\n Notera detta som:\n  ”1” om risken inte kvarstod tillfälle 2,\n ”2” om risken kvarstod tillfälle 2,\n ”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället.",
+      "ruleType": "Övriga Läkemedelskombinationer",
+      "ruleTypeID": 7,
+      "Interaction": 1
+    },
+    {
+      "warningNumber": 58,
+      "severityLevel": 1,
+      "warningName": "Patienten har warfarin behandling OCH INR över 4",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\n Notera detta som:\n  ”1” om risken inte kvarstod tillfälle 2,\n ”2” om risken kvarstod tillfälle 2,\n ”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället.",
+      "ruleType": "Övriga Läkemedelskombinationer",
+      "ruleTypeID": 7,
+      "Interaction": 3
+    },
+    {
+      "warningNumber": 59,
+      "severityLevel": 1,
+      "warningName": "Patienten har kaliumläkemedel OCH högt kalium (över 5.5)",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\n Notera detta som:\n  ”1” om risken inte kvarstod tillfälle 2,\n ”2” om risken kvarstod tillfälle 2,\n ”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället.",
+      "ruleType": "Övrigt",
+      "ruleTypeID": 8,
+      "Interaction": 3
+    },
+    {
+      "warningNumber": 60,
+      "severityLevel": 1,
+      "warningName": "Patienten har parenteral nutrition OCH högt kalium (över 5.5)",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\n Notera detta som:\n  ”1” om risken inte kvarstod tillfälle 2,\n ”2” om risken kvarstod tillfälle 2,\n ”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället.",
+      "ruleType": "Övrigt",
+      "ruleTypeID": 8,
+      "Interaction": 3
+    },
+    {
+      "warningNumber": 61,
+      "severityLevel": 1,
+      "warningName": "Patienten har behandling med opioider OCH en andningsfrekvens på mindre än 15 andetag per minut?",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\n Notera detta som:\n  ”1” om risken inte kvarstod tillfälle 2,\n ”2” om risken kvarstod tillfälle 2,\n ”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället.",
+      "ruleType": "Övrigt",
+      "ruleTypeID": 8,
+      "Interaction": 3
+    },
+    {
+      "warningNumber": 62,
+      "severityLevel": 1,
+      "warningName": "Patienten har alfa-blockare eller kalciumblockare OCH och ett blodtryck under 110 mmHg systoliskt",
+      "relevantInformation": "",
+      "CentralApotekarenToDo": "För varje träff, undersök om patientens data genererade samma risk vid tillfälle 2 (tillfälle 2 är fter 2 dagar, alternativt vid utskrivning, om denna är innan 2 dagar har gått).\n Notera detta som:\n  ”1” om risken inte kvarstod tillfälle 2,\n ”2” om risken kvarstod tillfälle 2,\n ”2ut” om risken kvarstod tillfälle 2 och tillfälle 2 för aktuell patient var utskrivningstillfället.",
+      "ruleType": "Övrigt",
+      "ruleTypeID": 8,
+      "Interaction": 3
+    }
+  ]
 }
