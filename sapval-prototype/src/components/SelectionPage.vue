@@ -369,12 +369,12 @@ function updatePatientDiv(patientData, patientIndex) {
     wardInfo.innerHTML = "Avdelning: " + patientData["OA enhet"];
     wardInfoBox.appendChild(wardInfo);
 
-        let alertText = document.createElement("h1");
-        alertText.innerHTML = patientData["First Name"] + " " + patientData["Last Name"];
-        patientDiv.appendChild(alertText);
-        let patientAge = document.createElement("p");
-        patientAge.innerHTML = patientData["Birthday"]+ "-" + patientData["RandomFourDigitCode"] + " (" + patientData["Age"] + " år)";
-        patientDiv.appendChild(patientAge);
+    let alertText = document.createElement("h1");
+    alertText.innerHTML = patientData["First Name"] + " " + patientData["Last Name"];
+    patientDiv.appendChild(alertText);
+    let patientAge = document.createElement("p");
+    patientAge.innerHTML = patientData["Birthday"]+ "-" + patientData["RandomFourDigitCode"] + " (" + patientData["Age"] + " år)";
+    patientDiv.appendChild(patientAge);
     let patientInfo = document.createElement("p");
     patientInfo.innerHTML = "Typ av verksamhet: " + patientData["MA verksamhet"];
     wardInfoBox.appendChild(patientInfo);

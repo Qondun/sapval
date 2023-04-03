@@ -6,6 +6,10 @@ import patientInformation from '../records/patientInformation.json';
 
 export const useWarningsByWardStore = defineStore('wardWarnings', {
     state: () => ({
+        wardWarningArray: [],
+        patientLocationList: [],
+        sumWarningArray: [],
+        wardNameList: [],
         initialized: false,
         chartData: {
             labels: [],
@@ -74,7 +78,7 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
         patient: patientWarnings.WarningInfo,
         warnings: warningList.WarningInfo,
         patientInfo: patientInformation.PatientAlertDrug,
-        sumWarningArray: []
+        // sumWarningArray: []
 
     }),
     getters: {
@@ -90,17 +94,17 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
             }
             console.log("initializing wardwarningsData")
             this.initialized = true;
-            let sumWarningArray = [0, 0, 0, 0, 0];
-            let wardNameList = [];
+            this.sumWarningArray = Array(5).fill(0);
+            this.wardNameList = [];
             var value = 0;
             let warningValueList = [];
             let len = wardsdata.wardsInfo.length + 1;
-            let patientLocationList = Array.apply(null, Array(1500)).map(function () { })
+            this.patientLocationList = Array.apply(null, Array(1500)).map(function () { });
 
             //wardList in order for graph
             this.ward.map((item) => {
                 this.chartData.labels.push(item.Address)
-                wardNameList.push(item.Address)
+                this.wardNameList.push(item.Address)
             })
 
             let wardWarningArray = [...Array(10)].map(e => Array(len).fill(1));
@@ -112,7 +116,7 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
 
             for (let i = 0; i < this.patientInfo.length; i++) {
                 let obj = this.patientInfo[i]
-                patientLocationList[obj['Person ID']] = obj.PatientLocation
+                this.patientLocationList[obj['Person ID']] = obj.PatientLocation
             }
             //console.log(patientLocationList)
 
@@ -128,13 +132,14 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
                     severityLevel = Number(warningValueList[obj.Regel - 1]) - 1;
                 }
 
-                sumWarningArray[severityLevel] += 1;
+                this.sumWarningArray[severityLevel] += 1;
                 //      console.log('warningarray from byward' + sumWarningArray)
 
                 //console.log(`regel: ${obj.Regel} sev level: ${severityLevel}`)
                 let personNumber = obj.PersonID;
-                let personLocation = patientLocationList[personNumber];
-                let locationIndex = wardNameList.indexOf(personLocation)
+                let personLocation = this.patientLocationList[personNumber];
+                let locationIndex = this.wardNameList.indexOf(personLocation)
+                // console.log(locationIndex)
                 // console.log(len)
                 if (locationIndex < 0) {
                     // console.log(locationIndex)
@@ -151,6 +156,7 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
                 wardWarningArray[severityLevel][locationIndex] += 1
 
             }
+            this.wardWarningArray = wardWarningArray
 
             // this.chartData.datasets[1].data.push(parseInt(wardWarningArray[0]))
             this.chartData.datasets[0].data = wardWarningArray[2].map(x => x);
@@ -205,6 +211,49 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
             //if (this.chartData.datasets[severityLevel - 1].data[locationCode - 1] > 1) {
             //this.chartData.datasets[severityLevel - 1].data[locationCode - 1] = this.chartData.datasets[severityLevel - 1].data[locationCode - 1] - 1
             //}
+        },
+        testButton(a, b, c) {
+            console.log('test button: ' + a);
+        },
+
+        // needs error checking -> if no error to clear then don't add solved errors 
+        completedWarningWardChartUpdate(severityLevel, newSeverityLevel, personID) {
+            let newSeverity = newSeverityLevel + 2;
+            severityLevel = severityLevel - 3;
+            console.log(severityLevel);
+            console.log(newSeverityLevel);
+            console.log(personID)
+            // let obj = patientWarnings.WarningInfo[i];
+            //console.log(obj.PersonID)
+
+            this.sumWarningArray[severityLevel] += 1;
+            console.log('warningarray from byward: ' + this.sumWarningArray[severityLevel])
+
+            //console.log(`regel: ${obj.Regel} sev level: ${severityLevel}`)
+            let personNumber = personID;
+            let personLocation = this.patientLocationList[personNumber];
+            let locationIndex = this.wardNameList.indexOf(personLocation)
+            // console.log(len)
+            //TODO why did I do this check like this?  Was it a typo?
+            if (locationIndex < 0) {
+                // console.log(locationIndex)
+                console.log('Location index not found so using the top location...')
+                locationIndex = Number(len - 1)
+                //console.log(locationIndex)
+
+            }
+            console.log(this.chartData.datasets);
+            console.log('Prev Values: ' + this.wardWarningArray[severityLevel][locationIndex] + ' : ' + this.wardWarningArray[newSeverity][locationIndex])
+            this.chartData.datasets[severityLevel].data[locationIndex] -= 1;
+            this.chartData.datasets[newSeverity].data[locationIndex] -= 1;
+
+            //this.wardWarningArray[severityLevel][locationIndex] += 1
+            //this.wardWarningArray[newSeverity][locationIndex] += 1
+
+
+
+
+
         },
     },
 })

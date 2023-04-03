@@ -4,6 +4,10 @@ import patientWarnings from '../records/PatientWarnings.json';
 import warningList from '../records/warningList.json';
 import patientInformation from '../records/patientInformation.json';
 
+let warningValueListWithSpacer = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 10, 11, 12, 13, 14, 15, 0, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 0, 35, 36, 37, 38, 39, 40, 0, 41, 42, 43, 44, 45, 46, 47, 48, 0, 49, 50, 0, 51, 52, 53, 54, 55, 0, 56, 57, 58, 59, 60, 61, 62, 63]
+//let warningListToString = warningValueListWithSpacers.toString();
+let severityLevelListWithSpacer = [1, 2, 3, 4, 5, 1, 2, 3, 4, 0, 1, 2, 3, 1, 2, 3, 0, 1, 2, 3, 4, 5, 1, 2, 3, 4, 2, 1, 2, 3, 2, 1, 2, 3, 3, 4, 0, 1, 2, 3, 4, 1, 2, 0, 1, 2, 3, 4, 2, 1, 3, 4, 0, 1, 2, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 1, 2, 2, 1]
+
 export const useWarningsByRuleStore = defineStore('warnings', {
     state: () => ({
         initialized: false,
@@ -71,8 +75,8 @@ export const useWarningsByRuleStore = defineStore('warnings', {
             let numRulesLength = 0;
             let numRules;
             // let warningNumberArray;
-            let warningValueListWithSpacer = [];
-            let severityLevelListWithSpacer = [];
+            // let warningValueListWithSpacer = [];
+            //let severityLevelListWithSpacer = [];
 
 
             //let warningValueList = {Array.apply(null, Array(65)).map(function () {})}
@@ -88,10 +92,6 @@ export const useWarningsByRuleStore = defineStore('warnings', {
                 //console.log(wardNameList)
                 //this.chartData.datasets[0].data.push(parseInt(item.numPlatser))
             })
-
-            warningValueListWithSpacer = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 10, 11, 12, 13, 14, 15, 0, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 0, 35, 36, 37, 38, 39, 40, 0, 41, 42, 43, 44, 45, 46, 47, 48, 0, 49, 50, 0, 51, 52, 53, 54, 55, 0, 56, 57, 58, 59, 60, 61, 62, 63]
-            //let warningListToString = warningValueListWithSpacers.toString();
-            severityLevelListWithSpacer = [1, 2, 3, 4, 5, 1, 2, 3, 4, 0, 1, 2, 3, 1, 2, 3, 0, 1, 2, 3, 4, 5, 1, 2, 3, 4, 2, 1, 2, 3, 2, 1, 2, 3, 3, 4, 0, 1, 2, 3, 4, 1, 2, 0, 1, 2, 3, 4, 2, 1, 3, 4, 0, 1, 2, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 1, 2, 2, 1]
 
             console.log(warningValueListWithSpacer)
             //list, in order of alerts, value saved is severity level
@@ -146,7 +146,7 @@ export const useWarningsByRuleStore = defineStore('warnings', {
                 }
                 if (matchIndex > -1) {
                     warningNumberArray[severityLevel - 1][matchIndex] += 1
-                    console.log(warningNumberArray)
+                    //  console.log(warningNumberArray)
                 }
 
             }
@@ -195,5 +195,37 @@ export const useWarningsByRuleStore = defineStore('warnings', {
                 this.chartData.datasets[severityLevel - 1].data[ruleNumber - 1] = this.chartData.datasets[severityLevel - 1].data[ruleNumber - 1] - 1
             }
         },
+
+        completedWarningWardChartUpdate(severityLevel, newSeverityLevel, ruleNumber) {
+            console.log('decrease warning level for sev: ' + severityLevel + ' rule: ' + ruleNumber)
+            // due to the array setup, the new severity level will need to be converted to match the array 
+            let newSeverity = newSeverityLevel + 2;
+            severityLevel = severityLevel - 3;
+            let matchIndex = -1
+            for (let j = 0; j < warningValueListWithSpacer.length; j++) {
+                if (ruleNumber == warningValueListWithSpacer[j]) {
+                    matchIndex = j;
+                    severityLevel = severityLevelListWithSpacer[matchIndex];
+                }
+                if (matchIndex > -1) {
+                    severityLevel = severityLevelListWithSpacer[matchIndex]
+                    //   console.log(severityLevel + 'severityLevel')
+                    // console.log(matchIndex + 'matchIndex')
+                    this.chartData.datasets[severityLevel].data[matchIndex] -= 1;
+                    this.chartData.datasets[newSeverity].data[matchIndex] -= 1;
+                    //warningNumberArray[severityLevel][matchIndex] -= 1
+                    //warningNumberArray[newSeverity][matchIndex] -= 1
+
+
+                }
+
+            }
+
+
+            // console.log(this.chartData.datasets[s - 1].data)
+            //     if (this.chartData.datasets[s - 1].data[ruleNumber - 1] > 0) {
+            //        this.chartData.datasets[s - 1].data[ruleNumber - 1] = this.chartData.datasets[severityLevel - 1].data[ruleNumber - 1] - 1
+        }
     },
-})
+},
+)
