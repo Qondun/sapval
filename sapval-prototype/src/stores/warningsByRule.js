@@ -73,9 +73,9 @@ export const useWarningsByRuleStore = defineStore('warnings', {
             let numRulesLength = 0;
             let numRules;
 
-            this.warningValueListWithSpacer = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 10, 11, 12, 13, 14, 15, 0, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 0, 34, 35, 36, 37, 38, 39, 40, 0, 41, 42, 43, 44, 45, 46, 47, 48, 0, 49, 50, 0, 51, 52, 53, 54, 55, 0, 56, 57, 58, 0, 59, 60, 61, 62, 62];
+            this.warningValueListWithSpacer = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 10, 11, 12, 13, 14, 15, 0, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 0, 34, 35, 36, 37, 38, 39, 40, 0, 41, 42, 43, 44, 45, 46, 47, 48, 0, 49, 50, 0, 51, 52, 53, 54, 55, 0, 56, 57, 58, 0, 59, 60, 61, 62];
             //let warningListToString = warningValueListWithSpacers.toString();
-            this.severityLevelListWithSpacer = [1, 2, 1, 2, 1, 1, 1, 1, 1, 0, 2, 1, 2, 3, 2, 2, 0, 1, 1, 1, 3, 1, 2, 2, 1, 1, 1, 2, 2, 2, 2, 2, 1, 3, 3, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 3, 3, 1, 2, 2, 2, 2, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1];
+            this.severityLevelListWithSpacer = [1, 2, 1, 2, 1, 1, 1, 1, 1, 0, 2, 1, 2, 3, 2, 2, 0, 1, 1, 1, 3, 1, 2, 2, 1, 1, 1, 2, 2, 2, 2, 2, 1, 3, 3, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 3, 3, 1, 2, 2, 2, 2, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1];
 
             // let warningNumberArray;
             // let warningValueListWithSpacer = [];
@@ -154,9 +154,9 @@ export const useWarningsByRuleStore = defineStore('warnings', {
 
                     }
                 }
-                console.log(severityLevel + "severityLevel");
-                console.log(matchIndex + 'matchIndex');
-                console.log(i + 'i')
+                // console.log(severityLevel + "severityLevel");
+                //console.log(matchIndex + 'matchIndex');
+                //console.log(i + 'i')
                 if (isNaN(matchIndex)) {
                     console.log("This alert at index i[" + i + "] is NaN[" + severityLevel + "]")
                     severityLevel = 1
@@ -168,6 +168,9 @@ export const useWarningsByRuleStore = defineStore('warnings', {
                 }
 
             }
+            // for (let i = 0; i < 71; i++) {
+            //    console.log(this.warningValueListWithSpacer[i], this.severityLevelListWithSpacer[i])
+            //}
 
 
 

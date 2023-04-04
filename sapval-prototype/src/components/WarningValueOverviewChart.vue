@@ -43,7 +43,7 @@ export default {
                     },
                     y: {
                         stacked: true,
-                        max: 200,
+                        //max: 200,
                     }
                 },
                 plugins: {
