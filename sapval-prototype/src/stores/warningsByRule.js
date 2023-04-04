@@ -96,7 +96,7 @@ export const useWarningsByRuleStore = defineStore('warnings', {
                 //this.chartData.datasets[0].data.push(parseInt(item.numPlatser))
             })
 
-            console.log(this.warningValueListWithSpacer)
+            // console.log(this.warningValueListWithSpacer)
             //list, in order of alerts, value saved is severity level
             this.warnings.map((item) => {
                 warningValueList.push(item.severityLevel)
@@ -175,7 +175,7 @@ export const useWarningsByRuleStore = defineStore('warnings', {
 
 
             this.chartData.datasets[0].data = warningNumberArray[0].map(x => x);
-            console.log(warningNumberArray)
+            //console.log(warningNumberArray)
             //console.log(this.chartData.datasets[0])
 
             this.chartData.datasets[1].data = warningNumberArray[1].map(x => x);
