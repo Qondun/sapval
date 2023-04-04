@@ -48,7 +48,7 @@ export default {
                 },
                 plugins: {
                     legend: {
-                        display: false,
+                        display: true,
                     }
                 },
                 onClick: (event, item) => {
