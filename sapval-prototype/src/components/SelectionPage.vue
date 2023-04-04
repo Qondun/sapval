@@ -56,7 +56,8 @@ const selectionStateVal = computed({
 onMounted(() => {
     setCategoryRange();
     [patientIDSet, dataList, ruleNumberSet] = getCategoryData(filterRange);
-    createFilterButtons();
+    createFilterDropdowns();
+    createAvailableRuleBoxes();
     setUp();
 })
 
@@ -113,41 +114,89 @@ function createFilteredList() {
 
 };
 
-function createFilterButtons() {
+function createFilterDropdowns() {
+    let selectionGrid = document.getElementById("selectionGrid")
+    let filterDropdownBoundingBox = document.createElement('div');
+    filterDropdownBoundingBox.setAttribute('id','filterDropdownBoundingBox');
+
+    if(selectionPageState.value!="Ward") {
+        let wardBox = document.createElement('div');
+        let wardLegend = document.createElement('legend');
+        wardBox.appendChild(wardLegend);
+        wardLegend.innerHTML = "Avdelningar";
+        filterDropdownBoundingBox
+        let wardSelect = document.createElement('select');
+        let allOption = document.createElement('option');
+        allOption.innerHTML = "Alla";
+        wardSelect.appendChild(allOption);
+        wardBox.appendChild(wardSelect);
+        filterDropdownBoundingBox.appendChild(wardBox);
+    } 
+    if (selectionPageState.value!="Category") {
+        let categoryBox = document.createElement('div');
+        let categoryLegend = document.createElement('legend');
+        categoryBox.appendChild(categoryLegend);
+        categoryLegend.innerHTML = "Kategorier";
+        filterDropdownBoundingBox
+        let categorySelect = document.createElement('select');
+        let allOption = document.createElement('option');
+        allOption.innerHTML = "Alla";
+        categorySelect.appendChild(allOption);
+        categoryBox.appendChild(categorySelect);
+        filterDropdownBoundingBox.appendChild(categoryBox);
+    } 
+    if(selectionPageState.value!="Rule") {
+        let ruleBox = document.createElement('div');
+        let ruleLegend = document.createElement('legend');
+        ruleBox.appendChild(ruleLegend);
+        ruleLegend.innerHTML = "Regler";
+        filterDropdownBoundingBox
+        let ruleSelect = document.createElement('select');
+        let allOption = document.createElement('option');
+        allOption.innerHTML = "Alla";
+        ruleSelect.appendChild(allOption);
+        ruleBox.appendChild(ruleSelect);
+        filterDropdownBoundingBox.appendChild(ruleBox);
+    }
+    selectionGrid.appendChild(filterDropdownBoundingBox);
+}
+
+function createAvailableRuleBoxes() {
     let selectionGrid = document.getElementById("selectionGrid");
-    let filterButtonBox = document.createElement("div");
-    filterButtonBox.setAttribute("id", "filterBox");
+    let availableRuleBoundingBox = document.createElement("div");
+    availableRuleBoundingBox.setAttribute("id", "availableRuleBoundingBox");
     for (var ruleNr = filterRange[0]; ruleNr <= filterRange[1]; ruleNr++) {
         let ruleData = numberForRule(ruleNr);
-        let filterButton = document.createElement("div");
-        filterButton.classList.add("filterButton");
-        filterButton.setAttribute("id", ruleNr);
-        let filterButtonText = document.createElement("p");
-        filterButtonText.innerHTML = "Regel " + ruleNr + "<br>" + ruleData + " st";
-        filterButton.appendChild(filterButtonText);
-        filterButtonBox.appendChild(filterButton);
-
-        if (ruleNumberSet.includes(parseInt(filterButton.id))) {
-            filterButton.addEventListener("click", function () {
-                if (filterState == filterButton.id) {
-                    filterState = 0;
-                    filterButtonBox.childNodes.forEach((button) => {
-                        button.classList.remove("selected");
-                    });
-                } else {
-                    filterState = filterButton.id;
-                    filterButtonBox.childNodes.forEach((button) => {
-                        button.classList.remove("selected");
-                    });
-                    filterButton.classList.add("selected")
-                }
-                setUp();
-            });
-        } else {
-            filterButton.classList.add("unavailable")
-        }
+        //if(ruleData!="0") {
+            let availableRuleBox = document.createElement("div");
+            availableRuleBox.classList.add("availableRuleBox");
+            availableRuleBox.setAttribute("id", ruleNr);
+            let availableRuleBoxText = document.createElement("p");
+            availableRuleBoxText.innerHTML = "Regel " + ruleNr + "<br>" + ruleData + " st";
+            availableRuleBox.appendChild(availableRuleBoxText);
+            availableRuleBoundingBox.appendChild(availableRuleBox);
+        //}
+        // if (ruleNumberSet.includes(parseInt(filterButton.id))) {
+        //     filterButton.addEventListener("click", function () {
+        //         if (filterState == filterButton.id) {
+        //             filterState = 0;
+        //             filterButtonBox.childNodes.forEach((button) => {
+        //                 button.classList.remove("selected");
+        //             });
+        //         } else {
+        //             filterState = filterButton.id;
+        //             filterButtonBox.childNodes.forEach((button) => {
+        //                 button.classList.remove("selected");
+        //             });
+        //             filterButton.classList.add("selected")
+        //         }
+        //         setUp();
+        //     });
+        // } else {
+        //     filterButton.classList.add("unavailable")
+        // }
     };
-    selectionGrid.appendChild(filterButtonBox);
+    selectionGrid.appendChild(availableRuleBoundingBox);
 }
 
 function createLayout() {
@@ -164,14 +213,20 @@ function createLayout() {
         let patientBox = document.createElement('div')
         patientBox.classList.add("patientBox");
         patientBox.setAttribute("id", patientIndex);
-        let headerText = document.createElement("h3");
 
+        let patientHeaderBox = document.createElement('div');
+        patientHeaderBox.classList.add("patientHeaderBox");
         let patientData = getPatientInformation(patientID);
+        let alertList = filteredList[patientIndex];
+        let headerText = document.createElement("h3");
         headerText.innerHTML = patientData['First Name'] + " " + patientData['Last Name'] + ", " + patientData['Age'];
-        patientBox.appendChild(headerText);
+        let noAlerts = document.createElement('h3');
+        noAlerts.innerHTML = "Antal varningar: " + alertList.length
+        patientHeaderBox.appendChild(headerText);
+        patientHeaderBox.appendChild(noAlerts);
+        patientBox.appendChild(patientHeaderBox);
 
         /* Add all alerts into bounding box for alerts */
-        let alertList = filteredList[patientIndex];
         let alertBox = document.createElement('div');
         alertBox.classList.add("alertBox");
         let alertIndex = 0;
@@ -214,7 +269,7 @@ function createLayout() {
         });
 
         /* Event listener to header (top part of card) for expanding a patient */
-        headerText.addEventListener("click", function () {
+        patientHeaderBox.addEventListener("click", function () {
             let alreadySelected = patientBox.children[1].classList.contains("selected");
             listDiv.childNodes.forEach((patient) => {
                 patient.childNodes.forEach((item) => {
@@ -295,7 +350,7 @@ function updateInfoDiv(patientIndex, alertIndex) {
     let patientValueArray = ["GFR", "K", "Ca", "Puls"];
     patientValueArray.forEach((info) => {
         let patientInfo = document.createElement("p");
-        patientInfo.innerHTML = info + ": " + alertInfo[info];
+        patientInfo.innerHTML = "<b>" + info + "</b>" + ": " + alertInfo[info];
         patientValueBox.appendChild(patientInfo);
     });
     mainInfoBox.appendChild(patientValueBox);
@@ -333,16 +388,24 @@ function updateInfoDiv(patientIndex, alertIndex) {
     dosingInfoBox.appendChild(dosingText);
     mainInfoBox.appendChild(dosingInfoBox);
 
-    infoDiv.appendChild(mainInfoBox);
+    if(ruleInfo.CentralApotekarenToDo!="") {
+        mainInfoBox.appendChild(createDividingLine("Åtgärd"));
 
-
+        let toDoBox = document.createElement("div");
+        toDoBox.setAttribute("id", "toDoBox");
+        toDoBox.classList.add("infoBoxes");
+        let toDoText = document.createElement("p");
+        toDoText.innerHTML = ruleInfo.CentralApotekarenToDo;
+        toDoBox.appendChild(toDoText);
+        mainInfoBox.appendChild(toDoBox);
+    }
 
     //JENNS BUTTON STUFF
     console.log(wardStoreRef)
-
-    mainInfoBox.appendChild(createDividingLine("Update Alert Jenn"));
+    // mainInfoBox.appendChild(createActionBox(patientIndex, alertIndex));
+    //mainInfoBox.appendChild(createDividingLine("Update Alert Jenn"));
     mainInfoBox.appendChild(createDataUpdateButton("Jenn Button", 'JennID'));
-
+    infoDiv.appendChild(mainInfoBox);
 }
 
 function cleanPatientDiv() {
@@ -368,10 +431,10 @@ function updatePatientDiv(patientData, patientIndex) {
     wardInfoBox.classList.add("infoBoxes");
     patientDiv.appendChild(createDividingLine("Avdelningsinformation"));
     let wardInfo = document.createElement("p");
-    wardInfo.innerHTML = "Avdelning: " + patientData["OA enhet"];
+    wardInfo.innerHTML = "<b>Avdelning:</b> " + patientData["OA enhet"];
     wardInfoBox.appendChild(wardInfo);
     let patientInfo = document.createElement("p");
-    patientInfo.innerHTML = "Typ av verksamhet: " + patientData["MA verksamhet"];
+    patientInfo.innerHTML = "<b>Typ av verksamhet:</b> " + patientData["MA verksamhet"];
     wardInfoBox.appendChild(patientInfo);
     patientDiv.appendChild(wardInfoBox);
 
@@ -430,43 +493,63 @@ function createDataUpdateButton(label, id) {
         <div id="backButton" @click="layoutState = 0">
             <p>Backa</p>
         </div>
-        <div class="headerBox">
-            <p v-if="selectionPageState == 'Category'" class="listHeader">Kategori: {{
-                selectionStateVal.substr(2, selectionStateVal.length) }}</p>
+        <div id="listGridItem" class="selectionGridItem">
+            <div class="headerBox">
+                <p v-if="selectionPageState == 'Category'" id="patientListHeader" class="listHeader">Kategori: {{ selectionStateVal.substring(selectionStateVal.indexOf(' ') + 1) }}</p>
+            </div>
+            <div id="listDiv"></div>
         </div>
-        <div class="headerBox">
-            <p class="listHeader">Varningsinformation</p>
+        
+        <div id="alertGridItem" class="selectionGridItem">
+            <div class="headerBox">
+                <p class="listHeader">Varningsinformation</p>
+            </div>
+            <div id="infoDiv">
+                <div id="actionBox">
+                    <div id="optionButtonBox">
+                        <div id="dismissOptionButton" class="optionTab" :class="{ selected: selectedTab==0 }">
+                            <p>Dismiss</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="headerBox">
-            <p class="listHeader">Patientinformation</p>
-        </div>
-        <div id="listDiv" class="selectionGridItem"></div>
-        <div id="infoDiv" class="selectionGridItem"></div>
-        <div id="patientDiv" class="selectionGridItem"></div>
 
+        <div id="patientGridItem" class="selectionGridItem">
+            <div class="headerBox">
+                <p class="listHeader">Patientinformation</p>
+            </div>
+            <div id="patientDiv"></div>
+        </div>
     </div>
 </template>
 
 <style>
+b {
+    font-weight: bold;
+    font-size: 12pt;
+}
 #selectionGrid {
+    background-color: var(--background-color);
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: space-around;
     flex-direction: row;
     flex-wrap: wrap;
-    background-color: var(--background-color);
+    align-items: flex-end;
+    padding-bottom: 20px;
 }
 
 #backButton {
-    height: 50px;
-    width: 70px;
+    height: 40px;
+    width: 60px;
     text-align: center;
     border-radius: var(--buttonBorderRadius);
     padding: 6px;
     background-color: var(--buttonColor);
     position: absolute;
-    left: 10px;
+    left: 32px;
     top: 10px;
 }
 
@@ -475,65 +558,93 @@ function createDataUpdateButton(label, id) {
     background-color: var(--buttonColorHover);
 }
 
-#filterBox {
-    width: auto;
+#filterDropdownBoundingBox {
+    width: 10%;
     height: auto;
     top: 10px;
+    /* right: calc(30% + 33px + 64px); */
+    left: 17.5%;
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
+    justify-content: space-around;
+    position: absolute;
+}
+#filterDropdownBoundingBox div {
+    display: flex;
+    margin-left: 15px;
+    flex-direction: row;
+    justify-content: start;
+}
+
+select {
+    width: 80px;
+}
+
+#availableRuleBoundingBox {
+    width: 63.4%;
+    height: auto;
+    top: 10px;
+    right: 33px;
+    display: flex;
+    flex-wrap: wrap;
+    /* justify-content: space-between; */
     position: absolute;
 }
 
-.filterButton {
-    width: auto;
-    height: 70px;
-    margin-right: 10px;
-    margin-left: 10px;
-    padding: 10px;
-    background-color: var(--buttonColor);
-    border-radius: var(--buttonBorderRadius);
+.availableRuleBox {
+    width: 66px;
+    height: 50px;
+    margin: 3px;
+    /* margin-right: 10px;
+    margin-left: 10px; */
+    padding: 3px;
+    background-color: var(--sectionBackground);
+    /* border-radius: var(--buttonBorderRadius); */
+    text-align: center;
 }
-
-.filterButton:hover {
-    background-color: var(--buttonColorHover);
-    cursor: pointer;
-}
-
-.filterButton.selected {
+/* 
+.availableRuleBox.selected {
     background-color: var(--buttonSelected);
     border: var(--generalBorders);
 }
 
-.filterButton.selected:hover {
-    background-color: var(--buttonSelectedHover);
-}
-
-.filterButton.unavailable {
+.availableRuleBox.unavailable {
     background-color: var(--unavailableButton);
     cursor: default;
     color: #999;
-}
+} */
+#listGridItem {
+    height: 95.5%;
+} 
 
-.headerBox {
-    height: 20px;
-    width: 30%;
-    background-color: transparent;
-    bottom: -92px;
-}
-
-.listHeader {
-    position: absolute;
-    color: #999;
-    font-size: 26pt;
-}
-
-.selectionGridItem {
-    width: 30%;
-    height: 85%;
+#listDiv {
+    height: calc(100% - 56px);
+    width: 100%;
     background-color: var(--sectionBackground);
     border: var(--buttonBorderRadius);
     overflow: scroll;
-    bottom: -50px;
+}
+
+.headerBox {
+    height: 45px;
+    width: 100%;
+    background-color: transparent;
+    overflow-x: visible;
+}
+
+.listHeader {
+    color: #999;
+    font-size: 22pt;
+    white-space: nowrap;
+}
+
+
+.selectionGridItem {
+    width: 30%;
+}
+
+#patientGridItem, #alertGridItem {
+    height: 80%;
 }
 
 .patientBox {
@@ -541,23 +652,28 @@ function createDataUpdateButton(label, id) {
     height: auto;
 }
 
-.patientBox h3 {
+.patientHeaderBox {
     width: 98%;
     height: 35px;
     /* height: 80px; */
     background-color: var(--buttonColor);
     border-radius: var(--buttonBorderRadius);
     cursor: pointer;
-    padding: 3px;
+    padding: 3px 10px 3px 10px;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
 }
-
-.patientBox h3:hover {
+.patientHeaderBox:hover {
     background-color: var(--buttonColorHover);
 }
 
-.patientBox h3.selected {
+.patientHeaderBox.selected {
     background-color: var(--buttonSelected);
     border: var(--generalBorders);
+}
+.patientHeaderBox.selected:hover {
+    background-color: var(--buttonSelectedHover)
 }
 
 .alertBox {
@@ -642,12 +758,19 @@ function createDataUpdateButton(label, id) {
 
 #infoDiv,
 #patientDiv {
+    height: calc(100% - 56px);;
+    width: 100%;
+    background-color: var(--sectionBackground);
+    border: var(--buttonBorderRadius);
+    overflow: scroll;
     padding: 10px;
 }
-
 #infoDiv p,
 #patientDiv p {
     margin-bottom: 10px;
+}
+#infoDiv ul {
+    columns: 2;
 }
 
 .severityLevelBox {
@@ -694,6 +817,7 @@ fieldset {
     border: 2px solid transparent;
     border-top-color: #aeaeae;
     box-sizing: border-box;
+    margin-bottom: -20px;
 }
 
 legend {

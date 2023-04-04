@@ -31,13 +31,6 @@
         <div class="menuItem" :class="{ selectedTab: pageState=='Rule' }" @click="pageState='Rule' ">
             <p>Regler</p>
         </div>
-           
-        <!-- <div class="menuItem" :class="{ selectedTab: val==2 }" @click="val=2">
-            <p>Varningar per allvarighetsgrad</p>
-        </div>    
-        <div class="menuItem" :class="{ selectedTab: val==3 }" @click="val=3">
-            <p>Exempel</p>
-        </div> -->
     </div>
 </template>
 <style>

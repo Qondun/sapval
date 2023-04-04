@@ -87,9 +87,9 @@ const xxxWarning = ref(warningNumberArray);
   --severity5: #190263;
   --buttonBorderRadius: 10px;
   --buttonColor: #aeaeae;
-  --buttonColorHover: #555;
+  --buttonColorHover: #d8d5d5;
   --buttonSelected: #cecece;
-  --buttonSelectedHover: #bebebe;
+  --buttonSelectedHover: #e0dddd;
   --generalBorders: 2px solid #000;
   --unavailableButton: #dedede;
 }
