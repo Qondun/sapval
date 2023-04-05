@@ -37,14 +37,7 @@ export const useWarningsByRuleStore = defineStore('warnings', {
                     label: '3',
                     data: [],
                     backgroundColor: '#47741B'
-                }, {
-                    label: '4',
-                    data: [],
-                    backgroundColor: '#FFFFFF'
-                }, {
-                    label: '5',
-                    data: [],
-                    backgroundColor: '#FFFFFF'
+
                 }]
         },
         ward: wardsdata.wardsInfo,
@@ -198,13 +191,7 @@ export const useWarningsByRuleStore = defineStore('warnings', {
             //console.log(wardWarningArray)
             //console.log(this.chartData.datasets[2])
 
-            this.chartData.datasets[6].data = warningNumberArray[6].map(x => -x);
-            //console.log(wardWarningArray)
-            //console.log(this.chartData.datasets[3])
 
-            this.chartData.datasets[7].data = warningNumberArray[7].map(x => -x);
-            //console.log(wardWarningArray)
-            //console.log(this.chartData.datasets[4])
         },
 
 
@@ -220,8 +207,8 @@ export const useWarningsByRuleStore = defineStore('warnings', {
         completedWarningWardChartUpdate(severityLevel, newSeverityLevel, ruleNumber) {
             console.log('decrease warning level for sev: ' + severityLevel + ' rule: ' + ruleNumber)
             // due to the array setup, the new severity level will need to be converted to match the array 
-            let newSeverity = newSeverityLevel + 2;
-            severityLevel = severityLevel - 3;
+            let newSeverity = newSeverityLevel - 1;
+            // severityLevel = severityLevel - 1;
             let matchIndex = -1
             for (let j = 0; j < this.warningValueListWithSpacer.length; j++) {
                 if (ruleNumber == this.warningValueListWithSpacer[j]) {
@@ -234,6 +221,7 @@ export const useWarningsByRuleStore = defineStore('warnings', {
                     // console.log(matchIndex + 'matchIndex')
                     this.chartData.datasets[severityLevel].data[matchIndex] -= 1;
                     this.chartData.datasets[newSeverity].data[matchIndex] -= 1;
+                    break;
                     //warningNumberArray[severityLevel][matchIndex] -= 1
                     //warningNumberArray[newSeverity][matchIndex] -= 1
 

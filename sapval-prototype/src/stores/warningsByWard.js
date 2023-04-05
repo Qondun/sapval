@@ -207,8 +207,8 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
 
         // needs error checking -> if no error to clear then don't add solved errors 
         completedWarningWardChartUpdate(severityLevel, newSeverityLevel, personID) {
-            let newSeverity = newSeverityLevel + 2;
-            severityLevel = severityLevel - 3;
+            let newSeverity = newSeverityLevel;
+            severityLevel = severityLevel - 1;
             console.log(severityLevel);
             console.log(newSeverityLevel);
             console.log(personID)
@@ -220,7 +220,7 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
 
             //console.log(`regel: ${obj.Regel} sev level: ${severityLevel}`)
             let personNumber = personID;
-            let personLocation = this.patientLocationList[personNumber];
+            let personLocation = this.patientLocationList[personNumber].toUpperCase();
             let locationIndex = this.wardNameList.indexOf(personLocation)
             // console.log(len)
             //TODO why did I do this check like this?  Was it a typo?
@@ -235,6 +235,7 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
             console.log('Prev Values: ' + this.wardWarningArray[severityLevel][locationIndex] + ' : ' + this.wardWarningArray[newSeverity][locationIndex])
             this.chartData.datasets[severityLevel].data[locationIndex] -= 1;
             this.chartData.datasets[newSeverity].data[locationIndex] -= 1;
+
 
             //this.wardWarningArray[severityLevel][locationIndex] += 1
             //this.wardWarningArray[newSeverity][locationIndex] += 1
