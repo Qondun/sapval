@@ -14,47 +14,31 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
         chartData: {
             labels: [],
             datasets: [
-
                 {
                     label: '1',
                     data: [],
-                    backgroundColor: '#eca28a',
-                    borderColor: 'rgb(201, 203, 207)',
-                    borderWidth: 1
-                },
-                {
+                    backgroundColor: '#eca28a'
+                }, {
                     label: '2',
                     data: [],
-                    backgroundColor: '#cf4c22',
-                    borderColor: 'rgb(201, 203, 207)',
-                    borderWidth: 1
-                },
-                {
+                    backgroundColor: '#cf4c22'
+                }, {
                     label: '3',
                     data: [],
-                    backgroundColor: '#772c14',
-
-                    borderColor: 'rgb(201, 203, 207)',
-                    borderWidth: 1
+                    backgroundColor: '#772c14'
                 },
                 {
-                    label: 'd1',
+                    label: '1',
                     data: [],
-                    backgroundColor: '#741b47',
-                    borderColor: 'rgb(201, 203, 207)',
-                    borderWidth: 1
+                    backgroundColor: '#1B4774'
                 }, {
-                    label: 'd2',
+                    label: '2',
                     data: [],
-                    backgroundColor: '#1B4774',
-                    borderColor: 'rgb(201, 203, 207)',
-                    borderWidth: 1
+                    backgroundColor: '#741b47'
                 }, {
-                    label: 'd3',
+                    label: '3',
                     data: [],
-                    backgroundColor: '#47741B',
-                    borderColor: 'rgb(201, 203, 207)',
-                    borderWidth: 1
+                    backgroundColor: '#47741B'
                 }]
 
         },
@@ -91,7 +75,7 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
                 this.chartData.labels.push(item.KeyNamn)
                 this.wardNameList.push(item.KeyNamn)
             })
-            console.log(this.wardNameList)
+            //console.log(this.wardNameList)
 
             let wardWarningArray = [...Array(6)].map(e => Array(len).fill(0));
 
@@ -100,17 +84,17 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
             this.warnings.map((item) => {
                 warningValueList.push(item.severityLevel)
             })
-            console.log(warningValueList + 'warningvaluelist')
+            // console.log(warningValueList + 'warningvaluelist')
 
             for (let i = 0; i < this.patientInfo.length; i++) {
                 let obj = this.patientInfo[i]
                 this.patientLocationList[obj['Person ID']] = obj.PatientLocation
             }
-            console.log(this.patientLocationList + 'patientlocationlist')
+            //console.log(this.patientLocationList + 'patientlocationlist')
 
             for (let i = 0; i < patientWarnings.WarningInfo.length; i++) {
                 let obj = patientWarnings.WarningInfo[i];
-                console.log(obj.Regel + 'PersonID')
+                // console.log(obj.Regel + 'PersonID')
 
                 let severityLevel
 
@@ -119,7 +103,7 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
                 } else {
                     severityLevel = Number(warningValueList[obj.Regel - 1]) - 1;
                 }
-                console.log(severityLevel)
+                // console.log(severityLevel)
                 //  this.sumWarningArray[severityLevel] += 1;
                 // console.log(this.sumWarningArray)
                 //      console.log('warningarray from byward' + sumWarningArray)
@@ -129,10 +113,10 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
                 let personLocation = this.patientLocationList[personNumber].toUpperCase();
 
                 let locationIndex = this.wardNameList.indexOf(personLocation)
-                console.log(personNumber + 'personNumber ')
-                console.log(locationIndex + 'locaitonindex')
-                console.log(personLocation + 'personLocation')
-                console.log(this.wardNameList + 'warndnamelist')
+                //console.log(personNumber + 'personNumber ')
+                //console.log(locationIndex + 'locaitonindex')
+                //console.log(personLocation + 'personLocation')
+                //console.log(this.wardNameList + 'warndnamelist')
                 // console.log(len)
                 if (locationIndex < 0) {
                     // console.log(locationIndex)
@@ -158,7 +142,7 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
 
             // this.chartData.datasets[1].data.push(parseInt(wardWarningArray[0]))
             this.chartData.datasets[0].data = wardWarningArray[0].map(x => x);
-            console.log(wardWarningArray)
+            // console.log(wardWarningArray)
             //console.log(this.chartData.datasets[0])
 
 
@@ -209,9 +193,9 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
         completedWarningWardChartUpdate(severityLevel, newSeverityLevel, personID) {
             let newSeverity = newSeverityLevel;
             severityLevel = severityLevel - 1;
-            console.log(severityLevel);
-            console.log(newSeverityLevel);
-            console.log(personID)
+            //console.log(severityLevel);
+            //console.log(newSeverityLevel);
+            //console.log(personID)
             // let obj = patientWarnings.WarningInfo[i];
             //console.log(obj.PersonID)
 

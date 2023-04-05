@@ -44,19 +44,20 @@ const xxxWarning = ref(warningNumberArray);
     <main class="overviewGridItem">
 
 
-      <SortingMenu v-model:selectionPageState="selectionPageState"/>
+      <SortingMenu v-model:selectionPageState="selectionPageState" />
 
     </main>
 
     <div id="dynamicBottom" class="overviewGridItem">
       <!-- <TheWelcome v-if="dynamicBotState == 0" @clicked="increment" :count="state.count" />
-      <RuleCategories v-else-if="dynamicBotState == 1" v-model:layoutState="layoutState"
-        v-model:selectionPageState=selectionPageState v-model:selectionStateVal=selectionStateVal />
-      <div v-else-if="dynamicBotState == 2" class="botDiv" style="background-color: green">
-        <h1>3</h1>
-      </div>
-      <PatientCircle v-else /> -->
-      <RuleCategories v-model:layoutState="layoutState" v-model:selectionPageState=selectionPageState v-model:selectionStateVal=selectionStateVal />
+        <RuleCategories v-else-if="dynamicBotState == 1" v-model:layoutState="layoutState"
+          v-model:selectionPageState=selectionPageState v-model:selectionStateVal=selectionStateVal />
+        <div v-else-if="dynamicBotState == 2" class="botDiv" style="background-color: green">
+          <h1>3</h1>
+        </div>
+        <PatientCircle v-else /> -->
+      <RuleCategories v-model:layoutState="layoutState" v-model:selectionPageState=selectionPageState
+        v-model:selectionStateVal=selectionStateVal />
     </div>
   </div>
 
@@ -80,11 +81,14 @@ const xxxWarning = ref(warningNumberArray);
 :root {
   --background-color: #f3f3f3;
   --sectionBackground: #e1e1e1;
-  --severity1: #fff2cc;
-  --severity2: #93c47d;
-  --severity3: #cf4c22;
+  --severity1: #eca28a;
+  --severity2: #cf4c22;
+  --severity3: #772c14;
   --severity4: #741b47;
   --severity5: #190263;
+  --resolution1: #1B4774;
+  --resolution2: #741b47;
+  --resolution3: #47741B;
   --buttonBorderRadius: 10px;
   --buttonColor: #aeaeae;
   --buttonColorHover: #d8d5d5;
