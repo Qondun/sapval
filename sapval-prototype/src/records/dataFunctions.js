@@ -1,6 +1,7 @@
 import { WarningInfo } from './PatientWarnings.json';
 import { PatientAlertDrug } from './patientInformation.json'
 import { WarningInfo as WarningData } from './warningList.json'
+import { wardsInfo } from './inpatientWards.json'
 
 export function getCategoryData(filterRange) {
     var dataList = [];
@@ -36,6 +37,29 @@ export function getRuleData(ruleNumber) {
     return [patientIDSet,dataList];
 }
 
+export function getFilteredData(wardName, categoryID, ruleNr) {
+    console.log("running getFilteredData")
+    console.log("wardName: " + wardName + " categoryID: " + categoryID + " ruleNr: " + ruleNr);
+    var dataList = [];
+    var patientIDSet = new Set();
+    var ruleNumberSet =[];
+
+    WarningInfo.filter(obj=> (categoryID==0 || obj.RegelkategoriID+1==categoryID) && (ruleNr==0 || obj.Regel==ruleNr)).forEach((alert) =>{
+        let patientData = PatientAlertDrug.filter(obj=> obj['Person ID']==alert.PersonID)[0];
+        if(wardName=="All" || patientData.PatientLocation==wardName) {
+            patientIDSet.add(alert.PersonID);
+            if(!ruleNumberSet.includes(alert.Regel)) {
+                ruleNumberSet.push(alert.Regel);
+            }
+        }
+    });
+
+    patientIDSet.forEach((patient) =>{
+        dataList.push(WarningInfo.filter(obj=> obj.PersonID==patient));
+    });
+    return [patientIDSet,dataList,ruleNumberSet];
+}
+
 export function getPatientInformation(patientID) {
     return PatientAlertDrug.filter(obj=> obj['Person ID']==patientID)[0];
 }
@@ -46,4 +70,12 @@ export function getRuleInformation(ruleNr) {
 
 export function numberForRule(ruleNr) {
     return[WarningInfo.filter(obj=> obj.Regel==ruleNr).length]
+}
+
+export function getWardNames() {
+    let wardNameArray = [];
+    wardsInfo.forEach((ward) =>{
+        wardNameArray.push(ward.KeyNamn);
+    });
+    return wardNameArray;
 }

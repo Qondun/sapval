@@ -45,31 +45,31 @@
         </div>
     </div>
     <div v-else-if="selectionPageState=='Category'" id="categoryGrid">
-        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal='A. Riskprofil' ">
+        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal=1 ">
             <p>Riskprofil {{ getCategoryData([1,9])[1].reduce((count, current) => count + current.length, 0) }}</p>
         </div>
-        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal='B. Interaktioner'">
+        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal=2">
             <p>Interaktioner {{ getCategoryData([10,15])[1].reduce((count, current) => count + current.length, 0) }}</p>
         </div>
-        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal='C. Njurfunktion'">
+        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal=3">
             <p>Njurfunktion {{ getCategoryData([16,33])[1].length }}</p>
         </div>
-        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal='D. Läkemedel och äldre'">
+        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal=4">
             <p>Läkemedel och äldre {{ getCategoryData([34,30])[1].reduce((count, current) => count + current.length, 0) }}</p>
         </div>
-        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal='E. Läkemedel och labvärden'">
+        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal=5">
             <p>Läkemedel och labvärden {{ getCategoryData([41,49])[1].reduce((count, current) => count + current.length, 0) }}</p>
         </div>
-        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal='F. Läkemedel och diagnos'">
+        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal=6">
             <p>Läkemedel och diagnos {{ getCategoryData([50,51])[1].length }}</p>
         </div>
-        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal='G. Läkemedel och status'">
+        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal=7">
             <p>Läkemedel och status {{ getCategoryData([52,55])[1].length }}</p>
         </div>
-        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal='H. Övriga läkemedelskombinationer'">
+        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal=8">
             <p>Övriga läkemedelskombinationer {{ getCategoryData([56,58])[1].length }}</p>
         </div>
-        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal='I. Övrigt'">
+        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal=9">
             <p>Övrigt {{ getCategoryData([59,63])[1].length }}</p>
         </div>
     </div>

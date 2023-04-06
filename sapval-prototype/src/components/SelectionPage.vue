@@ -1,18 +1,19 @@
 <script setup>
 import { isInDestructureAssignment } from '@vue/compiler-core';
 import { computed, onMounted } from 'vue';
-import { getCategoryData, getRuleData, getPatientInformation, getRuleInformation, numberForRule } from '../records/dataFunctions';
+import { getCategoryData, getRuleData, getPatientInformation, getRuleInformation, numberForRule, getFilteredData, getWardNames } from '../records/dataFunctions';
 import { storeToRefs } from 'pinia'
 import { useWarningsByWardStore } from '../stores/warningsByWard';
 import { useWarningsByRuleStore } from '../stores/warningsByRule';
 
 let filterRange = []; // [Lower bound, Upper bound]
 let dataList = [];
-let filteredList = [];
 let patientIDSet = new Set();
-let filteredIDSet = new Set();
-let filterState = 0;
 let ruleNumberSet = [];
+
+let wardName = "All";
+let categoryID = 0;
+let ruleNr = 0;
 
 const wardStore = useWarningsByWardStore()
 wardStore.initialize()
@@ -54,46 +55,56 @@ const selectionStateVal = computed({
 });
 
 onMounted(() => {
+    switch (selectionPageState.value) {
+        case "Ward":
+            wardName = selectionStateVal.value;
+            break;
+        case "Category":
+            categoryID = selectionStateVal.value;
+            break;
+        case "Rule":
+            ruleNr = selectionStateVal.value;
+    }
+    [patientIDSet, dataList, ruleNumberSet] = getFilteredData(wardName, categoryID, ruleNr);
     setCategoryRange();
-    [patientIDSet, dataList, ruleNumberSet] = getCategoryData(filterRange);
     createFilterDropdowns();
     createAvailableRuleBoxes();
     setUp();
 })
 
 function setUp() {
-    createFilteredList();
+    setCategoryRange();
+    [patientIDSet, dataList, ruleNumberSet] = getFilteredData(wardName, categoryID, ruleNr);
     createLayout();
 }
 
 function setCategoryRange() {
-    console.log("setCategoryRange")
-    switch (selectionStateVal.value) {
-        case "A. Riskprofil":
+    switch (categoryID) {
+        case 1:
             filterRange = [1, 9];
             break;
-        case "B. Interaktioner":
+        case 2:
             filterRange = [10, 15];
             break;
-        case "C. Njurfunktion":
+        case 3:
             filterRange = [16, 33];
             break;
-        case "D. Läkemedel och äldre":
+        case 4:
             filterRange = [34, 40];
             break;
-        case "E. Läkemedel och labvärden":
+        case 5:
             filterRange = [41, 49];
             break;
-        case "F. Läkemedel och diagnos":
+        case 6:
             filterRange = [50, 51];
             break;
-        case "G. Läkemedel och status":
+        case 7:
             filterRange = [52, 55];
             break;
-        case "H. Övriga läkemedelskombinationer":
+        case 8:
             filterRange = [56, 58];
             break;
-        case "I. Övrigt":
+        case 9:
             filterRange = [59, 63];
             break;
         default:
@@ -101,18 +112,6 @@ function setCategoryRange() {
         //filterRange = [1,9];  
     }
 }
-
-function createFilteredList() {
-    filteredList = [];
-    switch (filterState) {
-        case 0:
-            [filteredIDSet, filteredList] = [patientIDSet, dataList];
-            break;
-        default:
-            [filteredIDSet, filteredList] = getRuleData(filterState);
-    }
-
-};
 
 function createFilterDropdowns() {
     let selectionGrid = document.getElementById("selectionGrid")
@@ -122,13 +121,29 @@ function createFilterDropdowns() {
     if(selectionPageState.value!="Ward") {
         let wardBox = document.createElement('div');
         let wardLegend = document.createElement('legend');
-        wardBox.appendChild(wardLegend);
         wardLegend.innerHTML = "Avdelningar";
-        filterDropdownBoundingBox
+        wardBox.appendChild(wardLegend);
+
         let wardSelect = document.createElement('select');
+        wardSelect.setAttribute('id','wardSelect');
+        wardSelect.addEventListener('change', (event) =>{
+            wardName = event.target.value;
+            setUp();
+        });
+
         let allOption = document.createElement('option');
         allOption.innerHTML = "Alla";
+        allOption.setAttribute('value', 0)
         wardSelect.appendChild(allOption);
+
+        let wardNames = getWardNames();
+        wardNames.forEach((ward) =>{
+            // let wardData = numberForRule(ruleNr);
+            let wardOption = document.createElement('option');
+            wardOption.setAttribute('value', ward);
+            wardOption.innerHTML = "Avdelning " + ward;
+            wardSelect.appendChild(wardOption);
+        });
         wardBox.appendChild(wardSelect);
         filterDropdownBoundingBox.appendChild(wardBox);
     } 
@@ -137,8 +152,10 @@ function createFilterDropdowns() {
         let categoryLegend = document.createElement('legend');
         categoryBox.appendChild(categoryLegend);
         categoryLegend.innerHTML = "Kategorier";
-        filterDropdownBoundingBox
+
         let categorySelect = document.createElement('select');
+        categorySelect.setAttribute('id','ruleSelect');
+        categorySelect.setAttribute('onChange', 'updateFilter()')
         let allOption = document.createElement('option');
         allOption.innerHTML = "Alla";
         categorySelect.appendChild(allOption);
@@ -148,16 +165,34 @@ function createFilterDropdowns() {
     if(selectionPageState.value!="Rule") {
         let ruleBox = document.createElement('div');
         let ruleLegend = document.createElement('legend');
-        ruleBox.appendChild(ruleLegend);
         ruleLegend.innerHTML = "Regler";
-        filterDropdownBoundingBox
+        ruleBox.appendChild(ruleLegend);
+
         let ruleSelect = document.createElement('select');
+        ruleSelect.setAttribute('id','ruleSelect');
+        ruleSelect.addEventListener('change', (event) =>{
+            console.log("rulenr before: " + ruleNr);
+            ruleNr = event.target.value;
+            console.log("rulenr after: " + ruleNr);
+            setUp();
+        });
+
         let allOption = document.createElement('option');
         allOption.innerHTML = "Alla";
+        allOption.setAttribute('value', 0)
         ruleSelect.appendChild(allOption);
+
+        for (var ruleNum = filterRange[0]; ruleNum <= filterRange[1]; ruleNum++) {
+            let ruleData = numberForRule(ruleNum);
+            let ruleOption = document.createElement('option');
+            ruleOption.setAttribute('value', ruleNum);
+            ruleOption.innerHTML = "Regel " + ruleNum + ": " + ruleData + " st";
+            ruleSelect.appendChild(ruleOption);
+        }
         ruleBox.appendChild(ruleSelect);
         filterDropdownBoundingBox.appendChild(ruleBox);
     }
+
     selectionGrid.appendChild(filterDropdownBoundingBox);
 }
 
@@ -167,34 +202,13 @@ function createAvailableRuleBoxes() {
     availableRuleBoundingBox.setAttribute("id", "availableRuleBoundingBox");
     for (var ruleNr = filterRange[0]; ruleNr <= filterRange[1]; ruleNr++) {
         let ruleData = numberForRule(ruleNr);
-        //if(ruleData!="0") {
-            let availableRuleBox = document.createElement("div");
-            availableRuleBox.classList.add("availableRuleBox");
-            availableRuleBox.setAttribute("id", ruleNr);
-            let availableRuleBoxText = document.createElement("p");
-            availableRuleBoxText.innerHTML = "Regel " + ruleNr + "<br>" + ruleData + " st";
-            availableRuleBox.appendChild(availableRuleBoxText);
-            availableRuleBoundingBox.appendChild(availableRuleBox);
-        //}
-        // if (ruleNumberSet.includes(parseInt(filterButton.id))) {
-        //     filterButton.addEventListener("click", function () {
-        //         if (filterState == filterButton.id) {
-        //             filterState = 0;
-        //             filterButtonBox.childNodes.forEach((button) => {
-        //                 button.classList.remove("selected");
-        //             });
-        //         } else {
-        //             filterState = filterButton.id;
-        //             filterButtonBox.childNodes.forEach((button) => {
-        //                 button.classList.remove("selected");
-        //             });
-        //             filterButton.classList.add("selected")
-        //         }
-        //         setUp();
-        //     });
-        // } else {
-        //     filterButton.classList.add("unavailable")
-        // }
+        let availableRuleBox = document.createElement("div");
+        availableRuleBox.classList.add("availableRuleBox");
+        availableRuleBox.setAttribute("id", ruleNr);
+        let availableRuleBoxText = document.createElement("p");
+        availableRuleBoxText.innerHTML = "Regel " + ruleNr + "<br>" + ruleData + " st";
+        availableRuleBox.appendChild(availableRuleBoxText);
+        availableRuleBoundingBox.appendChild(availableRuleBox);
     };
     selectionGrid.appendChild(availableRuleBoundingBox);
 }
@@ -207,7 +221,7 @@ function createLayout() {
     let listDiv = document.getElementById("listDiv");
     let patientIndex = 0; // not accessing all alerts
 
-    filteredIDSet.forEach((patientID) => {
+    patientIDSet.forEach((patientID) => {
 
         /* Bounding box for each patient */
         let patientBox = document.createElement('div')
@@ -217,7 +231,7 @@ function createLayout() {
         let patientHeaderBox = document.createElement('div');
         patientHeaderBox.classList.add("patientHeaderBox");
         let patientData = getPatientInformation(patientID);
-        let alertList = filteredList[patientIndex];
+        let alertList = dataList[patientIndex];
         let headerText = document.createElement("h3");
         headerText.innerHTML = patientData['First Name'] + " " + patientData['Last Name'] + ", " + patientData['Age'];
         let noAlerts = document.createElement('h3');
@@ -318,7 +332,7 @@ function cleanInfoDiv() {
 function updateInfoDiv(patientIndex, alertIndex) {
     cleanInfoDiv();
     let infoDiv = document.getElementById("infoDiv");
-    let alertInfo = filteredList[patientIndex][alertIndex];
+    let alertInfo = dataList[patientIndex][alertIndex];
     let ruleInfo = getRuleInformation(alertInfo.Regel);
 
     let alertText = document.createElement("h1");
@@ -363,7 +377,7 @@ function updateInfoDiv(patientIndex, alertIndex) {
     drugInfoBox.classList.add("infoBoxes");
     let drugList = document.createElement("ul");
 
-    alertInfo["RiskLM"][0].split(", ").forEach((drug) => {
+    alertInfo["RiskLM"].split(", ").forEach((drug) => {
         let singleDrug = document.createElement("li");
         singleDrug.innerHTML = drug;
         drugList.appendChild(singleDrug);
@@ -443,7 +457,7 @@ function updatePatientDiv(patientData, patientIndex) {
     let commentBox = document.createElement("div");
     commentBox.classList.add("infoBoxes");
     patientDiv.appendChild(createDividingLine("Tidigare kommentarer"));
-    filteredList[patientIndex].forEach((alert) => {
+    dataList[patientIndex].forEach((alert) => {
         let comment = document.createElement("p");
         comment.innerHTML = alert["Kommentar"];
         commentBox.appendChild(comment);
@@ -495,7 +509,7 @@ function createDataUpdateButton(label, id) {
         </div>
         <div id="listGridItem" class="selectionGridItem">
             <div class="headerBox">
-                <p v-if="selectionPageState == 'Category'" id="patientListHeader" class="listHeader">Kategori: {{ selectionStateVal.substring(selectionStateVal.indexOf(' ') + 1) }}</p>
+                <!-- <p v-if="selectionPageState == 'Category' && selectionStateVal.value=0" id="patientListHeader" class="listHeader">Kategori: {{ selectionStateVal.substring(selectionStateVal.indexOf(' ') + 1) }}</p> -->
             </div>
             <div id="listDiv"></div>
         </div>
@@ -563,7 +577,7 @@ b {
     height: auto;
     top: 10px;
     /* right: calc(30% + 33px + 64px); */
-    left: 17.5%;
+    left: 15.5%;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -577,7 +591,7 @@ b {
 }
 
 select {
-    width: 80px;
+    width: auto;
 }
 
 #availableRuleBoundingBox {
