@@ -79,3 +79,7 @@ export function getWardNames() {
     });
     return wardNameArray;
 }
+
+export function getCategoryNames() {
+    
+}

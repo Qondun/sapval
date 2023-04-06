@@ -1,7 +1,8 @@
 <script setup>
     import { computed } from 'vue';
     import { getCategoryData } from '../records/dataFunctions';
-    import { wardsInfo } from '../records/wards.json'
+    import { wardsInfo } from '../records/inpatientWards.json';
+    import { WarningInfo } from '../records/warningList.json';
     const props = defineProps({ 
         layoutState: Number,
         selectionPageState: String,
@@ -40,8 +41,11 @@
 
 <template>
     <div v-if="selectionPageState=='Ward'" id="wardGrid">
-        <div v-for="ward in wardsInfo" :key="ward" class="wardDiv gridButton">
-            <p>Avdelning {{ ward.Avdelning }}</p>
+        <div v-for="ward in wardsInfo" :key="ward" class="wardDiv gridButton" @click="layoutState=3, selectionStateVal=ward.KeyNamn">
+            <p>Avdelning {{ ward.KeyNamn }}</p>
+            <div class="pharmacistDiv">
+                <span class="pharmacistTooltip">{{ ward.WardContactPharmacistFirstName + ' ' + ward.WardContactPharmacistLastName }}</span>
+            </div>
         </div>
     </div>
     <div v-else-if="selectionPageState=='Category'" id="categoryGrid">
@@ -74,8 +78,8 @@
         </div>
     </div>
     <div v-else id="ruleGrid">
-        <div v-for="ruleNum in 63" :key="ruleNum" class="ruleDiv gridButton">
-            <p>Regel {{ ruleNum }}</p>
+        <div v-for="rule in WarningInfo" :key="rule" class="ruleDiv gridButton" @click="layoutState=3, selectionStateVal=rule.warningNumber">
+            <p>Regel {{ rule.warningNumber }}</p>
         </div>
     </div>
 </template>
@@ -124,12 +128,40 @@
 }
 
 .ruleDiv {
-    /* width: 9%;
-    height: 45px; */
     background-color: var(--buttonColor);
     border-radius: var(--buttonBorderRadius);
     margin: 5px;
 }
 
+.pharmacistDiv {
+    width: 20px;
+    height: 20px;
+    background-image: url("./icons/pharmacistIcon.png");
+    background-size: 20px 20px;
+    position: absolute;
+    display: inline-block;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+}
+
+.pharmacistTooltip {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    top: -20px;
+    right: 105%;
+      /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+.pharmacistDiv:hover .pharmacistTooltip {
+    visibility: visible;
+}
 
 </style>

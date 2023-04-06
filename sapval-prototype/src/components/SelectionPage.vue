@@ -10,6 +10,7 @@ let filterRange = []; // [Lower bound, Upper bound]
 let dataList = [];
 let patientIDSet = new Set();
 let ruleNumberSet = [];
+let categoryNames = ["Riskprofil", "Interaktioner", "Njurfunktion", "Läkemedel och äldre", "Läkemedel och labvärden", "Läkemedel och diagnos", "Läkemedel och status", "Övriga läkemedelskombinationer", "Övrigt"];
 
 let wardName = "All";
 let categoryID = 0;
@@ -65,21 +66,20 @@ onMounted(() => {
         case "Rule":
             ruleNr = selectionStateVal.value;
     }
-    [patientIDSet, dataList, ruleNumberSet] = getFilteredData(wardName, categoryID, ruleNr);
-    setCategoryRange();
-    createFilterDropdowns();
-    createAvailableRuleBoxes();
     setUp();
 })
 
 function setUp() {
-    setCategoryRange();
     [patientIDSet, dataList, ruleNumberSet] = getFilteredData(wardName, categoryID, ruleNr);
+    setCategoryRange();
+    createFilterDropdowns();
+    createAvailableRuleBoxes();
     createLayout();
 }
 
 function setCategoryRange() {
-    switch (categoryID) {
+    console.log("inside setCategoryRange");
+    switch (Number(categoryID)) {
         case 1:
             filterRange = [1, 9];
             break;
@@ -113,10 +113,18 @@ function setCategoryRange() {
     }
 }
 
+function clearFilterDropdowns() {
+    let boundingBox = document.getElementById('filterDropdownBoundingBox');
+    while (boundingBox.firstChild) {
+        boundingBox.removeChild(boundingBox.firstChild);
+    }
+}
+
 function createFilterDropdowns() {
-    let selectionGrid = document.getElementById("selectionGrid")
-    let filterDropdownBoundingBox = document.createElement('div');
-    filterDropdownBoundingBox.setAttribute('id','filterDropdownBoundingBox');
+    let selectionGrid = document.getElementById("selectionGrid");
+    clearFilterDropdowns();
+
+    let filterDropdownBoundingBox = document.getElementById('filterDropdownBoundingBox');
 
     if(selectionPageState.value!="Ward") {
         let wardBox = document.createElement('div');
@@ -133,7 +141,7 @@ function createFilterDropdowns() {
 
         let allOption = document.createElement('option');
         allOption.innerHTML = "Alla";
-        allOption.setAttribute('value', 0)
+        allOption.setAttribute('value', "All")
         wardSelect.appendChild(allOption);
 
         let wardNames = getWardNames();
@@ -144,21 +152,38 @@ function createFilterDropdowns() {
             wardOption.innerHTML = "Avdelning " + ward;
             wardSelect.appendChild(wardOption);
         });
+        wardSelect.value = wardName;
         wardBox.appendChild(wardSelect);
         filterDropdownBoundingBox.appendChild(wardBox);
     } 
-    if (selectionPageState.value!="Category") {
+    if(selectionPageState.value!="Category") {
         let categoryBox = document.createElement('div');
         let categoryLegend = document.createElement('legend');
-        categoryBox.appendChild(categoryLegend);
         categoryLegend.innerHTML = "Kategorier";
+        categoryBox.appendChild(categoryLegend);
 
         let categorySelect = document.createElement('select');
-        categorySelect.setAttribute('id','ruleSelect');
-        categorySelect.setAttribute('onChange', 'updateFilter()')
+        categorySelect.setAttribute('id','categorySelect');
+        categorySelect.addEventListener('change', (event) =>{
+            categoryID = event.target.value;
+            setUp();
+        });
+
         let allOption = document.createElement('option');
         allOption.innerHTML = "Alla";
+        allOption.setAttribute('value', 0)
         categorySelect.appendChild(allOption);
+
+        var catVal = 1;
+        categoryNames.forEach((category) =>{
+            // let wardData = numberForRule(ruleNr);
+            let categoryOption = document.createElement('option');
+            categoryOption.setAttribute('value', catVal);
+            categoryOption.innerHTML = category;
+            categorySelect.appendChild(categoryOption);
+            catVal++;
+        });
+        categorySelect.value = categoryID;
         categoryBox.appendChild(categorySelect);
         filterDropdownBoundingBox.appendChild(categoryBox);
     } 
@@ -171,9 +196,7 @@ function createFilterDropdowns() {
         let ruleSelect = document.createElement('select');
         ruleSelect.setAttribute('id','ruleSelect');
         ruleSelect.addEventListener('change', (event) =>{
-            console.log("rulenr before: " + ruleNr);
             ruleNr = event.target.value;
-            console.log("rulenr after: " + ruleNr);
             setUp();
         });
 
@@ -182,6 +205,7 @@ function createFilterDropdowns() {
         allOption.setAttribute('value', 0)
         ruleSelect.appendChild(allOption);
 
+        console.log("filterrange: " + filterRange + ", categoryID: " + categoryID);
         for (var ruleNum = filterRange[0]; ruleNum <= filterRange[1]; ruleNum++) {
             let ruleData = numberForRule(ruleNum);
             let ruleOption = document.createElement('option');
@@ -189,6 +213,7 @@ function createFilterDropdowns() {
             ruleOption.innerHTML = "Regel " + ruleNum + ": " + ruleData + " st";
             ruleSelect.appendChild(ruleOption);
         }
+        ruleSelect.value = ruleNr;
         ruleBox.appendChild(ruleSelect);
         filterDropdownBoundingBox.appendChild(ruleBox);
     }
@@ -200,6 +225,7 @@ function createAvailableRuleBoxes() {
     let selectionGrid = document.getElementById("selectionGrid");
     let availableRuleBoundingBox = document.createElement("div");
     availableRuleBoundingBox.setAttribute("id", "availableRuleBoundingBox");
+
     for (var ruleNr = filterRange[0]; ruleNr <= filterRange[1]; ruleNr++) {
         let ruleData = numberForRule(ruleNr);
         let availableRuleBox = document.createElement("div");
@@ -317,8 +343,10 @@ function createLayout() {
 
 function cleanListDiv() {
     let listDiv = document.getElementById("listDiv");
-    while (listDiv.firstChild) {
-        listDiv.removeChild(listDiv.firstChild);
+    if(listDiv) {
+        while (listDiv.firstChild) {
+            listDiv.removeChild(listDiv.firstChild);
+        }
     }
 }
 
@@ -507,9 +535,13 @@ function createDataUpdateButton(label, id) {
         <div id="backButton" @click="layoutState = 0">
             <p>Backa</p>
         </div>
+        <div id="filterDropdownBoundingBox"></div>
+        <div id="availableRulesBoundingBox"></div>
         <div id="listGridItem" class="selectionGridItem">
             <div class="headerBox">
-                <!-- <p v-if="selectionPageState == 'Category' && selectionStateVal.value=0" id="patientListHeader" class="listHeader">Kategori: {{ selectionStateVal.substring(selectionStateVal.indexOf(' ') + 1) }}</p> -->
+                <!-- <p v-if="selectionPageState == 'Category'" id="patientListHeader" class="listHeader">Kategori: {{ categoryNames[selectionStateVal] }}</p> -->
+                <p v-if="selectionPageState == 'Ward'" id="patientListHeader" class="listHeader">Avdelning {{ selectionStateVal }}</p>
+                <p v-else id="patientListHEader" class="listHeader">Regel {{ selectionStateVal }}</p>
             </div>
             <div id="listDiv"></div>
         </div>
@@ -563,8 +595,9 @@ b {
     padding: 6px;
     background-color: var(--buttonColor);
     position: absolute;
-    left: 32px;
+    right: 20px;
     top: 10px;
+    z-index: 1;
 }
 
 #backButton:hover {
@@ -573,11 +606,11 @@ b {
 }
 
 #filterDropdownBoundingBox {
-    width: 10%;
+    width: 30%;
     height: auto;
     top: 10px;
     /* right: calc(30% + 33px + 64px); */
-    left: 15.5%;
+    left: 66px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
