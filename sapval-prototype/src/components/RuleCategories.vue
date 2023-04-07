@@ -1,6 +1,6 @@
 <script setup>
     import { computed } from 'vue';
-    import { getCategoryData } from '../records/dataFunctions';
+    import { noAlertsForWard, noAlertsForCategory, noAlertsForRule, getCategoryNames } from '../records/dataFunctions';
     import { wardsInfo } from '../records/inpatientWards.json';
     import { WarningInfo } from '../records/warningList.json';
     const props = defineProps({ 
@@ -43,48 +43,33 @@
     <div v-if="selectionPageState=='Ward'" id="wardGrid">
         <div v-for="ward in wardsInfo" :key="ward" class="wardDiv gridButton" @click="layoutState=3, selectionStateVal=ward.KeyNamn">
             <p>Avdelning {{ ward.KeyNamn }}</p>
-            <div class="pharmacistDiv">
+            <div v-if="ward.WardContactPharmacistFirstName!=''" class="pharmacistDiv">
                 <span class="pharmacistTooltip">{{ ward.WardContactPharmacistFirstName + ' ' + ward.WardContactPharmacistLastName }}</span>
             </div>
+            <p> Antal varningar: {{ noAlertsForWard(ward.KeyNamn) }} </p>
         </div>
     </div>
     <div v-else-if="selectionPageState=='Category'" id="categoryGrid">
-        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal=1 ">
-            <p>Riskprofil {{ getCategoryData([1,9])[1].reduce((count, current) => count + current.length, 0) }}</p>
-        </div>
-        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal=2">
-            <p>Interaktioner {{ getCategoryData([10,15])[1].reduce((count, current) => count + current.length, 0) }}</p>
-        </div>
-        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal=3">
-            <p>Njurfunktion {{ getCategoryData([16,33])[1].length }}</p>
-        </div>
-        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal=4">
-            <p>Läkemedel och äldre {{ getCategoryData([34,30])[1].reduce((count, current) => count + current.length, 0) }}</p>
-        </div>
-        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal=5">
-            <p>Läkemedel och labvärden {{ getCategoryData([41,49])[1].reduce((count, current) => count + current.length, 0) }}</p>
-        </div>
-        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal=6">
-            <p>Läkemedel och diagnos {{ getCategoryData([50,51])[1].length }}</p>
-        </div>
-        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal=7">
-            <p>Läkemedel och status {{ getCategoryData([52,55])[1].length }}</p>
-        </div>
-        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal=8">
-            <p>Övriga läkemedelskombinationer {{ getCategoryData([56,58])[1].length }}</p>
-        </div>
-        <div class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal=9">
-            <p>Övrigt {{ getCategoryData([59,63])[1].length }}</p>
+        <div v-for="(cat, index) in getCategoryNames()" :key="index+1" class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal=index+1 ">
+            <p>{{ cat }}</p>
+            <p>Antal varningar: {{ noAlertsForCategory(index+1) }}</p>
         </div>
     </div>
     <div v-else id="ruleGrid">
         <div v-for="rule in WarningInfo" :key="rule" class="ruleDiv gridButton" @click="layoutState=3, selectionStateVal=rule.warningNumber">
             <p>Regel {{ rule.warningNumber }}</p>
+            <p> Antal varningar: {{ noAlertsForRule(rule.warningNumber) }} </p>
         </div>
     </div>
 </template>
 
 <style>
+.gridButton {
+    background-color: var(--buttonColor);
+    border-radius: var(--buttonBorderRadius);
+    padding: 5px;
+    font-size: 100%;
+}
 .gridButton:hover {
     background-color: var(--buttonColorHover);
     cursor: pointer;
@@ -99,8 +84,6 @@
 }
 
 .wardDiv {
-    background-color: var(--buttonColor);
-    border-radius: var(--buttonBorderRadius);
     margin: 5px;
 }
 
@@ -113,10 +96,8 @@
 }
 
 .categoryDiv {
-    background-color: var(--buttonColor);
     width: 30%;
     height: 30%;
-    border-radius: var(--buttonBorderRadius);
 }
 
 #ruleGrid {
@@ -128,14 +109,12 @@
 }
 
 .ruleDiv {
-    background-color: var(--buttonColor);
-    border-radius: var(--buttonBorderRadius);
     margin: 5px;
 }
 
 .pharmacistDiv {
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
     background-image: url("./icons/pharmacistIcon.png");
     background-size: 20px 20px;
     position: absolute;

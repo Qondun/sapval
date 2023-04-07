@@ -68,10 +68,6 @@ export function getRuleInformation(ruleNr) {
     return WarningData.filter(obj=> obj.warningNumber==ruleNr)[0];
 }
 
-export function numberForRule(ruleNr) {
-    return[WarningInfo.filter(obj=> obj.Regel==ruleNr).length]
-}
-
 export function getWardNames() {
     let wardNameArray = [];
     wardsInfo.forEach((ward) =>{
@@ -80,6 +76,23 @@ export function getWardNames() {
     return wardNameArray;
 }
 
+export function noAlertsForWard(wardName) {
+    let patientList = PatientAlertDrug.filter(obj=> obj['PatientLocation']==wardName);
+    let alertCounter = 0;
+    patientList.forEach((patient) => {
+        alertCounter += WarningInfo.filter(obj=> obj.PersonID==patient['Person ID']).length;       
+    })
+    return alertCounter;
+}
+
+export function noAlertsForCategory(categoryID) {
+    return WarningInfo.filter(obj=> obj.RegelkategoriID==categoryID-1).length;
+}
+
+export function noAlertsForRule(ruleNr) {
+    return WarningInfo.filter(obj=> obj.Regel==ruleNr).length;
+}
+
 export function getCategoryNames() {
-    
+    return ["Riskprofil", "Interaktioner", "Njurfunktion", "Läkemedel och äldre", "Läkemedel och labvärden", "Läkemedel och diagnos", "Läkemedel och status", "Övriga läkemedelskombinationer", "Övrigt"];
 }

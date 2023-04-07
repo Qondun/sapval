@@ -4608,23 +4608,6 @@
          "Antal träffar per patient": 6
       },
       {
-         "PersonID": 1077,
-         "GFR": "49",
-         "K": "4",
-         "Ca": "-",
-         "BT": "120/ 70",
-         "Hg": "",
-         "Andningsfrekvens": "22",
-         "Puls": "78",
-         "RegelkategoriID": 8,
-         "Regelkategori": "Övrigt",
-         "Regel": 63,
-         "RiskLM": "Vamcomycin",
-         "Kommentar": "Ingen koncentrationsbestämning under behandlingstiden.",
-         "ID för alert": "1201",
-         "Antal träffar per patient": 2
-      },
-      {
          "PersonID": 1078,
          "GFR": ">90",
          "K": "4.1",

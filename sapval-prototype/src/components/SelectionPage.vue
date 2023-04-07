@@ -1,7 +1,7 @@
 <script setup>
 import { isInDestructureAssignment } from '@vue/compiler-core';
 import { computed, onMounted } from 'vue';
-import { getCategoryData, getRuleData, getPatientInformation, getRuleInformation, numberForRule, getFilteredData, getWardNames } from '../records/dataFunctions';
+import { getPatientInformation, getRuleInformation, noAlertsForRule, getFilteredData, getWardNames, getCategoryNames } from '../records/dataFunctions';
 import { storeToRefs } from 'pinia'
 import { useWarningsByWardStore } from '../stores/warningsByWard';
 import { useWarningsByRuleStore } from '../stores/warningsByRule';
@@ -10,7 +10,6 @@ let filterRange = []; // [Lower bound, Upper bound]
 let dataList = [];
 let patientIDSet = new Set();
 let ruleNumberSet = [];
-let categoryNames = ["Riskprofil", "Interaktioner", "Njurfunktion", "Läkemedel och äldre", "Läkemedel och labvärden", "Läkemedel och diagnos", "Läkemedel och status", "Övriga läkemedelskombinationer", "Övrigt"];
 
 let wardName = "All";
 let categoryID = 0;
@@ -105,10 +104,10 @@ function setCategoryRange() {
             filterRange = [56, 58];
             break;
         case 9:
-            filterRange = [59, 63];
+            filterRange = [59, 62];
             break;
         default:
-            filterRange = [1, 63];
+            filterRange = [1, 62];
         //filterRange = [1,9];  
     }
 }
@@ -175,6 +174,7 @@ function createFilterDropdowns() {
         categorySelect.appendChild(allOption);
 
         var catVal = 1;
+        let categoryNames = getCategoryNames();
         categoryNames.forEach((category) =>{
             // let wardData = numberForRule(ruleNr);
             let categoryOption = document.createElement('option');
@@ -207,7 +207,7 @@ function createFilterDropdowns() {
 
         console.log("filterrange: " + filterRange + ", categoryID: " + categoryID);
         for (var ruleNum = filterRange[0]; ruleNum <= filterRange[1]; ruleNum++) {
-            let ruleData = numberForRule(ruleNum);
+            let ruleData = noAlertsForRule(ruleNum);
             let ruleOption = document.createElement('option');
             ruleOption.setAttribute('value', ruleNum);
             ruleOption.innerHTML = "Regel " + ruleNum + ": " + ruleData + " st";
@@ -227,7 +227,7 @@ function createAvailableRuleBoxes() {
     availableRuleBoundingBox.setAttribute("id", "availableRuleBoundingBox");
 
     for (var ruleNr = filterRange[0]; ruleNr <= filterRange[1]; ruleNr++) {
-        let ruleData = numberForRule(ruleNr);
+        let ruleData = noAlertsForRule(ruleNr);
         let availableRuleBox = document.createElement("div");
         availableRuleBox.classList.add("availableRuleBox");
         availableRuleBox.setAttribute("id", ruleNr);
@@ -272,6 +272,10 @@ function createLayout() {
         let alertIndex = 0;
         alertList.forEach((alert) => {
             let ruleInfo = getRuleInformation(alert.Regel);
+            if(!ruleInfo) {
+                console.log("undefined ruleInfo: " + alert.Regel);
+                console.table(ruleInfo)
+            }
             let singleAlertBox = document.createElement('div');
             singleAlertBox.classList.add("singleAlert");
             singleAlertBox.setAttribute("id", alertIndex);
@@ -539,7 +543,7 @@ function createDataUpdateButton(label, id) {
         <div id="availableRulesBoundingBox"></div>
         <div id="listGridItem" class="selectionGridItem">
             <div class="headerBox">
-                <!-- <p v-if="selectionPageState == 'Category'" id="patientListHeader" class="listHeader">Kategori: {{ categoryNames[selectionStateVal] }}</p> -->
+                <p v-if="selectionPageState == 'Category'" id="patientListHeader" class="listHeader">Kategori: {{ getCategoryNames()[selectionStateVal-1] }}</p>
                 <p v-if="selectionPageState == 'Ward'" id="patientListHeader" class="listHeader">Avdelning {{ selectionStateVal }}</p>
                 <p v-else id="patientListHEader" class="listHeader">Regel {{ selectionStateVal }}</p>
             </div>
@@ -595,7 +599,7 @@ b {
     padding: 6px;
     background-color: var(--buttonColor);
     position: absolute;
-    right: 20px;
+    left: 10px;
     top: 10px;
     z-index: 1;
 }
@@ -848,8 +852,6 @@ select {
     justify-content: space-around;
     margin-top: -10px;
 }
-
-#drugInfoBox {}
 
 #drugInfoBox p {
     font-weight: bold;
