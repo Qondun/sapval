@@ -42,7 +42,8 @@
 <template>
     <div v-if="selectionPageState=='Ward'" id="wardGrid">
         <div v-for="ward in wardsInfo" :key="ward" class="wardDiv gridButton" @click="layoutState=3, selectionStateVal=ward.KeyNamn">
-            <p>Avdelning {{ ward.KeyNamn }}</p>
+            <p>Avdelning {{ ward.KeyNamn }} </p>
+            <p class="wardTypeText">{{ ward.wardType }}</p>
             <div v-if="ward.WardContactPharmacistFirstName!=''" class="pharmacistDiv">
                 <span class="pharmacistTooltip">{{ ward.WardContactPharmacistFirstName + ' ' + ward.WardContactPharmacistLastName }}</span>
             </div>
@@ -73,6 +74,14 @@
 .gridButton:hover {
     background-color: var(--buttonColorHover);
     cursor: pointer;
+}
+.gridButton p:first-child {
+    font-weight: bold;
+    font-size: 107%;
+}
+
+.wardTypeText {
+    margin-top: -9px;
 }
 
 #wardGrid {
@@ -105,11 +114,11 @@
     height: 100%;
     display: grid;
     grid-template-columns: repeat(9, 1fr);
-    padding: 5px;
+    padding: 0px;
 }
 
 .ruleDiv {
-    margin: 5px;
+    margin: 4px;
 }
 
 .pharmacistDiv {
