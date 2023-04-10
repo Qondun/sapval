@@ -1,10 +1,11 @@
 <script setup>
 import { isInDestructureAssignment } from '@vue/compiler-core';
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, createVNode, render } from 'vue';
 import { getPatientInformation, getRuleInformation, noAlertsForRule, getFilteredData, getWardNames, getCategoryNames } from '../records/dataFunctions';
 import { storeToRefs } from 'pinia'
 import { useWarningsByWardStore } from '../stores/warningsByWard';
 import { useWarningsByRuleStore } from '../stores/warningsByRule';
+import AlertForm from './AlertForm.vue';
 
 let filterRange = []; // [Lower bound, Upper bound]
 let dataList = [];
@@ -14,6 +15,8 @@ let ruleNumberSet = [];
 let wardName = "All";
 let categoryID = 0;
 let ruleNr = 0;
+
+let currentAlert = null;
 
 const wardStore = useWarningsByWardStore()
 wardStore.initialize()
@@ -205,7 +208,6 @@ function createFilterDropdowns() {
         allOption.setAttribute('value', 0)
         ruleSelect.appendChild(allOption);
 
-        console.log("filterrange: " + filterRange + ", categoryID: " + categoryID);
         for (var ruleNum = filterRange[0]; ruleNum <= filterRange[1]; ruleNum++) {
             let ruleData = noAlertsForRule(ruleNum);
             let ruleOption = document.createElement('option');
@@ -221,20 +223,22 @@ function createFilterDropdowns() {
     selectionGrid.appendChild(filterDropdownBoundingBox);
 }
 
-function createAvailableRuleBoxes() {
+function createAvailableRuleBoxes() { // TODO: remake to show accurate information for ward and rule
     let selectionGrid = document.getElementById("selectionGrid");
     let availableRuleBoundingBox = document.createElement("div");
     availableRuleBoundingBox.setAttribute("id", "availableRuleBoundingBox");
 
     for (var ruleNr = filterRange[0]; ruleNr <= filterRange[1]; ruleNr++) {
         let ruleData = noAlertsForRule(ruleNr);
-        let availableRuleBox = document.createElement("div");
-        availableRuleBox.classList.add("availableRuleBox");
-        availableRuleBox.setAttribute("id", ruleNr);
-        let availableRuleBoxText = document.createElement("p");
-        availableRuleBoxText.innerHTML = "Regel " + ruleNr + "<br>" + ruleData + " st";
-        availableRuleBox.appendChild(availableRuleBoxText);
-        availableRuleBoundingBox.appendChild(availableRuleBox);
+        if(ruleData) {
+            let availableRuleBox = document.createElement("div");
+            availableRuleBox.classList.add("availableRuleBox");
+            availableRuleBox.setAttribute("id", ruleNr);
+            let availableRuleBoxText = document.createElement("p");
+            availableRuleBoxText.innerHTML = "Regel " + ruleNr + "<br>" + ruleData + " st";
+            availableRuleBox.appendChild(availableRuleBoxText);
+            availableRuleBoundingBox.appendChild(availableRuleBox);
+        }
     };
     selectionGrid.appendChild(availableRuleBoundingBox);
 }
@@ -304,8 +308,12 @@ function createLayout() {
                 if (!alreadySelected) {
                     singleAlertBox.classList.add("selected");
                     updateInfoDiv(patientBox.id, singleAlertBox.id);
+                    currentAlert = alert;
+                    console.log("updated?" + currentAlert)
                 } else {
                     cleanInfoDiv();
+                    currentAlert = null;
+                    console.log("updated?" + currentAlert)
                 }
 
             });
@@ -356,24 +364,26 @@ function cleanListDiv() {
 
 function cleanInfoDiv() {
     let infoDiv = document.getElementById("infoDiv");
-    while (infoDiv.firstChild) {
+    while (infoDiv.firstChild && infoDiv.firstChild!=infoDiv.lastChild) {
         infoDiv.removeChild(infoDiv.firstChild);
     }
 }
 
 function updateInfoDiv(patientIndex, alertIndex) {
     cleanInfoDiv();
-    let infoDiv = document.getElementById("infoDiv");
     let alertInfo = dataList[patientIndex][alertIndex];
+    let infoDiv = document.getElementById("infoDiv");
     let ruleInfo = getRuleInformation(alertInfo.Regel);
+    let patientDivBoundingBox = document.createElement('div');
+
 
     let alertText = document.createElement("h1");
     alertText.innerHTML = "Regel " + alertInfo.Regel;
-    infoDiv.appendChild(alertText);
+    patientDivBoundingBox.appendChild(alertText);
 
     let alertInfoText = document.createElement("p");
     alertInfoText.innerHTML = ruleInfo.warningName;
-    infoDiv.appendChild(alertInfoText);
+    patientDivBoundingBox.appendChild(alertInfoText);
 
     let severityLevelBox = document.createElement("div");
     severityLevelBox.classList.add("severityLevelBox");
@@ -382,7 +392,7 @@ function updateInfoDiv(patientIndex, alertIndex) {
     let severityLevelText = document.createElement("p");
     severityLevelText.innerHTML = ruleInfo.severityLevel;
     severityLevelBox.appendChild(severityLevelText);
-    infoDiv.appendChild(severityLevelBox);
+    patientDivBoundingBox.appendChild(severityLevelBox);
 
     // Patient values
     let mainInfoBox = document.createElement("div");
@@ -447,11 +457,17 @@ function updateInfoDiv(patientIndex, alertIndex) {
     }
 
     //JENNS BUTTON STUFF
-    console.log(wardStoreRef)
+    // console.log(wardStoreRef)
     // mainInfoBox.appendChild(createActionBox(patientIndex, alertIndex));
     //mainInfoBox.appendChild(createDividingLine("Update Alert Jenn"));
+    mainInfoBox.appendChild(document.createElement('alert-form'));
+    
+    
     mainInfoBox.appendChild(createDataUpdateButton("Jenn Button", 'JennID'));
-    infoDiv.appendChild(mainInfoBox);
+    patientDivBoundingBox.appendChild(mainInfoBox);
+
+    mainInfoBox.appendChild(createDividingLine("Update Alert Jenn"));
+    infoDiv.prepend(patientDivBoundingBox);
 }
 
 function cleanPatientDiv() {
@@ -512,8 +528,8 @@ function createDataUpdateButton(label, id) {
     let filterButtonText = document.createElement("p");
     filterButtonText.innerHTML = "Jenn Button";
     filterButton.appendChild(filterButtonText);
-    console.log("Creating the button...")
-    console.log(wardStoreRef)
+    // console.log("Creating the button...")
+    // console.log(wardStoreRef)
     filterButton.addEventListener("click", function () {
 
         console.log("clicked");
@@ -530,7 +546,6 @@ function createDataUpdateButton(label, id) {
 
     return filterButton
 }
-
 </script>
 
 <template>
@@ -552,15 +567,12 @@ function createDataUpdateButton(label, id) {
         
         <div id="alertGridItem" class="selectionGridItem">
             <div class="headerBox">
-                <p class="listHeader">Varningsinformation</p>
+                <p class="listHeader">Varningsinformation {{ currentAlert }}</p>
             </div>
             <div id="infoDiv">
-                <div id="actionBox">
-                    <div id="optionButtonBox">
-                        <div id="dismissOptionButton" class="optionTab" :class="{ selected: selectedTab==0 }">
-                            <p>Dismiss</p>
-                        </div>
-                    </div>
+                <AlertForm v-if="currentAlert!=null" :alert="currentAlert"/>
+                <div v-else>
+                    <p>Crazy</p>
                 </div>
             </div>
         </div>

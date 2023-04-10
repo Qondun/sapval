@@ -38,8 +38,8 @@ export function getRuleData(ruleNumber) {
 }
 
 export function getFilteredData(wardName, categoryID, ruleNr) {
-    console.log("running getFilteredData")
-    console.log("wardName: " + wardName + " categoryID: " + categoryID + " ruleNr: " + ruleNr);
+    // console.log("running getFilteredData")
+    // console.log("wardName: " + wardName + " categoryID: " + categoryID + " ruleNr: " + ruleNr);
     var dataList = [];
     var patientIDSet = new Set();
     var ruleNumberSet =[];

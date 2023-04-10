@@ -47,19 +47,29 @@
             <div v-if="ward.WardContactPharmacistFirstName!=''" class="pharmacistDiv">
                 <span class="pharmacistTooltip">{{ ward.WardContactPharmacistFirstName + ' ' + ward.WardContactPharmacistLastName }}</span>
             </div>
-            <p> Antal varningar: {{ noAlertsForWard(ward.KeyNamn) }} </p>
+            <p class="noAlertText"> {{ noAlertsForWard(ward.KeyNamn) }} </p>
         </div>
     </div>
     <div v-else-if="selectionPageState=='Category'" id="categoryGrid">
         <div v-for="(cat, index) in getCategoryNames()" :key="index+1" class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal=index+1 ">
             <p>{{ cat }}</p>
-            <p>Antal varningar: {{ noAlertsForCategory(index+1) }}</p>
+            <p class="noAlertText"> {{ noAlertsForCategory(index+1) }}</p>
         </div>
     </div>
     <div v-else id="ruleGrid">
         <div v-for="rule in WarningInfo" :key="rule" class="ruleDiv gridButton" @click="layoutState=3, selectionStateVal=rule.warningNumber">
-            <p>Regel {{ rule.warningNumber }}</p>
-            <p> Antal varningar: {{ noAlertsForRule(rule.warningNumber) }} </p>
+            <p>Regel {{ rule.warningNumber }} 
+                <span v-if="0<=rule.warningNumber && rule.warningNumber<=9">(RP)</span>
+                <span v-else-if="10<=rule.warningNumber && rule.warningNumber<=15">(I)</span>
+                <span v-else-if="16<=rule.warningNumber && rule.warningNumber<=33">(NF)</span>
+                <span v-else-if="34<=rule.warningNumber && rule.warningNumber<=40">(LÄ)</span>
+                <span v-else-if="41<=rule.warningNumber && rule.warningNumber<=49">(LL)</span>
+                <span v-else-if="50<=rule.warningNumber && rule.warningNumber<=51">(LD)</span>
+                <span v-else-if="52<=rule.warningNumber && rule.warningNumber<=55">(LS)</span>
+                <span v-else-if="56<=rule.warningNumber && rule.warningNumber<=58">(ÖL)</span>
+                <span v-else>(Ö)</span>
+            </p>
+            <p class="noAlertText"> {{ noAlertsForRule(rule.warningNumber) }} </p>
         </div>
     </div>
 </template>
@@ -70,6 +80,8 @@
     border-radius: var(--buttonBorderRadius);
     padding: 5px;
     font-size: 100%;
+    display: flex;
+    flex-direction: column;
 }
 .gridButton:hover {
     background-color: var(--buttonColorHover);
@@ -78,6 +90,16 @@
 .gridButton p:first-child {
     font-weight: bold;
     font-size: 107%;
+}
+.gridButton p:last-child {
+    float: right;
+    font-size: 130%;
+}
+
+.noAlertText {
+    position: absolute;
+    bottom: 0;
+    right: 5px;
 }
 
 .wardTypeText {
@@ -114,7 +136,7 @@
     height: 100%;
     display: grid;
     grid-template-columns: repeat(9, 1fr);
-    padding: 0px;
+    padding: 4px;
 }
 
 .ruleDiv {
@@ -142,7 +164,7 @@
     padding: 5px 0;
     border-radius: 6px;
     top: -20px;
-    right: 105%;
+    right: 100%;
       /* Position the tooltip text - see examples below! */
     position: absolute;
     z-index: 1;

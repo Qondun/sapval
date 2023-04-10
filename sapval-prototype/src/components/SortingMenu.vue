@@ -59,7 +59,6 @@
     }
     .menuItem:hover {
         background-color: var(--buttonColorHover);
-        color: white;
         cursor: pointer;
     }
     .selectedTab {
