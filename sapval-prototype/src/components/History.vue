@@ -1,7 +1,13 @@
 <script setup>
 import { computed } from 'vue';
+import { storeToRefs } from 'pinia'
+import { useActivityLogStore } from '../stores/logger';
 const props = defineProps({ modelValue: Number });
 const emit = defineEmits(['update:modelValue']);
+
+const activityLog = useActivityLogStore()
+activityLog.initialize()
+const activityLogRef = storeToRefs(activityLog)
 
 const val = computed({
     get() {
@@ -14,22 +20,22 @@ const val = computed({
 </script>
 
 <template>
-    <div id="miniMenuBounding">
-        <div id="messages" class="miniMenuButton" @click="val = 0"> <!-- Create specific component for envelopes -->
-            <p>Meddelanden</p>
-        </div>
-        <div v-if="val == 1" id="closeButton" class="miniMenuButton" @click="val = 0">
-            <p>Stäng historik</p>
-        </div>
-        <div v-if="val != 1" id="historyButton" class="miniMenuButton" @click="val = 1">
-            <p>Historik</p>
-        </div>
-        <div v-if="val == 99" id="adminCloseButton" class="miniMenuButton" @click="val = 0">
-            <p>Stäng Admin</p>
-        </div>
-        <div v-if="val != 99" id="adminButton" class="miniMenuButton" @click="val = 99">
-            <p>Admin</p>
-        </div>
+    <div>
+        <H1>Activity Log</H1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Timestamp</th>
+                    <th scope="col">Event</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in activityLog.activityLog">
+                    <td>{{ Date(item.time) }}</td>
+                    <td>{{ item.item }}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </template>
 

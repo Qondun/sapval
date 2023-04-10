@@ -6,6 +6,8 @@ import SortingMenu from './components/SortingMenu.vue'
 import RuleCategories from './components/RuleCategories.vue'
 import PatientCircle from './components/PatientCircle.vue'
 import MiniMenu from './components/MiniMenu.vue'
+import History from './components/History.vue'
+import AppAdmin from './components/AppAdmin.vue'
 import { reactive, ref } from 'vue';
 import WardOverviewChart from './components/WardOverviewChart.vue';
 import SelectionPage from './components/SelectionPage.vue'
@@ -50,12 +52,12 @@ const xxxWarning = ref(warningNumberArray);
 
     <div id="dynamicBottom" class="overviewGridItem">
       <!-- <TheWelcome v-if="dynamicBotState == 0" @clicked="increment" :count="state.count" />
-        <RuleCategories v-else-if="dynamicBotState == 1" v-model:layoutState="layoutState"
-          v-model:selectionPageState=selectionPageState v-model:selectionStateVal=selectionStateVal />
-        <div v-else-if="dynamicBotState == 2" class="botDiv" style="background-color: green">
-          <h1>3</h1>
-        </div>
-        <PatientCircle v-else /> -->
+                                                                              <RuleCategories v-else-if="dynamicBotState == 1" v-model:layoutState="layoutState"
+                                                                                v-model:selectionPageState=selectionPageState v-model:selectionStateVal=selectionStateVal />
+                                                                              <div v-else-if="dynamicBotState == 2" class="botDiv" style="background-color: green">
+                                                                                <h1>3</h1>
+                                                                              </div>
+                                                                              <PatientCircle v-else /> -->
       <RuleCategories v-model:layoutState="layoutState" v-model:selectionPageState=selectionPageState
         v-model:selectionStateVal=selectionStateVal />
     </div>
@@ -63,10 +65,21 @@ const xxxWarning = ref(warningNumberArray);
 
   <!-- HISTORY PAGE -->
   <div v-else-if="layoutState == 1" id="historyGrid">
-    <h1>Historik</h1>
-    <MiniMenu @clickedHistory="updateLayoutState" v-model="layoutState" />
-    {{ layout.state }}
+    <header class="overviewGridItem">
+      <History />
+      <MiniMenu v-model="layoutState" />
+    </header>
   </div>
+
+
+  <!-- Admin PAGE -->
+  <div v-else-if="layoutState == 99" id="adminGrid">
+    <header class="overviewGridItem">
+      <AppAdmin />
+      <MiniMenu v-model="layoutState" />
+    </header>
+  </div>
+
 
   <!-- SELECTION PAGE -->
   <div v-else id="selectionView">

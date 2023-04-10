@@ -5,7 +5,11 @@ import { getPatientInformation, getRuleInformation, noAlertsForRule, getFiltered
 import { storeToRefs } from 'pinia'
 import { useWarningsByWardStore } from '../stores/warningsByWard';
 import { useWarningsByRuleStore } from '../stores/warningsByRule';
+<<<<<<< HEAD
 import AlertForm from './AlertForm.vue';
+=======
+import { useActivityLogStore } from '../stores/logger';
+>>>>>>> 65b377cf2bf51f38bc8677aaa6d2e691dbad4a59
 
 let filterRange = []; // [Lower bound, Upper bound]
 let dataList = [];
@@ -20,8 +24,12 @@ let currentAlert = null;
 
 const wardStore = useWarningsByWardStore()
 wardStore.initialize()
-
 const wardStoreRef = storeToRefs(wardStore)
+
+const activityLog = useActivityLogStore()
+activityLog.initialize()
+const activityLogRef = storeToRefs(activityLog)
+
 
 const props = defineProps({
     layoutState: Number,
@@ -128,15 +136,15 @@ function createFilterDropdowns() {
 
     let filterDropdownBoundingBox = document.getElementById('filterDropdownBoundingBox');
 
-    if(selectionPageState.value!="Ward") {
+    if (selectionPageState.value != "Ward") {
         let wardBox = document.createElement('div');
         let wardLegend = document.createElement('legend');
         wardLegend.innerHTML = "Avdelningar";
         wardBox.appendChild(wardLegend);
 
         let wardSelect = document.createElement('select');
-        wardSelect.setAttribute('id','wardSelect');
-        wardSelect.addEventListener('change', (event) =>{
+        wardSelect.setAttribute('id', 'wardSelect');
+        wardSelect.addEventListener('change', (event) => {
             wardName = event.target.value;
             setUp();
         });
@@ -147,7 +155,7 @@ function createFilterDropdowns() {
         wardSelect.appendChild(allOption);
 
         let wardNames = getWardNames();
-        wardNames.forEach((ward) =>{
+        wardNames.forEach((ward) => {
             // let wardData = numberForRule(ruleNr);
             let wardOption = document.createElement('option');
             wardOption.setAttribute('value', ward);
@@ -157,16 +165,16 @@ function createFilterDropdowns() {
         wardSelect.value = wardName;
         wardBox.appendChild(wardSelect);
         filterDropdownBoundingBox.appendChild(wardBox);
-    } 
-    if(selectionPageState.value!="Category") {
+    }
+    if (selectionPageState.value != "Category") {
         let categoryBox = document.createElement('div');
         let categoryLegend = document.createElement('legend');
         categoryLegend.innerHTML = "Kategorier";
         categoryBox.appendChild(categoryLegend);
 
         let categorySelect = document.createElement('select');
-        categorySelect.setAttribute('id','categorySelect');
-        categorySelect.addEventListener('change', (event) =>{
+        categorySelect.setAttribute('id', 'categorySelect');
+        categorySelect.addEventListener('change', (event) => {
             categoryID = event.target.value;
             setUp();
         });
@@ -178,7 +186,7 @@ function createFilterDropdowns() {
 
         var catVal = 1;
         let categoryNames = getCategoryNames();
-        categoryNames.forEach((category) =>{
+        categoryNames.forEach((category) => {
             // let wardData = numberForRule(ruleNr);
             let categoryOption = document.createElement('option');
             categoryOption.setAttribute('value', catVal);
@@ -189,16 +197,16 @@ function createFilterDropdowns() {
         categorySelect.value = categoryID;
         categoryBox.appendChild(categorySelect);
         filterDropdownBoundingBox.appendChild(categoryBox);
-    } 
-    if(selectionPageState.value!="Rule") {
+    }
+    if (selectionPageState.value != "Rule") {
         let ruleBox = document.createElement('div');
         let ruleLegend = document.createElement('legend');
         ruleLegend.innerHTML = "Regler";
         ruleBox.appendChild(ruleLegend);
 
         let ruleSelect = document.createElement('select');
-        ruleSelect.setAttribute('id','ruleSelect');
-        ruleSelect.addEventListener('change', (event) =>{
+        ruleSelect.setAttribute('id', 'ruleSelect');
+        ruleSelect.addEventListener('change', (event) => {
             ruleNr = event.target.value;
             setUp();
         });
@@ -276,7 +284,7 @@ function createLayout() {
         let alertIndex = 0;
         alertList.forEach((alert) => {
             let ruleInfo = getRuleInformation(alert.Regel);
-            if(!ruleInfo) {
+            if (!ruleInfo) {
                 console.log("undefined ruleInfo: " + alert.Regel);
                 console.table(ruleInfo)
             }
@@ -355,7 +363,7 @@ function createLayout() {
 
 function cleanListDiv() {
     let listDiv = document.getElementById("listDiv");
-    if(listDiv) {
+    if (listDiv) {
         while (listDiv.firstChild) {
             listDiv.removeChild(listDiv.firstChild);
         }
@@ -444,7 +452,7 @@ function updateInfoDiv(patientIndex, alertIndex) {
     dosingInfoBox.appendChild(dosingText);
     mainInfoBox.appendChild(dosingInfoBox);
 
-    if(ruleInfo.CentralApotekarenToDo!="") {
+    if (ruleInfo.CentralApotekarenToDo != "") {
         mainInfoBox.appendChild(createDividingLine("Åtgärd"));
 
         let toDoBox = document.createElement("div");
@@ -485,7 +493,7 @@ function updatePatientDiv(patientData, patientIndex) {
     alertText.innerHTML = patientData["First Name"] + " " + patientData["Last Name"];
     patientDiv.appendChild(alertText);
     let patientAge = document.createElement("p");
-    patientAge.innerHTML = patientData["Birthday"]+ "-" + patientData["RandomFourDigitCode"] + " (" + patientData["Age"] + " år)";
+    patientAge.innerHTML = patientData["Birthday"] + "-" + patientData["RandomFourDigitCode"] + " (" + patientData["Age"] + " år)";
     patientDiv.appendChild(patientAge);
 
     // Ward information for patient
@@ -535,11 +543,27 @@ function createDataUpdateButton(label, id) {
         console.log("clicked");
         let wardsStore = useWarningsByWardStore()
         let warningStore = useWarningsByRuleStore()
+        let act = useActivityLogStore()
+
+        act.initialize()
         wardStore.initialize()
         //console.log(this.wardStore);
         //wardsStore.testButton(id, 0, 1);
+        act.logAppend('hewwo');
+        act.logConsole();
         wardsStore.completedWarningWardChartUpdate(4, 5, 15);
-        warningStore.completedWarningWardChartUpdate(3, 4, 5)
+        warningStore.completedWarningWardChartUpdate(3, 4, 5);
+
+        const blob = act.logDump()
+        const e = document.createEvent('MouseEvents'),
+            a = document.createElement('a');
+        a.download = "test.json";
+        a.href = window.URL.createObjectURL(blob);
+        a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
+        e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+        a.dispatchEvent(e);
+
+
 
 
     });
@@ -558,22 +582,28 @@ function createDataUpdateButton(label, id) {
         <div id="availableRulesBoundingBox"></div>
         <div id="listGridItem" class="selectionGridItem">
             <div class="headerBox">
-                <p v-if="selectionPageState == 'Category'" id="patientListHeader" class="listHeader">Kategori: {{ getCategoryNames()[selectionStateVal-1] }}</p>
-                <p v-if="selectionPageState == 'Ward'" id="patientListHeader" class="listHeader">Avdelning {{ selectionStateVal }}</p>
+                <p v-if="selectionPageState == 'Category'" id="patientListHeader" class="listHeader">Kategori: {{
+                    getCategoryNames()[selectionStateVal - 1] }}</p>
+                <p v-if="selectionPageState == 'Ward'" id="patientListHeader" class="listHeader">Avdelning {{
+                    selectionStateVal }}</p>
                 <p v-else id="patientListHEader" class="listHeader">Regel {{ selectionStateVal }}</p>
             </div>
             <div id="listDiv"></div>
         </div>
-        
+
         <div id="alertGridItem" class="selectionGridItem">
             <div class="headerBox">
                 <p class="listHeader">Varningsinformation {{ currentAlert }}</p>
             </div>
             <div id="infoDiv">
                 <AlertForm v-if="currentAlert!=null" :alert="currentAlert"/>
-                <div v-else>
-                    <p>Crazy</p>
-                </div>
+                <!-- <div id="actionBox">
+                    <div id="optionButtonBox">
+                        <div id="dismissOptionButton" class="optionTab" :class="{ selected: selectedTab == 0 }">
+                            <p>Dismiss</p>
+                        </div>
+                    </div>
+                </div> -->
             </div>
         </div>
 
@@ -591,6 +621,7 @@ b {
     font-weight: bold;
     font-size: 12pt;
 }
+
 #selectionGrid {
     background-color: var(--background-color);
     width: 100%;
@@ -632,6 +663,7 @@ b {
     justify-content: space-around;
     position: absolute;
 }
+
 #filterDropdownBoundingBox div {
     display: flex;
     margin-left: 15px;
@@ -665,6 +697,7 @@ select {
     /* border-radius: var(--buttonBorderRadius); */
     text-align: center;
 }
+
 /* 
 .availableRuleBox.selected {
     background-color: var(--buttonSelected);
@@ -678,7 +711,7 @@ select {
 } */
 #listGridItem {
     height: 95.5%;
-} 
+}
 
 #listDiv {
     height: calc(100% - 56px);
@@ -706,7 +739,8 @@ select {
     width: 30%;
 }
 
-#patientGridItem, #alertGridItem {
+#patientGridItem,
+#alertGridItem {
     height: 80%;
 }
 
@@ -727,6 +761,7 @@ select {
     flex-flow: row;
     justify-content: space-between;
 }
+
 .patientHeaderBox:hover {
     background-color: var(--buttonColorHover);
 }
@@ -735,6 +770,7 @@ select {
     background-color: var(--buttonSelected);
     border: var(--generalBorders);
 }
+
 .patientHeaderBox.selected:hover {
     background-color: var(--buttonSelectedHover)
 }
@@ -821,17 +857,20 @@ select {
 
 #infoDiv,
 #patientDiv {
-    height: calc(100% - 56px);;
+    height: calc(100% - 56px);
+    ;
     width: 100%;
     background-color: var(--sectionBackground);
     border: var(--buttonBorderRadius);
     overflow: scroll;
     padding: 10px;
 }
+
 #infoDiv p,
 #patientDiv p {
     margin-bottom: 10px;
 }
+
 #infoDiv ul {
     columns: 2;
 }
