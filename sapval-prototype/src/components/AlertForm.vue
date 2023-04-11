@@ -1,20 +1,20 @@
 <script>
-    import { defineProps, onMounted } from 'vue';
+import { defineProps, onMounted } from 'vue';
 
-    let formState = 0;
-    const currentAlert = defineProps(['alert'])
+let formState = 0;
+const currentAlert = defineProps(['alert'])
 
 </script>
 <template>
     <div id="formBoundingBox">
         <div id="formTabBox">
-            <div class="formTab" :class="{selectedTab: formState==0}" onclick="formState=0">
+            <div class="formTab" :class="{ selectedTab: formState == 0 }" onclick="formState=0">
                 <p>Avvisa</p>
             </div>
-            <div class="formTab" :class="{selectedTab: formState==1}" onclick="formState=1">
+            <div class="formTab" :class="{ selectedTab: formState == 1 }" onclick="formState=1">
                 <p>OK (skicka varning)</p>
             </div>
-            <div class="formTab" :class="{selectedTab: formState==2}" onclick="formState=2">
+            <div class="formTab" :class="{ selectedTab: formState == 2 }" onclick="formState=2">
                 <p>Behåll för framtida bedömning</p>
             </div>
         </div>

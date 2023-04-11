@@ -12,20 +12,13 @@ export const useActivityLogStore = defineStore('activityLog', {
     },
     actions: {
         initialize() {
-            if (this.initialized) {
-                console.log("already initialized")
-                return
-            }
-            console.log("initializing the data")
-            this.initialized = true
-
+            this.activityLog = []
         },
 
         logAppend(item) {
             const data = {
-                time: Date.now(),
-                item: item,
-                type: 'JennType'
+                time: Date(),
+                item: item
             };
 
             this.activityLog.push(data)
@@ -33,12 +26,12 @@ export const useActivityLogStore = defineStore('activityLog', {
         },
 
         logDump() {
-            const data = JSON.stringify(this.activityLog);
+            const data = JSON.stringify(this.activityLog, null, 2);
             return new Blob([data], { type: 'text/plain' });
         },
 
         logConsole() {
-            const data = JSON.stringify(this.activityLog);
+            const data = JSON.stringify(this.activityLog, null, 2);
             //new Blob([data], { type: 'text/plain' }); 
             console.log(data)
         },

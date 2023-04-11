@@ -11,9 +11,9 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
     state: () => ({
         chartData: useLocalStorage('warningsByWardChartData', {}),
         sumWarningArray: useLocalStorage('sumWarningArray', []),
-        wardWarningArray: [],
-        patientLocationList: [],
-        wardNameList: [],
+        wardWarningArray: useLocalStorage('wardWarningArray', []),
+        patientLocationList: useLocalStorage('patientLocationList', []),
+        wardNameList: useLocalStorage('wardNameList', []),
 
         // Do I need this in both places? 
         ward: wardsdata.wardsInfo,
@@ -88,6 +88,7 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
             for (let i = 0; i < this.patientInfo.length; i++) {
                 let obj = this.patientInfo[i]
                 this.patientLocationList[obj['Person ID']] = obj.PatientLocation
+                console.log('Setting patient: ' + obj['Person ID'] + ' to ' + obj.PatientLocation)
             }
             //console.log(this.patientLocationList + 'patientlocationlist')
 
@@ -202,7 +203,10 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
             console.log('warningarray from byward: ' + this.sumWarningArray[severityLevel])
 
             //console.log(`regel: ${obj.Regel} sev level: ${severityLevel}`)
-            let personNumber = personID;
+            let personNumber = parseInt(personID);
+            //console.log('Hi there: ' + this.patientLocationList)
+
+            //console.log('Hi there: ' + personNumber + ' : ' + this.patientLocationList[personNumber])
             let personLocation = this.patientLocationList[personNumber].toUpperCase();
             let locationIndex = this.wardNameList.indexOf(personLocation)
             // console.log(len)
@@ -214,13 +218,17 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
                 //console.log(locationIndex)
 
             }
+            console.log('location index: ' + locationIndex)
+            console.log('severityLevel: ' + severityLevel)
+
             //console.log(this.chartData.datasets);
-            let msg = 'Prev Values: ' + this.wardWarningArray[severityLevel][locationIndex] + ' : ' + this.wardWarningArray[newSeverity][locationIndex];
+            let msg = 'personNumber[' + personNumber + '] location[' + personLocation + '] location index[' + locationIndex + '] severityLevel[' + severityLevel + '] newSeverity[' + newSeverity + '] Prev Values: ' + this.chartData.datasets[severityLevel].data[locationIndex] + ' : ' + this.chartData.datasets[newSeverity].data[locationIndex];
             this.chartData.datasets[severityLevel].data[locationIndex] -= 1;
             this.chartData.datasets[newSeverity].data[locationIndex] -= 1;
-            let act = useActivityLogStore()
 
+            let act = useActivityLogStore()
             act.logAppend(msg);
+            console.log(msg)
             //this.wardWarningArray[severityLevel][locationIndex] += 1
             //this.wardWarningArray[newSeverity][locationIndex] += 1
 

@@ -1,75 +1,84 @@
 <script setup>
-    import { computed } from 'vue';
-    import { noAlertsForWard, noAlertsForCategory, noAlertsForRule, getCategoryNames } from '../records/dataFunctions';
-    import { wardsInfo } from '../records/inpatientWards.json';
-    import { WarningInfo } from '../records/warningList.json';
-    const props = defineProps({ 
-        layoutState: Number,
-        selectionPageState: String,
-        selectionStateVal: String 
-    });
-    const emit = defineEmits(['update:layoutState', 'update:selectionPageState', 'update:selectionStateVal']);
+import { computed } from 'vue';
+import { useSelectionDataStore } from '../stores/selectionData'
 
-    const layoutState = computed({
-        get() {
-            return props.layoutState;
-        },
-        set(newVal) {
-            emit('update:layoutState', parseInt(newVal));
-        },
-    });
+import { wardsInfo } from '../records/inpatientWards.json';
+import { WarningInfo } from '../records/warningList.json';
+const props = defineProps({
+    layoutState: Number,
+    selectionPageState: String,
+    selectionStateVal: String
+});
 
-    const selectionPageState = computed({
-        get() {
-            return props.selectionPageState;
-        },
-        set(newVal) {
-            emit('update:selectionPageState', (newVal));
-        },
-    });
-    
-    const selectionStateVal = computed({
-        get() {
-            return props.selectionStateVal;
-        },
-        set(newVal) {
-            emit('update:selectionStateVal', (newVal));
-        },
-    });
+const selectionDataStore = useSelectionDataStore()
+
+const emit = defineEmits(['update:layoutState', 'update:selectionPageState', 'update:selectionStateVal']);
+
+
+const layoutState = computed({
+    get() {
+        return props.layoutState;
+    },
+    set(newVal) {
+        emit('update:layoutState', parseInt(newVal));
+    },
+});
+
+const selectionPageState = computed({
+    get() {
+        return props.selectionPageState;
+    },
+    set(newVal) {
+        emit('update:selectionPageState', (newVal));
+    },
+});
+
+const selectionStateVal = computed({
+    get() {
+        return props.selectionStateVal;
+    },
+    set(newVal) {
+        emit('update:selectionStateVal', (newVal));
+    },
+});
 
 </script>
 
 <template>
-    <div v-if="selectionPageState=='Ward'" id="wardGrid">
-        <div v-for="ward in wardsInfo" :key="ward" class="wardDiv gridButton" @click="layoutState=3, selectionStateVal=ward.KeyNamn">
+    <div v-if="selectionPageState == 'Ward'" id="wardGrid">
+        <div v-for="ward in wardsInfo" :key="ward" class="wardDiv gridButton"
+            @click="layoutState = 3, selectionStateVal = ward.KeyNamn">
             <p>Avdelning {{ ward.KeyNamn }} </p>
             <p class="wardTypeText">{{ ward.wardType }}</p>
-            <div v-if="ward.WardContactPharmacistFirstName!=''" class="pharmacistDiv">
-                <span class="pharmacistTooltip">{{ ward.WardContactPharmacistFirstName + ' ' + ward.WardContactPharmacistLastName }}</span>
+            <div v-if="ward.WardContactPharmacistFirstName != ''" class="pharmacistDiv">
+                <span class="pharmacistTooltip">{{ ward.WardContactPharmacistFirstName + ' ' +
+                    ward.WardContactPharmacistLastName }}</span>
             </div>
-            <p class="noAlertText"> {{ noAlertsForWard(ward.KeyNamn) }} </p>
+            <p class="noAlertText"> {{ selectionDataStore.noAlertsForWard(ward.KeyNamn) }} </p>
         </div>
     </div>
-    <div v-else-if="selectionPageState=='Category'" id="categoryGrid">
-        <div v-for="(cat, index) in getCategoryNames()" :key="index+1" class="categoryDiv gridButton" @click="layoutState=3, selectionStateVal=index+1 ">
+    <div v-else-if="selectionPageState == 'Category'" id="categoryGrid">
+        <div v-for="(cat, index) in selectionDataStore.getCategoryNames()" :key="index + 1" class="categoryDiv gridButton"
+            @click="layoutState = 3, selectionStateVal = index + 1">
             <p>{{ cat }}</p>
-            <p class="noAlertText"> {{ noAlertsForCategory(index+1) }}</p>
+            <p class="noAlertText"> {{ selectionDataStore.noAlertsForCategory(index + 1) }}</p>
         </div>
     </div>
     <div v-else id="ruleGrid">
-        <div v-for="rule in WarningInfo" :key="rule" class="ruleDiv gridButton" @click="layoutState=3, selectionStateVal=rule.warningNumber">
-            <p>Regel {{ rule.warningNumber }} 
-                <span v-if="0<=rule.warningNumber && rule.warningNumber<=9">(RP)</span>
-                <span v-else-if="10<=rule.warningNumber && rule.warningNumber<=15">(I)</span>
-                <span v-else-if="16<=rule.warningNumber && rule.warningNumber<=33">(NF)</span>
-                <span v-else-if="34<=rule.warningNumber && rule.warningNumber<=40">(LÄ)</span>
-                <span v-else-if="41<=rule.warningNumber && rule.warningNumber<=49">(LL)</span>
-                <span v-else-if="50<=rule.warningNumber && rule.warningNumber<=51">(LD)</span>
-                <span v-else-if="52<=rule.warningNumber && rule.warningNumber<=55">(LS)</span>
-                <span v-else-if="56<=rule.warningNumber && rule.warningNumber<=58">(ÖL)</span>
+        <div v-for="rule in WarningInfo" :key="rule" class="ruleDiv gridButton"
+            @click="layoutState = 3, selectionStateVal = rule.warningNumber">
+            <p>Regel {{ rule.warningNumber }}
+                <span v-if="0 <= rule.warningNumber && rule.warningNumber <= 9">(RP)</span>
+                <span v-else-if="10 <= rule.warningNumber && rule.warningNumber <= 15">(I)</span>
+                <span v-else-if="16 <= rule.warningNumber && rule.warningNumber <= 33">(NF)</span>
+                <span v-else-if="34 <= rule.warningNumber && rule.warningNumber <= 40">(LÄ)</span>
+                <span v-else-if="41 <= rule.warningNumber && rule.warningNumber <= 49">(LL)</span>
+                <span v-else-if="50 <= rule.warningNumber && rule.warningNumber <= 51">(LD)</span>
+                <span v-else-if="52 <= rule.warningNumber && rule.warningNumber <= 55">(LS)</span>
+                <span v-else-if="56 <= rule.warningNumber && rule.warningNumber <= 58">(ÖL)</span>
                 <span v-else>(Ö)</span>
             </p>
-            <p class="noAlertText"> {{ noAlertsForRule(rule.warningNumber) }} </p>
+            <p class="noAlertText"> {{ selectionDataStore.noAlertsForRule(rule.warningNumber) }} </p>
         </div>
     </div>
 </template>
@@ -83,14 +92,17 @@
     display: flex;
     flex-direction: column;
 }
+
 .gridButton:hover {
     background-color: var(--buttonColorHover);
     cursor: pointer;
 }
+
 .gridButton p:first-child {
     font-weight: bold;
     font-size: 107%;
 }
+
 .gridButton p:last-child {
     float: right;
     font-size: 130%;
@@ -165,7 +177,7 @@
     border-radius: 6px;
     top: -20px;
     right: 100%;
-      /* Position the tooltip text - see examples below! */
+    /* Position the tooltip text - see examples below! */
     position: absolute;
     z-index: 1;
 }
@@ -173,5 +185,4 @@
 .pharmacistDiv:hover .pharmacistTooltip {
     visibility: visible;
 }
-
 </style>
