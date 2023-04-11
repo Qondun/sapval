@@ -5,11 +5,8 @@ import { getPatientInformation, getRuleInformation, noAlertsForRule, getFiltered
 import { storeToRefs } from 'pinia'
 import { useWarningsByWardStore } from '../stores/warningsByWard';
 import { useWarningsByRuleStore } from '../stores/warningsByRule';
-<<<<<<< HEAD
 import AlertForm from './AlertForm.vue';
-=======
 import { useActivityLogStore } from '../stores/logger';
->>>>>>> 65b377cf2bf51f38bc8677aaa6d2e691dbad4a59
 
 let filterRange = []; // [Lower bound, Upper bound]
 let dataList = [];
@@ -23,7 +20,6 @@ let ruleNr = 0;
 let currentAlert = null;
 
 const wardStore = useWarningsByWardStore()
-wardStore.initialize()
 const wardStoreRef = storeToRefs(wardStore)
 
 const activityLog = useActivityLogStore()
@@ -238,7 +234,7 @@ function createAvailableRuleBoxes() { // TODO: remake to show accurate informati
 
     for (var ruleNr = filterRange[0]; ruleNr <= filterRange[1]; ruleNr++) {
         let ruleData = noAlertsForRule(ruleNr);
-        if(ruleData) {
+        if (ruleData) {
             let availableRuleBox = document.createElement("div");
             availableRuleBox.classList.add("availableRuleBox");
             availableRuleBox.setAttribute("id", ruleNr);
@@ -317,11 +313,11 @@ function createLayout() {
                     singleAlertBox.classList.add("selected");
                     updateInfoDiv(patientBox.id, singleAlertBox.id);
                     currentAlert = alert;
-                    console.log("updated?" + currentAlert)
+                    console.log("updated?" + JSON.stringify(currentAlert))
                 } else {
                     cleanInfoDiv();
                     currentAlert = null;
-                    console.log("updated?" + currentAlert)
+                    console.log("updated?" + JSON.stringify(currentAlert))
                 }
 
             });
@@ -372,7 +368,7 @@ function cleanListDiv() {
 
 function cleanInfoDiv() {
     let infoDiv = document.getElementById("infoDiv");
-    while (infoDiv.firstChild && infoDiv.firstChild!=infoDiv.lastChild) {
+    while (infoDiv.firstChild && infoDiv.firstChild != infoDiv.lastChild) {
         infoDiv.removeChild(infoDiv.firstChild);
     }
 }
@@ -469,13 +465,16 @@ function updateInfoDiv(patientIndex, alertIndex) {
     // mainInfoBox.appendChild(createActionBox(patientIndex, alertIndex));
     //mainInfoBox.appendChild(createDividingLine("Update Alert Jenn"));
     mainInfoBox.appendChild(document.createElement('alert-form'));
-    
-    
+
+
     mainInfoBox.appendChild(createDataUpdateButton("Jenn Button", 'JennID'));
     patientDivBoundingBox.appendChild(mainInfoBox);
 
     mainInfoBox.appendChild(createDividingLine("Update Alert Jenn"));
     infoDiv.prepend(patientDivBoundingBox);
+
+    mainInfoBox.appendChild(createDividingLine("UpdateAlertForm"))
+
 }
 
 function cleanPatientDiv() {
@@ -545,8 +544,6 @@ function createDataUpdateButton(label, id) {
         let warningStore = useWarningsByRuleStore()
         let act = useActivityLogStore()
 
-        act.initialize()
-        wardStore.initialize()
         //console.log(this.wardStore);
         //wardsStore.testButton(id, 0, 1);
         act.logAppend('hewwo');
@@ -554,18 +551,22 @@ function createDataUpdateButton(label, id) {
         wardsStore.completedWarningWardChartUpdate(4, 5, 15);
         warningStore.completedWarningWardChartUpdate(3, 4, 5);
 
-        const blob = act.logDump()
-        const e = document.createEvent('MouseEvents'),
-            a = document.createElement('a');
-        a.download = "test.json";
-        a.href = window.URL.createObjectURL(blob);
-        a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
-        e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-        a.dispatchEvent(e);
+    });
 
+    return filterButton
+}
 
-
-
+function createAlertForm(label, id) {
+    let filterButton = document.createElement("div");
+    filterButton.classList.add("filterButton");
+    filterButton.setAttribute("id", id);
+    let filterButtonText = document.createElement("p");
+    filterButtonText.innerHTML = "Jenn Button";
+    filterButton.appendChild(filterButtonText);
+    // console.log("Creating the button...")
+    // console.log(wardStoreRef)
+    filterButton.addEventListener("click", function () {
+        console.log("clicked");
     });
 
     return filterButton
@@ -596,14 +597,18 @@ function createDataUpdateButton(label, id) {
                 <p class="listHeader">Varningsinformation {{ currentAlert }}</p>
             </div>
             <div id="infoDiv">
-                <AlertForm v-if="currentAlert!=null" :alert="currentAlert"/>
                 <!-- <div id="actionBox">
-                    <div id="optionButtonBox">
-                        <div id="dismissOptionButton" class="optionTab" :class="{ selected: selectedTab == 0 }">
-                            <p>Dismiss</p>
-                        </div>
-                    </div>
-                </div> -->
+                                                                                                                                        <div id="optionButtonBox">
+                                                                                                                                            <div id="dismissOptionButton" class="optionTab" :class="{ selected: selectedTab == 0 }">
+                                                                                                                                                <p>Dismiss</p>
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+                                                                                                                                    </div> -->
+            </div>
+            <div id="alertForm">
+                <h2>hi from here</h2>
+                <h3>{{ currentAlert }}</h3>
+                <AlertForm v-if="currentAlert != null" :alert="currentAlert" />
             </div>
         </div>
 
