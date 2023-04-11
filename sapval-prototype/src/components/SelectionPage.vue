@@ -5,11 +5,8 @@ import { getPatientInformation, getRuleInformation, noAlertsForRule, getFiltered
 import { storeToRefs } from 'pinia'
 import { useWarningsByWardStore } from '../stores/warningsByWard';
 import { useWarningsByRuleStore } from '../stores/warningsByRule';
-<<<<<<< HEAD
 import AlertForm from './AlertForm.vue';
-=======
 import { useActivityLogStore } from '../stores/logger';
->>>>>>> 65b377cf2bf51f38bc8677aaa6d2e691dbad4a59
 
 let filterRange = []; // [Lower bound, Upper bound]
 let dataList = [];
@@ -21,6 +18,7 @@ let categoryID = 0;
 let ruleNr = 0;
 
 let currentAlert = null;
+let formState = 0;
 
 const wardStore = useWarningsByWardStore()
 wardStore.initialize()
@@ -234,19 +232,26 @@ function createFilterDropdowns() {
 function createAvailableRuleBoxes() { // TODO: remake to show accurate information for ward and rule
     let selectionGrid = document.getElementById("selectionGrid");
     let availableRuleBoundingBox = document.createElement("div");
+    console.table(ruleNumberSet[0])
+    let ruleNumbers = ruleNumberSet.sort(function(a, b){return a - b});
     availableRuleBoundingBox.setAttribute("id", "availableRuleBoundingBox");
 
-    for (var ruleNr = filterRange[0]; ruleNr <= filterRange[1]; ruleNr++) {
-        let ruleData = noAlertsForRule(ruleNr);
-        if(ruleData) {
-            let availableRuleBox = document.createElement("div");
+    for (var rule in ruleNumbers) {
+        let counter = 0;
+        dataList.forEach((patient) =>{
+            patient.forEach((alert) =>{
+                if(alert.Regel==ruleNumbers[rule]) {
+                    counter++;
+                }
+            });
+        });
+        let availableRuleBox = document.createElement("div");
             availableRuleBox.classList.add("availableRuleBox");
-            availableRuleBox.setAttribute("id", ruleNr);
+            availableRuleBox.setAttribute("id", counter);
             let availableRuleBoxText = document.createElement("p");
-            availableRuleBoxText.innerHTML = "Regel " + ruleNr + "<br>" + ruleData + " st";
+            availableRuleBoxText.innerHTML = "Regel " + ruleNumbers[rule] + "<br>" + counter + " st";
             availableRuleBox.appendChild(availableRuleBoxText);
-            availableRuleBoundingBox.appendChild(availableRuleBox);
-        }
+            availableRuleBoundingBox.appendChild(availableRuleBox);;
     };
     selectionGrid.appendChild(availableRuleBoundingBox);
 }
@@ -372,7 +377,7 @@ function cleanListDiv() {
 
 function cleanInfoDiv() {
     let infoDiv = document.getElementById("infoDiv");
-    while (infoDiv.firstChild && infoDiv.firstChild!=infoDiv.lastChild) {
+    while (infoDiv.firstChild) {
         infoDiv.removeChild(infoDiv.firstChild);
     }
 }
@@ -382,16 +387,15 @@ function updateInfoDiv(patientIndex, alertIndex) {
     let alertInfo = dataList[patientIndex][alertIndex];
     let infoDiv = document.getElementById("infoDiv");
     let ruleInfo = getRuleInformation(alertInfo.Regel);
-    let patientDivBoundingBox = document.createElement('div');
 
 
     let alertText = document.createElement("h1");
     alertText.innerHTML = "Regel " + alertInfo.Regel;
-    patientDivBoundingBox.appendChild(alertText);
+    infoDiv.appendChild(alertText);
 
     let alertInfoText = document.createElement("p");
     alertInfoText.innerHTML = ruleInfo.warningName;
-    patientDivBoundingBox.appendChild(alertInfoText);
+    infoDiv.appendChild(alertInfoText);
 
     let severityLevelBox = document.createElement("div");
     severityLevelBox.classList.add("severityLevelBox");
@@ -400,7 +404,7 @@ function updateInfoDiv(patientIndex, alertIndex) {
     let severityLevelText = document.createElement("p");
     severityLevelText.innerHTML = ruleInfo.severityLevel;
     severityLevelBox.appendChild(severityLevelText);
-    patientDivBoundingBox.appendChild(severityLevelBox);
+    infoDiv.appendChild(severityLevelBox);
 
     // Patient values
     let mainInfoBox = document.createElement("div");
@@ -472,10 +476,10 @@ function updateInfoDiv(patientIndex, alertIndex) {
     
     
     mainInfoBox.appendChild(createDataUpdateButton("Jenn Button", 'JennID'));
-    patientDivBoundingBox.appendChild(mainInfoBox);
+    infoDiv.appendChild(mainInfoBox);
 
     mainInfoBox.appendChild(createDividingLine("Update Alert Jenn"));
-    infoDiv.prepend(patientDivBoundingBox);
+    createAlertForm(alertInfo);
 }
 
 function cleanPatientDiv() {
@@ -570,6 +574,70 @@ function createDataUpdateButton(label, id) {
 
     return filterButton
 }
+
+function createAlertForm(alert) {
+    formState = 0;
+    let infoDiv = document.getElementById('infoDiv');
+    let formBoundingBox = document.createElement('div');
+    formBoundingBox.setAttribute('id','formBoundingBox')
+    let formTabBox = document.createElement('div');
+    formTabBox.setAttribute('id','formTabBox');
+
+    let tabNames = ["Avvisa", "Skicka", "Spara tillsvidare"];
+    for(var tabName in tabNames){
+        let tabButton = document.createElement('div');
+        tabButton.setAttribute('id',tabName);
+        tabButton.classList.add('tabButton');
+        if(tabButton.id==formState) {
+            tabButton.classList.add('selected');
+        }
+        let tabText = document.createElement('p');
+        tabText.innerHTML = tabNames[tabName];
+        tabButton.appendChild(tabText);
+        formTabBox.appendChild(tabButton);
+
+        tabButton.addEventListener('click', function() {
+            // formState = tabButton.id;
+            updateAlertForm(alert, parseInt(tabButton.id,10));
+        })
+    }
+    formBoundingBox.appendChild(formTabBox);
+
+    formBoundingBox.appendChild(createFormMainBox());
+    infoDiv.appendChild(formBoundingBox);
+}
+
+function updateAlertForm(alert, newState) {
+    if(formState!=newState) {
+        let formBoundingBox = document.getElementById('formBoundingBox');
+        let formTabBox = document.getElementById('formTabBox');
+        formTabBox.childNodes[formState].classList.remove('selected');
+        formState = newState;
+        formTabBox.childNodes[formState].classList.add('selected');
+
+        formBoundingBox.removeChild(formBoundingBox.lastChild);
+        formBoundingBox.appendChild(createFormMainBox());
+    }
+}
+
+function createFormMainBox() {
+    let mainBox = document.createElement('div');
+    mainBox.setAttribute('id','formMainBox');
+    if(formState==0) {
+        let text = document.createElement('p');
+        text.innerHTML = "You can add everything needed for the 'dismiss' functionality here";
+        mainBox.appendChild(text);
+    } else if(formState==1) {
+        let text = document.createElement('p');
+        text.innerHTML = "You can add everything needed for the 'send' functionality here";
+        mainBox.appendChild(text);
+    } else {
+        let text = document.createElement('p');
+        text.innerHTML = "You can add everything needed for the 'save for later' functionality here";
+        mainBox.appendChild(text);
+    }
+    return mainBox;
+}
 </script>
 
 <template>
@@ -596,7 +664,6 @@ function createDataUpdateButton(label, id) {
                 <p class="listHeader">Varningsinformation {{ currentAlert }}</p>
             </div>
             <div id="infoDiv">
-                <AlertForm v-if="currentAlert!=null" :alert="currentAlert"/>
                 <!-- <div id="actionBox">
                     <div id="optionButtonBox">
                         <div id="dismissOptionButton" class="optionTab" :class="{ selected: selectedTab == 0 }">
@@ -911,6 +978,44 @@ select {
 #drugInfoBox ul {
     margin-top: -10px;
     margin-left: -15px;
+}
+
+#formBoundingBox {
+    width: 95%;
+    margin: auto;
+}
+
+#formTabBox {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    z-index: 1;
+}
+
+.tabButton {
+    width: calc(100% / 3);
+    background-color: var(--buttonColor);
+    text-align: center;
+    border: var(--generalBorders);
+    border-radius: var(--buttonBorderRadius);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.tabButton:hover {
+    cursor: pointer;
+    background-color: var(--buttonColorHover);
+}
+
+.tabButton.selected {
+    background-color: var(--buttonSelected);
+    border-bottom: 0;
+}
+
+#formMainBox {
+    background-color: var(--buttonSelected);
+    border: var(--generalBorders);
+    margin-top: -2px;
+    z-index: 0;
 }
 
 fieldset {

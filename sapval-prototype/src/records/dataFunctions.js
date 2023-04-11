@@ -48,14 +48,17 @@ export function getFilteredData(wardName, categoryID, ruleNr) {
         let patientData = PatientAlertDrug.filter(obj=> obj['Person ID']==alert.PersonID)[0];
         if(wardName=="All" || patientData.PatientLocation==wardName) {
             patientIDSet.add(alert.PersonID);
-            if(!ruleNumberSet.includes(alert.Regel)) {
-                ruleNumberSet.push(alert.Regel);
-            }
         }
     });
 
     patientIDSet.forEach((patient) =>{
-        dataList.push(WarningInfo.filter(obj=> obj.PersonID==patient));
+        let patientList = WarningInfo.filter(obj=> obj.PersonID==patient)
+        dataList.push(patientList);
+        patientList.forEach((alert) =>{
+            if(!ruleNumberSet.includes(alert.Regel)) {
+                ruleNumberSet.push(alert.Regel);
+            }
+        });
     });
     return [patientIDSet,dataList,ruleNumberSet];
 }
