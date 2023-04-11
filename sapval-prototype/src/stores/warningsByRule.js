@@ -3,43 +3,13 @@ import wardsdata from '../records/inpatientWards.json';
 import patientWarnings from '../records/PatientWarnings.json';
 import warningList from '../records/warningList.json';
 import patientInformation from '../records/patientInformation.json';
+import { useLocalStorage } from "@vueuse/core";
 
 export const useWarningsByRuleStore = defineStore('warnings', {
     state: () => ({
-        initialized: false,
         warningValueListWithSpacer: [],
         severityLevelListWithSpacer: [],
-        chartData: {
-            labels: [],
-            datasets: [
-                {
-                    label: '1',
-                    data: [],
-                    backgroundColor: '#eca28a'
-                }, {
-                    label: '2',
-                    data: [],
-                    backgroundColor: '#cf4c22'
-                }, {
-                    label: '3',
-                    data: [],
-                    backgroundColor: '#772c14'
-                },
-                {
-                    label: '1',
-                    data: [],
-                    backgroundColor: '#1B4774'
-                }, {
-                    label: '2',
-                    data: [],
-                    backgroundColor: '#741b47'
-                }, {
-                    label: '3',
-                    data: [],
-                    backgroundColor: '#47741B'
-
-                }]
-        },
+        chartData: useLocalStorage('warningsByRuleChartData', {}),
         ward: wardsdata.wardsInfo,
         patient: patientWarnings.WarningInfo,
         warnings: warningList.WarningInfo,
@@ -50,10 +20,37 @@ export const useWarningsByRuleStore = defineStore('warnings', {
     },
     actions: {
         initialize() {
-            if (this.initialized) {
-                console.log("already initialized")
-                return
-            }
+            this.chartData = {
+                labels: [],
+                datasets: [
+                    {
+                        label: '1',
+                        data: [],
+                        backgroundColor: '#eca28a'
+                    }, {
+                        label: '2',
+                        data: [],
+                        backgroundColor: '#cf4c22'
+                    }, {
+                        label: '3',
+                        data: [],
+                        backgroundColor: '#772c14'
+                    },
+                    {
+                        label: '1',
+                        data: [],
+                        backgroundColor: '#1B4774'
+                    }, {
+                        label: '2',
+                        data: [],
+                        backgroundColor: '#741b47'
+                    }, {
+                        label: '3',
+                        data: [],
+                        backgroundColor: '#47741B'
+                    }]
+            };
+
             console.log("initializing the data")
             this.initialized = true
             // Checking if everything works, delete this right after you see that everything works
@@ -77,8 +74,6 @@ export const useWarningsByRuleStore = defineStore('warnings', {
 
             //let warningValueList = {Array.apply(null, Array(65)).map(function () {})}
             let patientLocationList = Array.apply(null, Array(1500)).map(function () { })
-
-
 
             //wardList in order for graph
             this.ward.map((item) => {

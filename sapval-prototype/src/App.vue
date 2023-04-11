@@ -52,12 +52,12 @@ const xxxWarning = ref(warningNumberArray);
 
     <div id="dynamicBottom" class="overviewGridItem">
       <!-- <TheWelcome v-if="dynamicBotState == 0" @clicked="increment" :count="state.count" />
-                                                                              <RuleCategories v-else-if="dynamicBotState == 1" v-model:layoutState="layoutState"
-                                                                                v-model:selectionPageState=selectionPageState v-model:selectionStateVal=selectionStateVal />
-                                                                              <div v-else-if="dynamicBotState == 2" class="botDiv" style="background-color: green">
-                                                                                <h1>3</h1>
-                                                                              </div>
-                                                                              <PatientCircle v-else /> -->
+                                                                                  <RuleCategories v-else-if="dynamicBotState == 1" v-model:layoutState="layoutState"
+                                                                                    v-model:selectionPageState=selectionPageState v-model:selectionStateVal=selectionStateVal />
+                                                                                  <div v-else-if="dynamicBotState == 2" class="botDiv" style="background-color: green">
+                                                                                    <h1>3</h1>
+                                                                                  </div>
+                                                                                  <PatientCircle v-else /> -->
       <RuleCategories v-model:layoutState="layoutState" v-model:selectionPageState=selectionPageState
         v-model:selectionStateVal=selectionStateVal />
     </div>

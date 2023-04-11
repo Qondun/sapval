@@ -30,7 +30,6 @@ export default {
     },
     data: function () {
         const warningsStore = useOverallWarningsStore()
-        warningsStore.initialize()
         const warningsStoreRef = storeToRefs(useOverallWarningsStore())
         console.log("allocated warningsStore for allWarningChart")
         return {

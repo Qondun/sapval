@@ -28,7 +28,6 @@ export default {
     },
     data: function () {
         const warningsStore = useWarningsByRuleStore()
-        warningsStore.initialize()
         const warningsStoreRef = storeToRefs(useWarningsByRuleStore())
         console.log("allocated warningsStore")
         return {

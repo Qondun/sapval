@@ -21,7 +21,6 @@ let currentAlert = null;
 let formState = 0;
 
 const wardStore = useWarningsByWardStore()
-wardStore.initialize()
 const wardStoreRef = storeToRefs(wardStore)
 
 const activityLog = useActivityLogStore()
@@ -322,11 +321,11 @@ function createLayout() {
                     singleAlertBox.classList.add("selected");
                     updateInfoDiv(patientBox.id, singleAlertBox.id);
                     currentAlert = alert;
-                    console.log("updated?" + currentAlert)
+                    console.log("updated?" + JSON.stringify(currentAlert))
                 } else {
                     cleanInfoDiv();
                     currentAlert = null;
-                    console.log("updated?" + currentAlert)
+                    console.log("updated?" + JSON.stringify(currentAlert))
                 }
 
             });
@@ -473,12 +472,16 @@ function updateInfoDiv(patientIndex, alertIndex) {
     // mainInfoBox.appendChild(createActionBox(patientIndex, alertIndex));
     //mainInfoBox.appendChild(createDividingLine("Update Alert Jenn"));
     mainInfoBox.appendChild(document.createElement('alert-form'));
-    
-    
-    mainInfoBox.appendChild(createDataUpdateButton("Jenn Button", 'JennID'));
+
+
+    // mainInfoBox.appendChild(createDataUpdateButton("Jenn Button", 'JennID'));
     infoDiv.appendChild(mainInfoBox);
 
-    mainInfoBox.appendChild(createDividingLine("Update Alert Jenn"));
+    // mainInfoBox.appendChild(createDividingLine("Update Alert Jenn"));
+    
+    // infoDiv.prepend(patientDivBoundingBox);
+
+    mainInfoBox.appendChild(createDividingLine("Hantera varning"))
     createAlertForm(alertInfo);
 }
 
@@ -549,8 +552,6 @@ function createDataUpdateButton(label, id) {
         let warningStore = useWarningsByRuleStore()
         let act = useActivityLogStore()
 
-        act.initialize()
-        wardStore.initialize()
         //console.log(this.wardStore);
         //wardsStore.testButton(id, 0, 1);
         act.logAppend('hewwo');
@@ -558,22 +559,26 @@ function createDataUpdateButton(label, id) {
         wardsStore.completedWarningWardChartUpdate(4, 5, 15);
         warningStore.completedWarningWardChartUpdate(3, 4, 5);
 
-        const blob = act.logDump()
-        const e = document.createEvent('MouseEvents'),
-            a = document.createElement('a');
-        a.download = "test.json";
-        a.href = window.URL.createObjectURL(blob);
-        a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
-        e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-        a.dispatchEvent(e);
-
-
-
-
     });
 
     return filterButton
 }
+
+// function createAlertForm(label, id) {
+//     let filterButton = document.createElement("div");
+//     filterButton.classList.add("filterButton");
+//     filterButton.setAttribute("id", id);
+//     let filterButtonText = document.createElement("p");
+//     filterButtonText.innerHTML = "Jenn Button";
+//     filterButton.appendChild(filterButtonText);
+//     // console.log("Creating the button...")
+//     // console.log(wardStoreRef)
+//     filterButton.addEventListener("click", function () {
+//         console.log("clicked");
+//     });
+
+//     return filterButton
+// }
 
 function createAlertForm(alert) {
     formState = 0;
@@ -663,15 +668,7 @@ function createFormMainBox() {
             <div class="headerBox">
                 <p class="listHeader">Varningsinformation {{ currentAlert }}</p>
             </div>
-            <div id="infoDiv">
-                <!-- <div id="actionBox">
-                    <div id="optionButtonBox">
-                        <div id="dismissOptionButton" class="optionTab" :class="{ selected: selectedTab == 0 }">
-                            <p>Dismiss</p>
-                        </div>
-                    </div>
-                </div> -->
-            </div>
+            <div id="infoDiv"></div>
         </div>
 
         <div id="patientGridItem" class="selectionGridItem">
@@ -983,6 +980,7 @@ select {
 #formBoundingBox {
     width: 95%;
     margin: auto;
+    margin-top: 10px;
 }
 
 #formTabBox {

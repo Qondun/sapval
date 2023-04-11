@@ -26,7 +26,6 @@ export default {
   },
   data: function () {
     const wardsStore = useWarningsByWardStore()
-    wardsStore.initialize()
     const wardsStoreRef = storeToRefs(useWarningsByWardStore())
     console.log("allocated wardsStore")
     return {

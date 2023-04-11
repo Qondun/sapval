@@ -3,45 +3,18 @@ import wardsdata from '../records/inpatientWards.json';
 import patientWarnings from '../records/PatientWarnings.json';
 import warningList from '../records/warningList.json';
 import patientInformation from '../records/patientInformation.json';
+import { useActivityLogStore } from '../stores/logger';
+import { useLocalStorage } from "@vueuse/core";
+
 
 export const useWarningsByWardStore = defineStore('wardWarnings', {
     state: () => ({
+        chartData: useLocalStorage('warningsByWardChartData', {}),
+        sumWarningArray: useLocalStorage('sumWarningArray', []),
         wardWarningArray: [],
         patientLocationList: [],
-        sumWarningArray: [],
         wardNameList: [],
-        initialized: false,
-        chartData: {
-            labels: [],
-            datasets: [
-                {
-                    label: '1',
-                    data: [],
-                    backgroundColor: '#eca28a'
-                }, {
-                    label: '2',
-                    data: [],
-                    backgroundColor: '#cf4c22'
-                }, {
-                    label: '3',
-                    data: [],
-                    backgroundColor: '#772c14'
-                },
-                {
-                    label: '1',
-                    data: [],
-                    backgroundColor: '#1B4774'
-                }, {
-                    label: '2',
-                    data: [],
-                    backgroundColor: '#741b47'
-                }, {
-                    label: '3',
-                    data: [],
-                    backgroundColor: '#47741B'
-                }]
 
-        },
         // Do I need this in both places? 
         ward: wardsdata.wardsInfo,
         patient: patientWarnings.WarningInfo,
@@ -52,17 +25,43 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
     }),
     getters: {
         getChartData: (state) => state.chartData,
-
         getSumWarningArray: (state) => state.sumWarningArray,
     },
     actions: {
         initialize() {
-            if (this.initialized) {
-                console.log("already initialized")
-                return
+            this.chartData = {
+                labels: [],
+                datasets: [
+                    {
+                        label: '1',
+                        data: [],
+                        backgroundColor: '#eca28a'
+                    }, {
+                        label: '2',
+                        data: [],
+                        backgroundColor: '#cf4c22'
+                    }, {
+                        label: '3',
+                        data: [],
+                        backgroundColor: '#772c14'
+                    },
+                    {
+                        label: '1',
+                        data: [],
+                        backgroundColor: '#1B4774'
+                    }, {
+                        label: '2',
+                        data: [],
+                        backgroundColor: '#741b47'
+                    }, {
+                        label: '3',
+                        data: [],
+                        backgroundColor: '#47741B'
+                    }]
+
             }
+
             console.log("initializing wardwarningsData")
-            this.initialized = true;
             this.sumWarningArray = Array(5).fill(0);
             this.wardNameList = [];
             //var value = 0;
@@ -215,12 +214,13 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
                 //console.log(locationIndex)
 
             }
-            console.log(this.chartData.datasets);
-            console.log('Prev Values: ' + this.wardWarningArray[severityLevel][locationIndex] + ' : ' + this.wardWarningArray[newSeverity][locationIndex])
+            //console.log(this.chartData.datasets);
+            let msg = 'Prev Values: ' + this.wardWarningArray[severityLevel][locationIndex] + ' : ' + this.wardWarningArray[newSeverity][locationIndex];
             this.chartData.datasets[severityLevel].data[locationIndex] -= 1;
             this.chartData.datasets[newSeverity].data[locationIndex] -= 1;
+            let act = useActivityLogStore()
 
-
+            act.logAppend(msg);
             //this.wardWarningArray[severityLevel][locationIndex] += 1
             //this.wardWarningArray[newSeverity][locationIndex] += 1
 
