@@ -245,12 +245,19 @@ function createAvailableRuleBoxes() { // TODO: remake to show accurate informati
             });
         });
         let availableRuleBox = document.createElement("div");
-            availableRuleBox.classList.add("availableRuleBox");
-            availableRuleBox.setAttribute("id", counter);
-            let availableRuleBoxText = document.createElement("p");
-            availableRuleBoxText.innerHTML = "Regel " + ruleNumbers[rule] + "<br>" + counter + " st";
-            availableRuleBox.appendChild(availableRuleBoxText);
-            availableRuleBoundingBox.appendChild(availableRuleBox);;
+        availableRuleBox.classList.add("availableRuleBox");
+        availableRuleBox.setAttribute("id", counter);
+        let availableRuleBoxText = document.createElement("p");
+        availableRuleBoxText.innerHTML = "Regel " + ruleNumbers[rule] + "<br>" + counter + " st";
+        availableRuleBox.appendChild(availableRuleBoxText);
+        
+        let severityLevelBox = document.createElement('div');
+        severityLevelBox.classList.add('availableBoxSeverity');
+        let boxSevClassName = "sev" + getRuleInformation(ruleNumbers[rule]).severityLevel;
+        severityLevelBox.classList.add(boxSevClassName);
+        availableRuleBox.appendChild(severityLevelBox);
+
+        availableRuleBoundingBox.appendChild(availableRuleBox);
     };
     selectionGrid.appendChild(availableRuleBoundingBox);
 }
@@ -740,10 +747,10 @@ select {
 }
 
 #availableRuleBoundingBox {
-    width: 63.4%;
+    width: 1200px;
     height: auto;
     top: 10px;
-    right: 33px;
+    right: 25px;
     display: flex;
     flex-wrap: wrap;
     /* justify-content: space-between; */
@@ -751,17 +758,25 @@ select {
 }
 
 .availableRuleBox {
-    width: 66px;
-    height: 50px;
+    width: 69px;
+    height: 60px;
     margin: 3px;
     /* margin-right: 10px;
     margin-left: 10px; */
-    padding: 3px;
+    padding: 3px 3px 0 3px;
     background-color: var(--sectionBackground);
     /* border-radius: var(--buttonBorderRadius); */
     text-align: center;
 }
 
+.availableBoxSeverity {
+    height: 10px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    margin-left: -3px;
+    /* margin: -1px; */
+}
 /* 
 .availableRuleBox.selected {
     background-color: var(--buttonSelected);
@@ -805,7 +820,7 @@ select {
 
 #patientGridItem,
 #alertGridItem {
-    height: 80%;
+    height: 70%;
 }
 
 .patientBox {
