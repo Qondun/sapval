@@ -111,6 +111,14 @@ const xxxWarning = ref(warningNumberArray);
   --unavailableButton: #dedede;
 }
 
+a {
+  color: black;
+  text-decoration: none;
+}
+a:hover {
+  color: #444;
+}
+
 #overviewGrid {
   width: 100%;
   height: 100%;

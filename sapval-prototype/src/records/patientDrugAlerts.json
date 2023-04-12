@@ -163,7 +163,7 @@
  {
    "PersonID": 15,
    "AntalLM": 18,
-   "RiskLM": "Fluconazol",
+   "RiskLM": "Flukonazol",
    "FassName": "J02AC01: Flukonazol",
    "ATC": "J02AC01: Flukonazol",
    "AlertID": "7"
@@ -171,7 +171,7 @@
  {
    "PersonID": 15,
    "AntalLM": 18,
-   "RiskLM": "Fluconazol",
+   "RiskLM": "Flukonazol",
    "FassName": "J02AC01: Flukonazol",
    "ATC": "J02AC01: Flukonazol",
    "AlertID": "11"

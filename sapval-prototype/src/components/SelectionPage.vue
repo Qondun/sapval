@@ -1,7 +1,7 @@
 <script setup>
 import { isInDestructureAssignment } from '@vue/compiler-core';
 import { computed, onMounted, createVNode, render } from 'vue';
-import { getPatientInformation, getRuleInformation, noAlertsForRule, getFilteredData, getWardNames, getCategoryNames } from '../records/dataFunctions';
+import { getPatientInformation, getRuleInformation, noAlertsForRule, getFilteredData, getWardNames, getCategoryNames, getDrugFassName } from '../records/dataFunctions';
 import { storeToRefs } from 'pinia'
 import { useWarningsByWardStore } from '../stores/warningsByWard';
 import { useWarningsByRuleStore } from '../stores/warningsByRule';
@@ -438,10 +438,20 @@ function updateInfoDiv(patientIndex, alertIndex) {
     let drugList = document.createElement("ul");
 
     alertInfo["RiskLM"].split(", ").forEach((drug) => {
-        let singleDrug = document.createElement("li");
-        singleDrug.innerHTML = drug;
+        let singleDrug = document.createElement('li');
+        // singleDrug.innerHTML = drug;
+        let singleDrugHyperlink = document.createElement('a');
+        singleDrugHyperlink.setAttribute('target','fassPopup');
+        let fassName = getDrugFassName(drug);
+        singleDrugHyperlink.textContent = drug;
+        singleDrugHyperlink.href =  'https://www.fass.se/LIF/atcregister?atcCode=' + fassName.substring(0, fassName.indexOf(":"));
+        singleDrug.appendChild(singleDrugHyperlink);
         drugList.appendChild(singleDrug);
-    })
+
+        singleDrug.addEventListener('click', function() {
+
+        });
+    });
     drugInfoBox.appendChild(drugList);
     mainInfoBox.appendChild(drugInfoBox);
 
@@ -685,6 +695,7 @@ function createFormMainBox() {
             <div id="patientDiv"></div>
         </div>
     </div>
+    <iframe name="fassPopup"></iframe>   
 </template>
 
 <style>
@@ -703,6 +714,19 @@ b {
     flex-wrap: wrap;
     align-items: flex-end;
     padding-bottom: 20px;
+    z-index: 0;
+}
+
+iframe {
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    right: 0px;
+    visibility: visible;
+    z-index: 1;
+}
+iframe.toggled {
+    visibility: visible;
 }
 
 #backButton {

@@ -2,6 +2,7 @@ import { WarningInfo } from './PatientWarnings.json';
 import { PatientAlertDrug } from './patientInformation.json'
 import { WarningInfo as WarningData } from './warningList.json'
 import { wardsInfo } from './inpatientWards.json'
+import { PatientAlertDrug as DrugList } from './patientDrugAlerts.json'
 
 export function getCategoryData(filterRange) {
     var dataList = [];
@@ -98,4 +99,8 @@ export function noAlertsForRule(ruleNr) {
 
 export function getCategoryNames() {
     return ["Riskprofil", "Interaktioner", "Njurfunktion", "Läkemedel och äldre", "Läkemedel och labvärden", "Läkemedel och diagnos", "Läkemedel och status", "Övriga läkemedelskombinationer", "Övrigt"];
+}
+
+export function getDrugFassName(drugName) {
+    return DrugList.filter(obj=> obj['RiskLM'].includes(drugName))[0].FassName;
 }
