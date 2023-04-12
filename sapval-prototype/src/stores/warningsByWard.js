@@ -32,29 +32,22 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
             this.chartData = {
                 labels: [],
                 datasets: [
+
                     {
-                        label: '1',
+                        label: 'Alert 1',
                         data: [],
                         backgroundColor: '#eca28a'
                     }, {
-                        label: '2',
+                        label: 'Alert 2',
                         data: [],
                         backgroundColor: '#cf4c22'
                     }, {
-                        label: '3',
+                        label: 'Alert 3',
                         data: [],
                         backgroundColor: '#772c14'
                     },
                     {
-                        label: '1',
-                        data: [],
-                        backgroundColor: '#1B4774'
-                    }, {
-                        label: '2',
-                        data: [],
-                        backgroundColor: '#741b47'
-                    }, {
-                        label: '3',
+                        label: 'Assessed',
                         data: [],
                         backgroundColor: '#47741B'
                     }]
@@ -154,18 +147,9 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
             //console.log(wardWarningArray)
             //console.log(this.chartData.datasets[4])
 
-            this.chartData.datasets[3].data = wardWarningArray[3].map(x => -x);
+            this.chartData.datasets[3].data = wardWarningArray[3].map(x => x);
             //console.log(wardWarningArray)
             //console.log(this.chartData.datasets[1])
-
-            this.chartData.datasets[4].data = wardWarningArray[4].map(x => -x);
-            //console.log(wardWarningArray)
-            //console.log(this.chartData.datasets[2])
-
-            this.chartData.datasets[5].data = wardWarningArray[5].map(x => -x);
-            //console.log(wardWarningArray)
-            //console.log(this.chartData.datasets[1])
-
         },
         //TODO: need to move location array so the index can be sent to this function (it is above)
         decreaseWarningNumberArray(severityLevel, locationCode) {
@@ -191,7 +175,7 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
 
         // needs error checking -> if no error to clear then don't add solved errors 
         completedWarningWardChartUpdate(severityLevel, newSeverityLevel, personID) {
-            let newSeverity = newSeverityLevel;
+            let newSeverity = 3;
             severityLevel = severityLevel - 1;
             //console.log(severityLevel);
             //console.log(newSeverityLevel);
@@ -224,7 +208,7 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
             //console.log(this.chartData.datasets);
             let msg = 'personNumber[' + personNumber + '] location[' + personLocation + '] location index[' + locationIndex + '] severityLevel[' + severityLevel + '] newSeverity[' + newSeverity + '] Prev Values: ' + this.chartData.datasets[severityLevel].data[locationIndex] + ' : ' + this.chartData.datasets[newSeverity].data[locationIndex];
             this.chartData.datasets[severityLevel].data[locationIndex] -= 1;
-            this.chartData.datasets[newSeverity].data[locationIndex] -= 1;
+            this.chartData.datasets[newSeverity].data[locationIndex] += 1;
 
             let act = useActivityLogStore()
             act.logAppend(msg);

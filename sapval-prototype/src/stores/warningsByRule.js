@@ -7,8 +7,8 @@ import { useLocalStorage } from "@vueuse/core";
 
 export const useWarningsByRuleStore = defineStore('warnings', {
     state: () => ({
-        warningValueListWithSpacer: [],
-        severityLevelListWithSpacer: [],
+        warningValueListWithSpacer: useLocalStorage('warningValueListWithSpacer', []),
+        severityLevelListWithSpacer: useLocalStorage('severityLevelListWithSpacer', []),
         chartData: useLocalStorage('warningsByRuleChartData', {}),
         ward: wardsdata.wardsInfo,
         patient: patientWarnings.WarningInfo,
@@ -24,28 +24,20 @@ export const useWarningsByRuleStore = defineStore('warnings', {
                 labels: [],
                 datasets: [
                     {
-                        label: '1',
+                        label: 'Alert 1',
                         data: [],
                         backgroundColor: '#eca28a'
                     }, {
-                        label: '2',
+                        label: 'Alert 2',
                         data: [],
                         backgroundColor: '#cf4c22'
                     }, {
-                        label: '3',
+                        label: 'Alert 3',
                         data: [],
                         backgroundColor: '#772c14'
                     },
                     {
-                        label: '1',
-                        data: [],
-                        backgroundColor: '#1B4774'
-                    }, {
-                        label: '2',
-                        data: [],
-                        backgroundColor: '#741b47'
-                    }, {
-                        label: '3',
+                        label: 'Assessed',
                         data: [],
                         backgroundColor: '#47741B'
                     }]
@@ -174,18 +166,9 @@ export const useWarningsByRuleStore = defineStore('warnings', {
             //console.log(wardWarningArray)
             //console.log(this.chartData.datasets[2])
 
-            this.chartData.datasets[3].data = warningNumberArray[3].map(x => -x);
+            this.chartData.datasets[3].data = warningNumberArray[3].map(x => x);
             //console.log(wardWarningArray)
             //console.log(this.chartData.datasets[3])
-
-            this.chartData.datasets[4].data = warningNumberArray[4].map(x => -x);
-            //console.log(wardWarningArray)
-            //console.log(this.chartData.datasets[4])
-
-            this.chartData.datasets[5].data = warningNumberArray[5].map(x => -x);
-            //console.log(wardWarningArray)
-            //console.log(this.chartData.datasets[2])
-
 
         },
 
@@ -202,28 +185,36 @@ export const useWarningsByRuleStore = defineStore('warnings', {
         completedWarningWardChartUpdate(severityLevel, newSeverityLevel, ruleNumber) {
             console.log('decrease warning level for sev: ' + severityLevel + ' rule: ' + ruleNumber)
             // due to the array setup, the new severity level will need to be converted to match the array 
-            let newSeverity = newSeverityLevel - 1;
+            let newSeverity = 3;
+            let sevIndex = severityLevel - 1
             // severityLevel = severityLevel - 1;
-            let matchIndex = -1
+            console.log(this.warningValueListWithSpacer)
             for (let j = 0; j < this.warningValueListWithSpacer.length; j++) {
                 if (ruleNumber == this.warningValueListWithSpacer[j]) {
-                    matchIndex = j;
-                    severityLevel = this.severityLevelListWithSpacer[matchIndex];
-                }
-                if (matchIndex > -1) {
-                    severityLevel = this.severityLevelListWithSpacer[matchIndex]
+                    console.log('Found rule[' + ruleNumber + '] at index[' + j + ']')
+                    let decSeverityLevel = this.severityLevelListWithSpacer[j]
                     //   console.log(severityLevel + 'severityLevel')
                     // console.log(matchIndex + 'matchIndex')
-                    this.chartData.datasets[severityLevel].data[matchIndex] -= 1;
-                    this.chartData.datasets[newSeverity].data[matchIndex] -= 1;
-                    break;
+                    console.log('dec level 0: ' + this.chartData.datasets[0].data[j])
+                    console.log('dec level 1: ' + this.chartData.datasets[1].data[j])
+                    console.log('dec level 2: ' + this.chartData.datasets[2].data[j])
+                    console.log('dec level 3: ' + this.chartData.datasets[3].data[j])
+
+                    console.log('sev level' + this.chartData.datasets[sevIndex].data[j])
+
+                    this.chartData.datasets[sevIndex].data[j] -= 1;
+                    this.chartData.datasets[newSeverity].data[j] += 1;
+                    return;
                     //warningNumberArray[severityLevel][matchIndex] -= 1
                     //warningNumberArray[newSeverity][matchIndex] -= 1
 
 
                 }
 
+
             }
+
+            console.log("completedWarningWardChartUpdate: ruleNumber not found")
 
 
             // console.log(this.chartData.datasets[s - 1].data)
