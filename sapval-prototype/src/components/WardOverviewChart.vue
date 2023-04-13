@@ -39,8 +39,8 @@ export default {
           },
           y: {
             stacked: true,
-            max: 48,
-            suggestedMax: 46,
+            max: 100,
+            suggestedMax: 100,
           }
         },
         plugins: {
@@ -98,6 +98,7 @@ export default {
   width: 48%;
   float: left;
   top: 33px;
+  margin-top: 17px;
 }
 </style>
 

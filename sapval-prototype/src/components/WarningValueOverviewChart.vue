@@ -42,12 +42,12 @@ export default {
                     },
                     y: {
                         stacked: true,
-                        //max: 200,
+                        max: 100,
                     }
                 },
                 plugins: {
                     legend: {
-                        display: true,
+                        display: false,
                     }
                 },
                 onClick: (event, item) => {

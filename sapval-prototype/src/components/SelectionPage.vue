@@ -590,7 +590,8 @@ function createDataUpdateButton(label, id, severityLevel, newSeverity, personID,
     filterButton.addEventListener("click", function (evt) {
         let personID = evt.currentTarget.personID
         let severityLevel = evt.currentTarget.severityLevel
-        let newSeverity = evt.currentTarget.newSeverity
+        //let newSeverity = evt.currentTarget.newSeverity
+        let newSeverity = 3
         let ruleNumber = evt.currentTarget.ruleNumber
         let warningId = evt.currentTarget.warningId
 
