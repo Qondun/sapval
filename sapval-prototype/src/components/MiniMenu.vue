@@ -15,7 +15,7 @@ const val = computed({
 
 <template>
     <div id="miniMenuBounding">
-        <div id="messages" class="miniMenuButton" @click="val = 0"> <!-- Create specific component for envelopes -->
+        <!-- <div id="messages" class="miniMenuButton" @click="val = 0"> 
             <p>Meddelanden</p>
         </div>
         <div v-if="val == 1" id="closeButton" class="miniMenuButton" @click="val = 0">
@@ -23,7 +23,7 @@ const val = computed({
         </div>
         <div v-if="val != 1" id="historyButton" class="miniMenuButton" @click="val = 1">
             <p>Historik</p>
-        </div>
+        </div> -->
         <div v-if="val == 99" id="adminCloseButton" class="miniMenuButton" @click="val = 0">
             <p>Stäng Admin</p>
         </div>
@@ -39,6 +39,7 @@ const val = computed({
     height: 50px;
     display: flex;
     justify-content: space-between;
+    flex-direction: row-reverse;
     position: absolute;
     top: 10px;
     right: 10px;

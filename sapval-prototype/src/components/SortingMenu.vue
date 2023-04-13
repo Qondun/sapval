@@ -25,9 +25,9 @@
         <div class="menuItem" :class="{ selectedTab: pageState=='Ward' }" @click="pageState='Ward'">
             <p>Avdelningar</p>
         </div> 
-        <div class="menuItem" :class="{ selectedTab: pageState=='Category' }" @click="pageState='Category'">
+        <!-- <div class="menuItem" :class="{ selectedTab: pageState=='Category' }" @click="pageState='Category'">
             <p>Kategorier</p>
-        </div> 
+        </div>  -->
         <div class="menuItem" :class="{ selectedTab: pageState=='Rule' }" @click="pageState='Rule' ">
             <p>Regler</p>
         </div>

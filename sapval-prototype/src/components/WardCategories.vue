@@ -49,72 +49,27 @@ const categoryNames = selectionData.getCategoryNames()
 const { updated } = storeToRefs(selectionData)
 
 watch(updated, () => {
-    createRuleBottom();
+    createWardBottom();
 })
 onMounted(() => { // TODO: Find way to create different layouts. Easiest way is to do seperate components
-    createRuleBottom();    
+    createWardBottom();    
 })
 
-function createRuleBottom() {
-    let ruleGrid = document.getElementById("ruleGrid");
+function createWardBottom() {
+    let wardGrid = document.getElementById("wardGrid");
     let catNames = selectionDataStore.getCategoryNames();
-    for(var cat in catNames) {
-        let categoryDiv = document.createElement('div');
-        categoryDiv.classList.add('categoryDiv');
-        categoryDiv.classList.add('gridButton');
-        categoryDiv.setAttribute('id',parseInt(cat)+1)
-        
-        let categoryText = document.createElement('p');
-        if(catNames[cat]!="Övriga läkemedelskombinationer") {
-            categoryText.innerHTML = catNames[cat];
-        } else {
-            categoryText.innerHTML = "Övriga läkemedels- <br>kombinationer";
-        }
-        categoryDiv.appendChild(categoryText);
-        
-        let categoryCount = document.createElement('p');
-        categoryCount.innerHTML = selectionDataStore.noAlertsForCategory(parseInt(cat)+1);
-        categoryDiv.appendChild(categoryCount);
-
-        categoryDiv.addEventListener('click', function() {
-            layoutState.value = 3;
-            selectionPageState.value = "Category";
-            selectionStateVal.value = categoryDiv.id;
-            console.log("selectionPageState: " + selectionPageState.value);
-        });
-
-        ruleGrid.appendChild(categoryDiv);
-
-        let ruleRange = selectionDataStore.getCategoryRange(parseInt(cat)+1)
-        for(var i=ruleRange[0]; i<=ruleRange[1]; i++) {
-            let ruleDiv = document.createElement('div');
-            ruleDiv.classList.add('ruleDiv');
-            ruleDiv.classList.add('gridButton');
-            ruleDiv.setAttribute('id',i);
-
-            let ruleText = document.createElement('p');
-            ruleText.innerHTML = "Regel " + i;
-            ruleDiv.appendChild(ruleText);
-
-            let ruleCountText = document.createElement('p');
-            ruleCountText.innerHTML = selectionDataStore.noAlertsForRule(i);
-            ruleDiv.appendChild(ruleCountText);
-
-            ruleDiv.addEventListener('click', function() {
-                layoutState.value = 3;
-                selectionPageState.value = "Rule";
-                selectionStateVal.value = ruleDiv.id;
-            });
-
-            ruleGrid.appendChild(ruleDiv);
-        }
-    }
+    wardsInfo.forEach((ward) =>{
+        let wardHeader = document.createElement('h2');
+        console.log("ward: " + ward)
+        wardHeader.innerHTML = ward.KeyNamn;
+        wardGrid.appendChild(wardHeader);
+    });
 }
 </script>
 
 <template>
-    <!-- <div v-if="selectionPageState == 'Ward'" id="wardGrid">
-        <h1>Akut- och internmedicin</h1>
+    <div v-if="selectionPageState == 'Ward'" id="wardGrid">
+        <!-- <h1>Akut- och internmedicin</h1>
         <template v-for="ward in wardsInfo" :key="ward">
             <div v-if="ward.wardType=='Akut- och internmedicin'" class="wardDiv gridButton">
                 <p>{{ ward.KeyNamn }} </p>
@@ -125,21 +80,6 @@ function createRuleBottom() {
                 <p class="noAlertText"> {{ selectionDataStore.noAlertsForWard(ward.KeyNamn) }} </p>
             </div>
             
-        </template>
-    </div> -->
-
-    <div id="ruleGrid">
-        <!-- <template v-for="(cat, index) in selectionDataStore.getCategoryNames()" :key="index+1">
-            <div class="categoryDiv gridButton" @click="layoutState=3, selectionPageState='Category', selectionStateVal=index+1">
-                <p v-if="cat!='Övriga läkemedelskombinationer'">{{ cat }}</p>
-                <p v-else>Övriga läkemedels- <br> kombinationer</p>
-                <p> {{ selectionDataStore.noAlertsForCategory(index + 1) }}</p>
-            </div>
-            <div v-for="rule in selectionDataStore.getRuleNumbers().slice(selectionDataStore.getCategoryRange(index+1)[0]-1, selectionDataStore.getCategoryRange(index+1)[1])" :key="rule" class="ruleDiv gridButton"
-                @click="layoutState = 3, selectionPageState='Rule', selectionStateVal = rule">
-                <p>Regel {{ rule }}</p>
-                <p> {{ selectionDataStore.noAlertsForRule(rule) }} </p>
-            </div>
         </template> -->
     </div>
 </template>

@@ -6132,7 +6132,7 @@
          "RegelkategoriID": 5,
          "Regelkategori": "Läkemedel och diagnos",
          "Regel": 42,
-         "RiskLM": "Losartan/hydrochlorothiazide",
+         "RiskLM": "Losartan/hydroklortiazid",
          "Kommentar": "Patienten har ett kalium under 3,5. Följdes inte upp mer under vårdtiden.",
          "ID för alert": "1158",
          "Antal träffar per patient": 3

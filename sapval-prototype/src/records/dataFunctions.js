@@ -98,9 +98,35 @@ export function noAlertsForRule(ruleNr) {
 }
 
 export function getCategoryNames() {
-    return ["Riskprofil", "Interaktioner", "Njurfunktion", "Läkemedel och äldre", "Läkemedel och labvärden", "Läkemedel och diagnos", "Läkemedel och status", "Övriga läkemedelskombinationer", "Övrigt"];
+    return ["Njurfunktion", "Riskprofil", "Läkemedel och labvärden", "Läkemedel och äldre", "Interaktioner", "Läkemedel och status", "Övrigt", "Övriga läkemedelskombinationer", "Läkemedel och diagnos"];
+}
+
+export function getCategoryRange(categoryID) {
+    switch (categoryID) {
+        case 1:
+            return [1, 9];
+        case 2:
+            return [10, 15];
+        case 3:
+            return [16, 33];
+        case 4:
+            return [34, 40];
+        case 5:
+            return [41, 49];
+        case 6:
+            return [50, 51];
+        case 7:
+            return [52, 55];
+        case 8:
+            return [56, 58];
+        case 9:
+            return [59, 62];
+        default:
+            return [1, 62];
+    }
 }
 
 export function getDrugFassName(drugName) {
-    return DrugList.filter(obj=> obj['RiskLM'].includes(drugName))[0].FassName;
+    console.log(drugName)
+    return DrugList.filter(obj=> obj['RiskLM'].toLowerCase().includes(drugName.toLowerCase()))[0].FassName;
 }

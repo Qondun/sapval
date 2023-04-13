@@ -4,6 +4,7 @@ import { Bar } from 'vue-chartjs'
 import TheWelcome from './components/TheWelcome.vue'
 import SortingMenu from './components/SortingMenu.vue'
 import RuleCategories from './components/RuleCategories.vue'
+import WardCategories from './components/WardCategories.vue'
 import PatientCircle from './components/PatientCircle.vue'
 import MiniMenu from './components/MiniMenu.vue'
 import History from './components/History.vue'
@@ -51,15 +52,8 @@ const xxxWarning = ref(warningNumberArray);
     </main>
 
     <div id="dynamicBottom" class="overviewGridItem">
-      <!-- <TheWelcome v-if="dynamicBotState == 0" @clicked="increment" :count="state.count" />
-                                                                                  <RuleCategories v-else-if="dynamicBotState == 1" v-model:layoutState="layoutState"
-                                                                                    v-model:selectionPageState=selectionPageState v-model:selectionStateVal=selectionStateVal />
-                                                                                  <div v-else-if="dynamicBotState == 2" class="botDiv" style="background-color: green">
-                                                                                    <h1>3</h1>
-                                                                                  </div>
-                                                                                  <PatientCircle v-else /> -->
-      <RuleCategories v-model:layoutState="layoutState" v-model:selectionPageState=selectionPageState
-        v-model:selectionStateVal=selectionStateVal />
+      <WardCategories v-if="selectionPageState=='Ward'" v-model:layoutState="layoutState" v-model:selectionPageState=selectionPageState v-model:selectionStateVal=selectionStateVal />
+      <RuleCategories v-if="selectionPageState=='Rule'" v-model:layoutState="layoutState" v-model:selectionPageState=selectionPageState v-model:selectionStateVal=selectionStateVal />
     </div>
   </div>
 

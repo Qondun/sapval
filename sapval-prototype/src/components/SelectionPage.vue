@@ -1,10 +1,12 @@
 <script setup>
 import { isInDestructureAssignment } from '@vue/compiler-core';
-import { computed, onMounted, createVNode, render } from 'vue';
-import { getPatientInformation, getRuleInformation, noAlertsForRule, getFilteredData, getWardNames, getCategoryNames, getDrugFassName } from '../records/dataFunctions';
+import { computed, onMounted, createVNode, render, watch } from 'vue';
+import { getPatientInformation, getRuleInformation, noAlertsForRule, getFilteredData, getWardNames, getCategoryNames, getDrugFassName, getCategoryRange } from '../records/dataFunctions';
 import { storeToRefs } from 'pinia'
 import { useWarningsByWardStore } from '../stores/warningsByWard';
 import { useWarningsByRuleStore } from '../stores/warningsByRule';
+import { useSelectionDataStore } from '../stores/selectionData'
+
 import AlertForm from './AlertForm.vue';
 import { useActivityLogStore } from '../stores/logger';
 
@@ -24,9 +26,19 @@ const wardStore = useWarningsByWardStore()
 const wardStoreRef = storeToRefs(wardStore)
 
 const activityLog = useActivityLogStore()
-activityLog.initialize()
 const activityLogRef = storeToRefs(activityLog)
 
+const selectionData = useSelectionDataStore()
+const categoryNames = selectionData.getCategoryNames()
+
+const { updated } = storeToRefs(selectionData)
+
+watch(updated, () => {
+    console.log('selectionData ref changed, do something!')
+    cleanInfoDiv()
+    clearFilterDropdowns()
+    setUp()
+})
 
 const props = defineProps({
     layoutState: Number,
@@ -77,48 +89,50 @@ onMounted(() => {
 })
 
 function setUp() {
-    [patientIDSet, dataList, ruleNumberSet] = getFilteredData(wardName, categoryID, ruleNr);
-    setCategoryRange();
+    [patientIDSet, dataList, ruleNumberSet] = selectionData.getFilteredData(wardName, categoryID, ruleNr);
+    filterRange = getCategoryRange(Number(categoryID));
+    console.log('filterrange: ' + filterRange);
+    // setCategoryRange();
     createFilterDropdowns();
     createAvailableRuleBoxes();
     createLayout();
 }
 
-function setCategoryRange() {
-    console.log("inside setCategoryRange");
-    switch (Number(categoryID)) {
-        case 1:
-            filterRange = [1, 9];
-            break;
-        case 2:
-            filterRange = [10, 15];
-            break;
-        case 3:
-            filterRange = [16, 33];
-            break;
-        case 4:
-            filterRange = [34, 40];
-            break;
-        case 5:
-            filterRange = [41, 49];
-            break;
-        case 6:
-            filterRange = [50, 51];
-            break;
-        case 7:
-            filterRange = [52, 55];
-            break;
-        case 8:
-            filterRange = [56, 58];
-            break;
-        case 9:
-            filterRange = [59, 62];
-            break;
-        default:
-            filterRange = [1, 62];
-        //filterRange = [1,9];  
-    }
-}
+// function setCategoryRange() {
+//     console.log("inside setCategoryRange");
+//     switch (Number(categoryID)) {
+//         case 1:
+//             filterRange = [1, 9];
+//             break;
+//         case 2:
+//             filterRange = [10, 15];
+//             break;
+//         case 3:
+//             filterRange = [16, 33];
+//             break;
+//         case 4:
+//             filterRange = [34, 40];
+//             break;
+//         case 5:
+//             filterRange = [41, 49];
+//             break;
+//         case 6:
+//             filterRange = [50, 51];
+//             break;
+//         case 7:
+//             filterRange = [52, 55];
+//             break;
+//         case 8:
+//             filterRange = [56, 58];
+//             break;
+//         case 9:
+//             filterRange = [59, 62];
+//             break;
+//         default:
+//             filterRange = [1, 62];
+//         //filterRange = [1,9];  
+//     }
+// }
 
 function clearFilterDropdowns() {
     let boundingBox = document.getElementById('filterDropdownBoundingBox');
@@ -151,12 +165,12 @@ function createFilterDropdowns() {
         allOption.setAttribute('value', "All")
         wardSelect.appendChild(allOption);
 
-        let wardNames = getWardNames();
+        let wardNames = selectionData.getWardNames();
         wardNames.forEach((ward) => {
             // let wardData = numberForRule(ruleNr);
             let wardOption = document.createElement('option');
             wardOption.setAttribute('value', ward);
-            wardOption.innerHTML = "Avdelning " + ward;
+            wardOption.innerHTML = ward;
             wardSelect.appendChild(wardOption);
         });
         wardSelect.value = wardName;
@@ -182,7 +196,7 @@ function createFilterDropdowns() {
         categorySelect.appendChild(allOption);
 
         var catVal = 1;
-        let categoryNames = getCategoryNames();
+        let categoryNames = selectionData.getCategoryNames();
         categoryNames.forEach((category) => {
             // let wardData = numberForRule(ruleNr);
             let categoryOption = document.createElement('option');
@@ -214,7 +228,7 @@ function createFilterDropdowns() {
         ruleSelect.appendChild(allOption);
 
         for (var ruleNum = filterRange[0]; ruleNum <= filterRange[1]; ruleNum++) {
-            let ruleData = noAlertsForRule(ruleNum);
+            let ruleData = selectionData.noAlertsForRule(ruleNum);
             let ruleOption = document.createElement('option');
             ruleOption.setAttribute('value', ruleNum);
             ruleOption.innerHTML = "Regel " + ruleNum + ": " + ruleData + " st";
@@ -232,14 +246,14 @@ function createAvailableRuleBoxes() { // TODO: remake to show accurate informati
     let selectionGrid = document.getElementById("selectionGrid");
     let availableRuleBoundingBox = document.createElement("div");
     console.table(ruleNumberSet[0])
-    let ruleNumbers = ruleNumberSet.sort(function(a, b){return a - b});
+    let ruleNumbers = ruleNumberSet.sort(function (a, b) { return a - b });
     availableRuleBoundingBox.setAttribute("id", "availableRuleBoundingBox");
 
     for (var rule in ruleNumbers) {
         let counter = 0;
-        dataList.forEach((patient) =>{
-            patient.forEach((alert) =>{
-                if(alert.Regel==ruleNumbers[rule]) {
+        dataList.forEach((patient) => {
+            patient.forEach((alert) => {
+                if (alert.Regel == ruleNumbers[rule]) {
                     counter++;
                 }
             });
@@ -250,10 +264,10 @@ function createAvailableRuleBoxes() { // TODO: remake to show accurate informati
         let availableRuleBoxText = document.createElement("p");
         availableRuleBoxText.innerHTML = "Regel " + ruleNumbers[rule] + "<br>" + counter + " st";
         availableRuleBox.appendChild(availableRuleBoxText);
-        
+
         let severityLevelBox = document.createElement('div');
         severityLevelBox.classList.add('availableBoxSeverity');
-        let boxSevClassName = "sev" + getRuleInformation(ruleNumbers[rule]).severityLevel;
+        let boxSevClassName = "sev" + selectionData.getRuleInformation(ruleNumbers[rule]).severityLevel;
         severityLevelBox.classList.add(boxSevClassName);
         availableRuleBox.appendChild(severityLevelBox);
 
@@ -279,12 +293,12 @@ function createLayout() {
 
         let patientHeaderBox = document.createElement('div');
         patientHeaderBox.classList.add("patientHeaderBox");
-        let patientData = getPatientInformation(patientID);
+        let patientData = selectionData.getPatientInformation(patientID);
         let alertList = dataList[patientIndex];
         let headerText = document.createElement("h3");
         headerText.innerHTML = patientData['First Name'] + " " + patientData['Last Name'] + ", " + patientData['Age'];
         let noAlerts = document.createElement('h3');
-        noAlerts.innerHTML = "Antal varningar: " + alertList.length
+        noAlerts.innerHTML = alertList.length
         patientHeaderBox.appendChild(headerText);
         patientHeaderBox.appendChild(noAlerts);
         patientBox.appendChild(patientHeaderBox);
@@ -294,7 +308,7 @@ function createLayout() {
         alertBox.classList.add("alertBox");
         let alertIndex = 0;
         alertList.forEach((alert) => {
-            let ruleInfo = getRuleInformation(alert.Regel);
+            let ruleInfo = selectionData.getRuleInformation(alert.Regel);
             if (!ruleInfo) {
                 console.log("undefined ruleInfo: " + alert.Regel);
                 console.table(ruleInfo)
@@ -392,7 +406,7 @@ function updateInfoDiv(patientIndex, alertIndex) {
     cleanInfoDiv();
     let alertInfo = dataList[patientIndex][alertIndex];
     let infoDiv = document.getElementById("infoDiv");
-    let ruleInfo = getRuleInformation(alertInfo.Regel);
+    let ruleInfo = selectionData.getRuleInformation(alertInfo.Regel);
 
 
     let alertText = document.createElement("h1");
@@ -441,7 +455,7 @@ function updateInfoDiv(patientIndex, alertIndex) {
         let singleDrug = document.createElement('li');
         // singleDrug.innerHTML = drug;
         let singleDrugHyperlink = document.createElement('a');
-        singleDrugHyperlink.setAttribute('target','fassPopup');
+        singleDrugHyperlink.setAttribute('target','_blank');
         let fassName = getDrugFassName(drug);
         singleDrugHyperlink.textContent = drug;
         singleDrugHyperlink.href =  'https://www.fass.se/LIF/atcregister?atcCode=' + fassName.substring(0, fassName.indexOf(":"));
@@ -495,11 +509,11 @@ function updateInfoDiv(patientIndex, alertIndex) {
     infoDiv.appendChild(mainInfoBox);
 
     // mainInfoBox.appendChild(createDividingLine("Update Alert Jenn"));
-    
+
     // infoDiv.prepend(patientDivBoundingBox);
 
     mainInfoBox.appendChild(createDividingLine("Hantera varning"))
-    createAlertForm(alertInfo);
+    createAlertForm(alertInfo, ruleInfo.severityLevel, ruleInfo);
 }
 
 function cleanPatientDiv() {
@@ -553,84 +567,90 @@ function createDividingLine(label) {
     return fieldset;
 }
 
-function createDataUpdateButton(label, id) {
+function createDataUpdateButton(label, id, severityLevel, newSeverity, personID, ruleNumber, warningId) {
     let filterButton = document.createElement("div");
+
+    // Setup the attributes for the button that we need in the callback
+    filterButton.personID = personID
+    filterButton.severityLevel = severityLevel
+    filterButton.newSeverity = newSeverity
+    filterButton.ruleNumber = ruleNumber
+    filterButton.warningId = warningId
+
+    // Set the class of the button
     filterButton.classList.add("filterButton");
     filterButton.setAttribute("id", id);
-    let filterButtonText = document.createElement("p");
-    filterButtonText.innerHTML = "Jenn Button";
-    filterButton.appendChild(filterButtonText);
-    // console.log("Creating the button...")
-    // console.log(wardStoreRef)
-    filterButton.addEventListener("click", function () {
 
-        console.log("clicked");
+    // Make it look like a button and set the text
+    let filterButtonText = document.createElement("button");
+    filterButtonText.innerHTML = label;
+    filterButton.appendChild(filterButtonText);
+
+    // Our on click event
+    filterButton.addEventListener("click", function (evt) {
+        let personID = evt.currentTarget.personID
+        let severityLevel = evt.currentTarget.severityLevel
+        let newSeverity = evt.currentTarget.newSeverity
+        let ruleNumber = evt.currentTarget.ruleNumber
+        let warningId = evt.currentTarget.warningId
+
         let wardsStore = useWarningsByWardStore()
         let warningStore = useWarningsByRuleStore()
+        let selectionDataStore = useSelectionDataStore()
         let act = useActivityLogStore()
 
-        //console.log(this.wardStore);
-        //wardsStore.testButton(id, 0, 1);
-        act.logAppend('hewwo');
-        act.logConsole();
-        wardsStore.completedWarningWardChartUpdate(4, 5, 15);
-        warningStore.completedWarningWardChartUpdate(3, 4, 5);
+        wardsStore.completedWarningWardChartUpdate(severityLevel, newSeverity, personID);
+        warningStore.completedWarningWardChartUpdate(severityLevel, newSeverity, ruleNumber);
 
+        selectionDataStore.clearWarning(warningId)
+
+        // Might need to disable the button or reset some page state here
     });
 
     return filterButton
 }
 
-// function createAlertForm(label, id) {
-//     let filterButton = document.createElement("div");
-//     filterButton.classList.add("filterButton");
-//     filterButton.setAttribute("id", id);
-//     let filterButtonText = document.createElement("p");
-//     filterButtonText.innerHTML = "Jenn Button";
-//     filterButton.appendChild(filterButtonText);
-//     // console.log("Creating the button...")
-//     // console.log(wardStoreRef)
-//     filterButton.addEventListener("click", function () {
-//         console.log("clicked");
-//     });
-
-//     return filterButton
-// }
-
-function createAlertForm(alert) {
+function createAlertForm(alert, severityLevel, rule) {
+    console.log("Alert is")
+    console.log(alert)
     formState = 0;
     let infoDiv = document.getElementById('infoDiv');
     let formBoundingBox = document.createElement('div');
-    formBoundingBox.setAttribute('id','formBoundingBox')
+    formBoundingBox.setAttribute('id', 'formBoundingBox')
     let formTabBox = document.createElement('div');
-    formTabBox.setAttribute('id','formTabBox');
+    formTabBox.setAttribute('id', 'formTabBox');
 
     let tabNames = ["Avvisa", "Skicka", "Spara tillsvidare"];
-    for(var tabName in tabNames){
+    for (var tabName in tabNames) {
         let tabButton = document.createElement('div');
-        tabButton.setAttribute('id',tabName);
+        tabButton.setAttribute('id', tabName);
         tabButton.classList.add('tabButton');
-        if(tabButton.id==formState) {
+        if (tabButton.id == formState) {
             tabButton.classList.add('selected');
         }
         let tabText = document.createElement('p');
         tabText.innerHTML = tabNames[tabName];
         tabButton.appendChild(tabText);
+        tabButton.severityLevel = severityLevel
+        tabButton.rule = rule
         formTabBox.appendChild(tabButton);
 
-        tabButton.addEventListener('click', function() {
+        tabButton.addEventListener('click', function (evt) {
+            let severityLevel = evt.currentTarget.severityLevel
+            let rule = evt.currentTarget.rule
+
             // formState = tabButton.id;
-            updateAlertForm(alert, parseInt(tabButton.id,10));
+            updateAlertForm(alert, parseInt(tabButton.id, 10), severityLevel, rule);
         })
     }
     formBoundingBox.appendChild(formTabBox);
 
-    formBoundingBox.appendChild(createFormMainBox());
+    formBoundingBox.appendChild(createFormMainBox(alert, severityLevel, rule));
     infoDiv.appendChild(formBoundingBox);
 }
 
-function updateAlertForm(alert, newState) {
-    if(formState!=newState) {
+function updateAlertForm(alert, newState, severityLevel, rule) {
+    if (formState != newState) {
         let formBoundingBox = document.getElementById('formBoundingBox');
         let formTabBox = document.getElementById('formTabBox');
         formTabBox.childNodes[formState].classList.remove('selected');
@@ -638,26 +658,38 @@ function updateAlertForm(alert, newState) {
         formTabBox.childNodes[formState].classList.add('selected');
 
         formBoundingBox.removeChild(formBoundingBox.lastChild);
-        formBoundingBox.appendChild(createFormMainBox());
+        formBoundingBox.appendChild(createFormMainBox(alert, severityLevel, rule));
     }
 }
 
-function createFormMainBox() {
+function createFormMainBox(alert, severityLevel, rule) {
+    let warningId = alert['ID för alert']
     let mainBox = document.createElement('div');
-    mainBox.setAttribute('id','formMainBox');
-    if(formState==0) {
-        let text = document.createElement('p');
-        text.innerHTML = "You can add everything needed for the 'dismiss' functionality here";
-        mainBox.appendChild(text);
-    } else if(formState==1) {
-        let text = document.createElement('p');
-        text.innerHTML = "You can add everything needed for the 'send' functionality here";
-        mainBox.appendChild(text);
+    mainBox.setAttribute('id', 'formMainBox');
+    let form = document.createElement('form');
+    if (formState == 0) {
+        let radioButtonNames = ["Redan minskad risk", "Palliativ vård", "Engångsdos", "Annan"];
+        for(var name in radioButtonNames) {
+            let radioButton = document.createElement('input');
+            radioButton.setAttribute('type','radio');
+            radioButton.setAttribute('id', 'radioButton' + name);
+            radioButton.setAttribute('name', 'dismiss');
+            radioButton.setAttribute('value',radioButtonNames[name]);
+
+            let radioLabel = document.createElement('label');
+            radioLabel.setAttribute('for','radioButton' + name);
+            radioLabel.innerHTML = radioButtonNames[name];
+            
+            form.appendChild(radioButton);
+            form.appendChild(radioLabel);
+        }
+        mainBox.appendChild(createDataUpdateButton("Dismiss 1", "dis1", severityLevel, 1, alert.PersonID, alert.Regel, warningId))
+    } else if (formState == 1) {
+        mainBox.appendChild(createDataUpdateButton("Dismiss 2", "dis2", severityLevel, 2, alert.PersonID, alert.Regel, warningId))
     } else {
-        let text = document.createElement('p');
-        text.innerHTML = "You can add everything needed for the 'save for later' functionality here";
-        mainBox.appendChild(text);
+        mainBox.appendChild(createDataUpdateButton("Dismiss 3", "dis3", severityLevel, 3, alert.PersonID, alert.Regel, warningId))
     }
+    mainBox.appendChild(form);
     return mainBox;
 }
 </script>
@@ -673,10 +705,11 @@ function createFormMainBox() {
         <div id="listGridItem" class="selectionGridItem">
             <div class="headerBox">
                 <p v-if="selectionPageState == 'Category'" id="patientListHeader" class="listHeader">Kategori: {{
-                    getCategoryNames()[selectionStateVal - 1] }}</p>
-                <p v-if="selectionPageState == 'Ward'" id="patientListHeader" class="listHeader">Avdelning {{
+                    categoryNames[selectionStateVal - 1] }}</p>
+                <p v-else-if="selectionPageState == 'Ward'" id="patientListHeader" class="listHeader">Avdelning {{
                     selectionStateVal }}</p>
                 <p v-else id="patientListHEader" class="listHeader">Regel {{ selectionStateVal }}</p>
+                <p id="noAlertsText">Antal varningar</p>
             </div>
             <div id="listDiv"></div>
         </div>
@@ -695,7 +728,6 @@ function createFormMainBox() {
             <div id="patientDiv"></div>
         </div>
     </div>
-    <iframe name="fassPopup"></iframe>   
 </template>
 
 <style>
@@ -715,18 +747,6 @@ b {
     align-items: flex-end;
     padding-bottom: 20px;
     z-index: 0;
-}
-
-iframe {
-    width: 300px;
-    height: 300px;
-    position: absolute;
-    right: 0px;
-    visibility: visible;
-    z-index: 1;
-}
-iframe.toggled {
-    visibility: visible;
 }
 
 #backButton {
@@ -750,20 +770,20 @@ iframe.toggled {
 #filterDropdownBoundingBox {
     width: 30%;
     height: auto;
-    top: 10px;
+    top: 40px;
     /* right: calc(30% + 33px + 64px); */
-    left: 66px;
+    left: 70px;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content:flex-start;
     position: absolute;
 }
 
 #filterDropdownBoundingBox div {
     display: flex;
-    margin-left: 15px;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: start;
+    margin-right: 10px;
 }
 
 select {
@@ -801,17 +821,7 @@ select {
     margin-left: -3px;
     /* margin: -1px; */
 }
-/* 
-.availableRuleBox.selected {
-    background-color: var(--buttonSelected);
-    border: var(--generalBorders);
-}
 
-.availableRuleBox.unavailable {
-    background-color: var(--unavailableButton);
-    cursor: default;
-    color: #999;
-} */
 #listGridItem {
     height: 95.5%;
 }
@@ -837,6 +847,13 @@ select {
     white-space: nowrap;
 }
 
+#noAlertsText {
+    color: #999;
+    position: absolute;
+    top: 10px;
+    right: 0;
+    font-size: 18pt;
+}
 
 .selectionGridItem {
     width: 30%;
@@ -864,7 +881,6 @@ select {
     flex-flow: row;
     justify-content: space-between;
 }
-
 .patientHeaderBox:hover {
     background-color: var(--buttonColorHover);
 }
@@ -873,9 +889,19 @@ select {
     background-color: var(--buttonSelected);
     border: var(--generalBorders);
 }
-
 .patientHeaderBox.selected:hover {
     background-color: var(--buttonSelectedHover)
+}
+
+.patientHeaderBox h3:last-child {
+    font-weight: bold;
+    font-size: 16pt;
+    margin-top: -2px;
+}
+
+#patientListHeader {
+    position: absolute;
+    top: -50px;
 }
 
 .alertBox {
@@ -1038,6 +1064,7 @@ select {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }
+
 .tabButton:hover {
     cursor: pointer;
     background-color: var(--buttonColorHover);
@@ -1053,6 +1080,18 @@ select {
     border: var(--generalBorders);
     margin-top: -2px;
     z-index: 0;
+}
+
+#formMainBox form{
+    display: block;
+}
+
+#formMainBox label {
+    display: inline;
+}
+
+#formMainBox label, #formMainBox input {
+    float: left;
 }
 
 fieldset {

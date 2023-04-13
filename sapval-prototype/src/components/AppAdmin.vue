@@ -3,7 +3,7 @@
 import { useActivityLogStore } from '../stores/logger';
 import { useWarningsByRuleStore } from '../stores/warningsByRule';
 import { useWarningsByWardStore } from '../stores/warningsByWard';
-
+import { useSelectionDataStore } from '../stores/selectionData';
 
 
 const props = defineProps({ modelValue: Number });
@@ -11,6 +11,7 @@ const emit = defineEmits(['update:modelValue']);
 const activityLog = useActivityLogStore();
 const warningsByRule = useWarningsByRuleStore();
 const warningsByWard = useWarningsByWardStore();
+const selectionDataStore = useSelectionDataStore();
 
 function createDataUpdateButton(label, id) {
     let filterButton = document.createElement("div");
@@ -21,6 +22,8 @@ function createDataUpdateButton(label, id) {
     filterButton.appendChild(filterButtonText);
     // console.log("Creating the button...")
     // console.log(wardStoreRef)
+
+
     filterButton.addEventListener("click", function () {
 
         console.log("clicked");
@@ -38,22 +41,23 @@ function createDataUpdateButton(label, id) {
         warningStore.completedWarningWardChartUpdate(3, 4, 5);
 
         const blob = act.logDump()
-        const e = document.createEvent('MouseEvents'),
-            a = document.createElement('a');
-        a.download = "test.json";
-        a.href = window.URL.createObjectURL(blob);
-        a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
-        e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-        a.dispatchEvent(e);
+        //   const e = document.createEvent('MouseEvents'),
+        //      a = document.createElement('a');
+        //  a.download = "test.json";
+        //  a.href = window.URL.createObjectURL(blob);
+        //  a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
+        //  e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+        //  a.dispatchEvent(e);
     });
 
     return filterButton
 }
 
 function logReset() {
-    activityLog.logReset()
+    activityLog.initialize()
     warningsByRule.initialize()
     warningsByWard.initialize()
+    selectionDataStore.initialize()
     console.log("log resetstarted")
 }
 
