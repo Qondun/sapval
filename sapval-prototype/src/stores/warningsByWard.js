@@ -34,20 +34,20 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
                 datasets: [
 
                     {
-                        label: 'Alert 1',
+                        label: 'Allvarighetsgrad 1',
                         data: [],
                         backgroundColor: '#eca28a'
                     }, {
-                        label: 'Alert 2',
+                        label: 'Allvarighetsgrad 2',
                         data: [],
                         backgroundColor: '#cf4c22'
                     }, {
-                        label: 'Alert 3',
+                        label: 'Allvarighetsgrad 3',
                         data: [],
                         backgroundColor: '#772c14'
                     },
                     {
-                        label: 'Assessed',
+                        label: 'Hanterad',
                         data: [],
                         backgroundColor: '#47741B'
                     }]
