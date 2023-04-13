@@ -90,7 +90,8 @@ onMounted(() => {
 
 function setUp() {
     [patientIDSet, dataList, ruleNumberSet] = selectionData.getFilteredData(wardName, categoryID, ruleNr);
-    filterRange = getCategoryRange(Number(categoryID));
+    filterRange = selectionData.getCategoryRange(Number(categoryID));
+    console.log("selectionStateVal" + selectionStateVal.value + " filterRange: " + filterRange)
     console.log('filterrange: ' + filterRange);
     // setCategoryRange();
     createFilterDropdowns();
@@ -709,7 +710,7 @@ function createFormMainBox(alert, severityLevel, rule) {
                     categoryNames[selectionStateVal - 1] }}</p>
                 <p v-else-if="selectionPageState == 'Ward'" id="patientListHeader" class="listHeader">Avdelning {{
                     selectionStateVal }}</p>
-                <p v-else id="patientListHEader" class="listHeader">Regel {{ selectionStateVal }}</p>
+                <p v-else id="patientListHeader" class="listHeader">Regel {{ selectionStateVal }}</p>
                 <p id="noAlertsText">Antal varningar</p>
             </div>
             <div id="listDiv"></div>

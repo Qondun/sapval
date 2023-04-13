@@ -138,7 +138,7 @@ export const useSelectionDataStore = defineStore('selectionData', {
             this.wardsInfo = wardsInfo
         },
         getCategoryNames() {
-            return ["Njurfunktion", "Riskprofil", "Läkemedel och labvärden", "Läkemedel och äldre", "Interaktioner", "Läkemedel och status", "Övrigt", "Övriga läkemedelskombinationer", "Läkemedel och diagnos"];
+            return ["Njurfunktion", "Riskprofil", "LM och labvärden", "LM och äldre", "Interaktioner", "LM och status", "Övrigt", "Övriga LM-komb.", "LM och diagnos"];
         },
         getWardCategoryNames() {
             return ["Psykiatri", "Blod och tumörsjukd.", "Neuro"];

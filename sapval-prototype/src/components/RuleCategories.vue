@@ -52,6 +52,7 @@ watch(updated, () => {
     createRuleBottom();
 })
 onMounted(() => { // TODO: Find way to create different layouts. Easiest way is to do seperate components
+    console.log("in ruleCategories")
     createRuleBottom();    
 })
 
@@ -93,7 +94,7 @@ function createRuleBottom() {
             ruleDiv.setAttribute('id',i);
 
             let ruleText = document.createElement('p');
-            ruleText.innerHTML = "Regel " + i;
+            ruleText.innerHTML = i;
             ruleDiv.appendChild(ruleText);
 
             let ruleCountText = document.createElement('p');
@@ -113,21 +114,6 @@ function createRuleBottom() {
 </script>
 
 <template>
-    <!-- <div v-if="selectionPageState == 'Ward'" id="wardGrid">
-        <h1>Akut- och internmedicin</h1>
-        <template v-for="ward in wardsInfo" :key="ward">
-            <div v-if="ward.wardType=='Akut- och internmedicin'" class="wardDiv gridButton">
-                <p>{{ ward.KeyNamn }} </p>
-                <div v-if="ward.WardContactPharmacistFirstName != ''" class="pharmacistDiv">
-                    <span class="pharmacistTooltip">{{ ward.WardContactPharmacistFirstName + ' ' +
-                        ward.WardContactPharmacistLastName }}</span>
-                </div>
-                <p class="noAlertText"> {{ selectionDataStore.noAlertsForWard(ward.KeyNamn) }} </p>
-            </div>
-            
-        </template>
-    </div> -->
-
     <div id="ruleGrid">
         <!-- <template v-for="(cat, index) in selectionDataStore.getCategoryNames()" :key="index+1">
             <div class="categoryDiv gridButton" @click="layoutState=3, selectionPageState='Category', selectionStateVal=index+1">
@@ -241,20 +227,9 @@ function createRuleBottom() {
 .categoryDiv {
     font-size: 105%;
     text-decoration: underline;
-    margin-top: 34px;
+    position: relative;
+    top: 0;
     border: var(--generalBorders)
-}
-.categoryDiv:first-child{
-    margin-top: 2px;
-}
-#ruleGrid > div:nth-child(20), #ruleGrid > div:nth-child(30), #ruleGrid > div:nth-child(55), #ruleGrid > div:nth-child(69) {
-    margin-top: 0px;
-}
-#ruleGrid > div:nth-child(19), #ruleGrid > div:nth-child(54){
-    margin-bottom: 50px;
-}
-#ruleGrid > div:nth-child(68) {
-    margin-bottom: 70px;
 }
 
 .categoryDiv p, .ruleDiv p {

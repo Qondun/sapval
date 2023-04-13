@@ -53,7 +53,7 @@ const xxxWarning = ref(warningNumberArray);
 
     <div id="dynamicBottom" class="overviewGridItem">
       <WardCategories v-if="selectionPageState=='Ward'" v-model:layoutState="layoutState" v-model:selectionPageState=selectionPageState v-model:selectionStateVal=selectionStateVal />
-      <RuleCategories v-if="selectionPageState=='Rule'" v-model:layoutState="layoutState" v-model:selectionPageState=selectionPageState v-model:selectionStateVal=selectionStateVal />
+      <RuleCategories v-else v-model:layoutState="layoutState" v-model:selectionPageState=selectionPageState v-model:selectionStateVal=selectionStateVal />
     </div>
   </div>
 

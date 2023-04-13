@@ -28,7 +28,7 @@
         <!-- <div class="menuItem" :class="{ selectedTab: pageState=='Category' }" @click="pageState='Category'">
             <p>Kategorier</p>
         </div>  -->
-        <div class="menuItem" :class="{ selectedTab: pageState=='Rule' }" @click="pageState='Rule' ">
+        <div class="menuItem" :class="{ selectedTab: pageState=='Rule' || pageState=='Category' }" @click="pageState='Rule' ">
             <p>Regler</p>
         </div>
     </div>
