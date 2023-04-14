@@ -5,6 +5,7 @@ import { storeToRefs } from 'pinia'
 
 import { wardsInfo } from '../records/inpatientWards.json';
 import { WarningInfo } from '../records/warningList.json';
+import { getRuleInformation } from '../records/dataFunctions';
 const props = defineProps({
     layoutState: Number,
     selectionPageState: String,
@@ -60,17 +61,15 @@ function createRuleBottom() {
     let ruleGrid = document.getElementById("ruleGrid");
     let catNames = selectionDataStore.getCategoryNames();
     for(var cat in catNames) {
+        let categoryBoundingBox = document.createElement('div');
+        categoryBoundingBox.classList.add('categoryBoundingBox')
         let categoryDiv = document.createElement('div');
         categoryDiv.classList.add('categoryDiv');
         categoryDiv.classList.add('gridButton');
         categoryDiv.setAttribute('id',parseInt(cat)+1)
         
         let categoryText = document.createElement('p');
-        if(catNames[cat]!="Övriga läkemedelskombinationer") {
-            categoryText.innerHTML = catNames[cat];
-        } else {
-            categoryText.innerHTML = "Övriga läkemedels- <br>kombinationer";
-        }
+        categoryText.innerHTML = catNames[cat];
         categoryDiv.appendChild(categoryText);
         
         let categoryCount = document.createElement('p');
@@ -84,22 +83,30 @@ function createRuleBottom() {
             console.log("selectionPageState: " + selectionPageState.value);
         });
 
-        ruleGrid.appendChild(categoryDiv);
+        categoryBoundingBox.appendChild(categoryDiv);
 
         let ruleRange = selectionDataStore.getCategoryRange(parseInt(cat)+1)
         for(var i=ruleRange[0]; i<=ruleRange[1]; i++) {
+            let ruleInfo = selectionDataStore.getRuleInformation(i);
+
             let ruleDiv = document.createElement('div');
             ruleDiv.classList.add('ruleDiv');
             ruleDiv.classList.add('gridButton');
             ruleDiv.setAttribute('id',i);
 
             let ruleText = document.createElement('p');
-            ruleText.innerHTML = i;
+            ruleText.innerHTML = "<b>" + i + ":</b> " + ruleInfo.warningShortText;
             ruleDiv.appendChild(ruleText);
 
             let ruleCountText = document.createElement('p');
             ruleCountText.innerHTML = selectionDataStore.noAlertsForRule(i);
             ruleDiv.appendChild(ruleCountText);
+
+            let severityLevelBox = document.createElement('div');
+            let severityClass = "sev" + ruleInfo.severityLevel;
+            severityLevelBox.classList.add(severityClass);
+            severityLevelBox.classList.add('ruleSeverityBox');
+            ruleDiv.appendChild(severityLevelBox);
 
             ruleDiv.addEventListener('click', function() {
                 layoutState.value = 3;
@@ -107,35 +114,28 @@ function createRuleBottom() {
                 selectionStateVal.value = ruleDiv.id;
             });
 
-            ruleGrid.appendChild(ruleDiv);
+            categoryBoundingBox.appendChild(ruleDiv);
         }
+        ruleGrid.appendChild(categoryBoundingBox);
     }
 }
 </script>
 
 <template>
-    <div id="ruleGrid">
-        <!-- <template v-for="(cat, index) in selectionDataStore.getCategoryNames()" :key="index+1">
-            <div class="categoryDiv gridButton" @click="layoutState=3, selectionPageState='Category', selectionStateVal=index+1">
-                <p v-if="cat!='Övriga läkemedelskombinationer'">{{ cat }}</p>
-                <p v-else>Övriga läkemedels- <br> kombinationer</p>
-                <p> {{ selectionDataStore.noAlertsForCategory(index + 1) }}</p>
-            </div>
-            <div v-for="rule in selectionDataStore.getRuleNumbers().slice(selectionDataStore.getCategoryRange(index+1)[0]-1, selectionDataStore.getCategoryRange(index+1)[1])" :key="rule" class="ruleDiv gridButton"
-                @click="layoutState = 3, selectionPageState='Rule', selectionStateVal = rule">
-                <p>Regel {{ rule }}</p>
-                <p> {{ selectionDataStore.noAlertsForRule(rule) }} </p>
-            </div>
-        </template> -->
-    </div>
+    <div id="ruleGrid"></div>
 </template>
 
 <style>
+b {
+    font-weight: bold;
+    font-size: 107%;
+}
 .gridButton {
     background-color: var(--buttonColor);
     border-radius: var(--buttonBorderRadius);
-    padding: 5px;
+    padding: 3px;
     font-size: 100%;
+    height: 37px;
 }
 
 .gridButton:hover {
@@ -143,83 +143,35 @@ function createRuleBottom() {
     cursor: pointer;
 }
 
-.gridButton p:first-child {
-    font-weight: bold;
-    font-size: 107%;
-}
-
-.gridButton p:last-child {
+.categoryDiv p:last-child, .ruleDiv p:nth-child(2) {
     float: right;
     font-size: 130%;
 }
-
-.noAlertText {
-    position: absolute;
-    bottom: 0;
-    right: 5px;
-}
-
-.wardTypeText {
-    margin-top: -9px;
-}
-
-#wardGrid {
-    width: 100%;
-    height: 100%;
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    padding: 5px;
-}
-
-#wardGrid .gridButton {
-    display: flex;
-    flex-direction: column;
-}
-
-.wardDiv {
-    margin: 5px;
-}
-
-.pharmacistDiv {
-    width: 15px;
-    height: 15px;
-    background-image: url("./icons/pharmacistIcon.png");
-    background-size: 20px 20px;
-    position: absolute;
-    display: inline-block;
-    top: 10px;
-    right: 10px;
-    z-index: 1;
-}
-
-.pharmacistTooltip {
-    visibility: hidden;
-    width: 120px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    padding: 5px 0;
-    border-radius: 6px;
-    top: -20px;
-    right: 100%;
-    /* Position the tooltip text - see examples below! */
-    position: absolute;
-    z-index: 1;
-}
-.pharmacistDiv:hover .pharmacistTooltip {
-    visibility: visible;
-}
-
 
 #ruleGrid {
     width: 100%;
     height: 100%;
     display: flex;
     flex-flow: column wrap;
-    padding: 10px;
+    padding: 7px 0 0 60px;
     overflow: auto;
-    column-gap: 10px; 
+    justify-content: flex-start; 
+    column-gap: 10px;
 }
+
+.categoryBoundingBox {
+    max-height: 95%;
+    display: flex;
+    flex-flow: column wrap;
+    column-gap: 65px;
+    row-gap: 3px;
+    margin-bottom: 20px;
+}
+
+.categoryBoundingBox:first-child {
+    width: calc(400px + 65px);
+}
+
 .categoryDiv, .ruleDiv {
     width: 200px;
 }
@@ -227,8 +179,6 @@ function createRuleBottom() {
 .categoryDiv {
     font-size: 105%;
     text-decoration: underline;
-    position: relative;
-    top: 0;
     border: var(--generalBorders)
 }
 
@@ -236,12 +186,37 @@ function createRuleBottom() {
     display: inline;
 }
 .categoryDiv p:first-child {
-    margin-right: 10px;
+    margin-right: 20px;
 }
 
-.ruleDiv {
-    margin-top: 4px;
-    font-weight: normal;
+.ruleDiv p:nth-child(2) {
+    margin-right: 20px;
 }
 
+.ruleSeverityBox {
+    width: 10px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    text-align: center;
+    font-size: calc(1vw + 1vh);
+    line-height: 40px;
+    border-radius: var(--buttonBorderRadius);
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0;
+}
+
+.sev1 {
+    background-color: var(--severity1);
+}
+
+.sev2 {
+    background-color: var(--severity2);
+}
+
+.sev3 {
+    background-color: var(--severity3);
+    color: white;
+}
 </style>
