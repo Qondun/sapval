@@ -97,15 +97,15 @@ export const useSelectionDataStore = defineStore('selectionData', {
                 case 4:
                     return [34, 40];
                 case 5:
-                    return [10, 15];
-                case 6:
-                    return [52, 55];
-                case 7:
-                    return [59, 62];
-                case 8:
-                    return [56, 58];
-                case 9:
                     return [50, 51];
+                case 6:
+                    return [10, 15];
+                case 7:
+                    return [56, 58];
+                case 8:
+                    return [52, 55];
+                case 9:
+                    return [59, 62];
                 default:
                     return [1, 62];
             }
@@ -131,6 +131,9 @@ export const useSelectionDataStore = defineStore('selectionData', {
         noAlertsForRule(ruleNr) {
             return this.WarningInfo.filter(obj => obj.Regel == ruleNr).length;
         },
+        getWardList() {
+            return wardsInfo;
+        },
         initialize() {
             this.WarningInfo = WarningInfo
             this.PatientAlertDrug = PatientAlertDrug
@@ -138,10 +141,10 @@ export const useSelectionDataStore = defineStore('selectionData', {
             this.wardsInfo = wardsInfo
         },
         getCategoryNames() {
-            return ["Njurfunktion", "Riskprofil", "LM och labvärden", "LM och äldre", "Interaktioner", "LM och status", "Övrigt", "Övriga LM-komb.", "LM och diagnos"];
+            return ["Njurfunktion", "Riskprofil", "LM och labvärden", "LM och äldre", "LM och diagnos", "Interaktioner", "Övriga LM-komb.", "LM och status", "Övrigt"];
         },
         getWardCategoryNames() {
-            return ["Psykiatri", "Blod och tumörsjukd.", "Neuro"];
+            return ["Psykiatri", "Blod och tumörsjukd.", "Neuro", "Hjärt- lungmedicin", "Kirurgi", "Akut- och internmedicin", "Ortopedi", "Infektionssjukdomar", "Geriatrik", "Specialmedicin hur reumatol" ,"Ögonsjukdomar", "Öron näs hals", "Plastik- och kärlkirurgi", "Thoraxkirurgi", "Urologi", "Rehabilitering och smärtcentr", "Kvinnosjukvård"];
         },
         clearWarning(AlertID) {
             const logger = useActivityLogStore()

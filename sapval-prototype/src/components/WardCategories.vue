@@ -5,6 +5,7 @@ import { storeToRefs } from 'pinia'
 
 import { wardsInfo } from '../records/inpatientWards.json';
 import { WarningInfo } from '../records/warningList.json';
+import { getRuleInformation } from '../records/dataFunctions';
 const props = defineProps({
     layoutState: Number,
     selectionPageState: String,
@@ -49,47 +50,72 @@ const categoryNames = selectionData.getCategoryNames()
 const { updated } = storeToRefs(selectionData)
 
 watch(updated, () => {
-    createWardBottom();
+    createRuleBottom();
 })
 onMounted(() => { // TODO: Find way to create different layouts. Easiest way is to do seperate components
-    createWardBottom();    
+    console.log("in ruleCategories")
+    createRuleBottom();    
 })
 
-function createWardBottom() {
-    let wardGrid = document.getElementById("wardGrid");
-    let catNames = selectionDataStore.getCategoryNames();
-    wardsInfo.forEach((ward) =>{
-        let wardHeader = document.createElement('h2');
-        console.log("ward: " + ward)
-        wardHeader.innerHTML = ward.KeyNamn;
-        wardGrid.appendChild(wardHeader);
-    });
+function createRuleBottom() {
+    let ruleGrid = document.getElementById("wardGrid");
+    let catNames = selectionDataStore.getWardCategoryNames();
+    for(var cat in catNames) {
+        let categoryBoundingBox = document.createElement('div');
+        categoryBoundingBox.classList.add('wardGroupBoundingBox')
+        let categoryHeader = document.createElement('p');
+        categoryHeader.classList.add('categoryHeader');
+        categoryHeader.innerHTML = catNames[cat];
+        
+        categoryBoundingBox.appendChild(categoryHeader);
+
+        let wardList = selectionDataStore.getWardList();
+        for(var ward in wardList){
+            let currentWard = wardList[ward];
+            if(currentWard.wardType==catNames[cat]) {
+                let ruleDiv = document.createElement('div');
+                ruleDiv.classList.add('ruleDiv');
+                ruleDiv.classList.add('gridButton');
+                ruleDiv.setAttribute('id', ward+1);
+
+                let ruleText = document.createElement('p');
+                ruleText.innerHTML = "<b>" + currentWard.KeyNamn + ":</b> ";
+                ruleDiv.appendChild(ruleText);
+                
+
+                if(currentWard.WardContactPharmacistFirstName!='') {
+                    let pharmacistDiv = document.createElement('div');
+                    pharmacistDiv.classList.add('pharmacistDiv');
+
+                    let pharmacistTooltip = document.createElement('span');
+                    pharmacistTooltip.classList.add('pharmacistTooltip');
+                    pharmacistTooltip.innerHTML = currentWard.WardContactPharmacistFirstName + ' ' + currentWard.WardContactPharmacistLastName;
+                    pharmacistDiv.appendChild(pharmacistTooltip);
+                    ruleDiv.appendChild(pharmacistDiv);
+                }
+                categoryBoundingBox.appendChild(ruleDiv);
+            }
+        }
+        ruleGrid.appendChild(categoryBoundingBox);
+    }
 }
 </script>
 
 <template>
-    <div v-if="selectionPageState == 'Ward'" id="wardGrid">
-        <!-- <h1>Akut- och internmedicin</h1>
-        <template v-for="ward in wardsInfo" :key="ward">
-            <div v-if="ward.wardType=='Akut- och internmedicin'" class="wardDiv gridButton">
-                <p>{{ ward.KeyNamn }} </p>
-                <div v-if="ward.WardContactPharmacistFirstName != ''" class="pharmacistDiv">
-                    <span class="pharmacistTooltip">{{ ward.WardContactPharmacistFirstName + ' ' +
-                        ward.WardContactPharmacistLastName }}</span>
-                </div>
-                <p class="noAlertText"> {{ selectionDataStore.noAlertsForWard(ward.KeyNamn) }} </p>
-            </div>
-            
-        </template> -->
-    </div>
+    <div id="wardGrid"></div>
 </template>
 
 <style>
+b {
+    font-weight: bold;
+    font-size: 107%;
+}
 .gridButton {
     background-color: var(--buttonColor);
     border-radius: var(--buttonBorderRadius);
-    padding: 5px;
+    padding: 3px;
     font-size: 100%;
+    height: 37px;
 }
 
 .gridButton:hover {
@@ -97,41 +123,68 @@ function createWardBottom() {
     cursor: pointer;
 }
 
-.gridButton p:first-child {
-    font-weight: bold;
-    font-size: 107%;
-}
-
-.gridButton p:last-child {
+.categoryDiv p:last-child, .ruleDiv p:nth-child(2) {
     float: right;
     font-size: 130%;
-}
-
-.noAlertText {
-    position: absolute;
-    bottom: 0;
-    right: 5px;
-}
-
-.wardTypeText {
-    margin-top: -9px;
 }
 
 #wardGrid {
     width: 100%;
     height: 100%;
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    padding: 5px;
-}
-
-#wardGrid .gridButton {
     display: flex;
-    flex-direction: column;
+    flex-flow: column wrap;
+    padding: 7px 0 0 60px;
+    overflow: auto;
+    justify-content: flex-start; 
+    column-gap: 10px;
 }
 
-.wardDiv {
-    margin: 5px;
+.wardGroupBoundingBox {
+    max-height: 95%;
+    display: flex;
+    flex-flow: column wrap;
+    column-gap: 65px;
+    row-gap: 3px;
+    margin-bottom: 20px;
+}
+
+.categoryHeader {
+    font-size: 14pt;
+}
+
+.categoryDiv, .ruleDiv {
+    width: 200px;
+}
+
+.categoryDiv {
+    font-size: 105%;
+    text-decoration: underline;
+    border: var(--generalBorders)
+}
+
+.categoryDiv p, .ruleDiv p {
+    display: inline;
+}
+.categoryDiv p:first-child {
+    margin-right: 20px;
+}
+
+.ruleDiv p:nth-child(2) {
+    margin-right: 20px;
+}
+
+.ruleSeverityBox {
+    width: 10px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    text-align: center;
+    font-size: calc(1vw + 1vh);
+    line-height: 40px;
+    border-radius: var(--buttonBorderRadius);
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0;
 }
 
 .pharmacistDiv {
@@ -145,7 +198,6 @@ function createWardBottom() {
     right: 10px;
     z-index: 1;
 }
-
 .pharmacistTooltip {
     visibility: hidden;
     width: 120px;
@@ -156,7 +208,7 @@ function createWardBottom() {
     border-radius: 6px;
     top: -20px;
     right: 100%;
-    /* Position the tooltip text - see examples below! */
+      /* Position the tooltip text - see examples below! */
     position: absolute;
     z-index: 1;
 }
@@ -164,49 +216,16 @@ function createWardBottom() {
     visibility: visible;
 }
 
-
-#ruleGrid {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-flow: column wrap;
-    padding: 10px;
-    overflow: auto;
-    column-gap: 10px; 
-}
-.categoryDiv, .ruleDiv {
-    width: 200px;
+.sev1 {
+    background-color: var(--severity1);
 }
 
-.categoryDiv {
-    font-size: 105%;
-    text-decoration: underline;
-    margin-top: 34px;
-    border: var(--generalBorders)
-}
-.categoryDiv:first-child{
-    margin-top: 2px;
-}
-#ruleGrid > div:nth-child(20), #ruleGrid > div:nth-child(30), #ruleGrid > div:nth-child(55), #ruleGrid > div:nth-child(69) {
-    margin-top: 0px;
-}
-#ruleGrid > div:nth-child(19), #ruleGrid > div:nth-child(54){
-    margin-bottom: 50px;
-}
-#ruleGrid > div:nth-child(68) {
-    margin-bottom: 70px;
+.sev2 {
+    background-color: var(--severity2);
 }
 
-.categoryDiv p, .ruleDiv p {
-    display: inline;
+.sev3 {
+    background-color: var(--severity3);
+    color: white;
 }
-.categoryDiv p:first-child {
-    margin-right: 10px;
-}
-
-.ruleDiv {
-    margin-top: 4px;
-    font-weight: normal;
-}
-
 </style>
