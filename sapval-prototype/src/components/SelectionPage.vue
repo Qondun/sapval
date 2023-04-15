@@ -619,80 +619,40 @@ function createAlertForm(alert, severityLevel, rule) {
     let infoDiv = document.getElementById('infoDiv');
     let formBoundingBox = document.createElement('div');
     formBoundingBox.setAttribute('id', 'formBoundingBox')
-    let formTabBox = document.createElement('div');
-    formTabBox.setAttribute('id', 'formTabBox');
-
-    let tabNames = ["Avvisa", "Skicka", "Spara tillsvidare"];
-    for (var tabName in tabNames) {
-        let tabButton = document.createElement('div');
-        tabButton.setAttribute('id', tabName);
-        tabButton.classList.add('tabButton');
-        if (tabButton.id == formState) {
-            tabButton.classList.add('selected');
-        }
-        let tabText = document.createElement('p');
-        tabText.innerHTML = tabNames[tabName];
-        tabButton.appendChild(tabText);
-        tabButton.severityLevel = severityLevel
-        tabButton.rule = rule
-        formTabBox.appendChild(tabButton);
-
-        tabButton.addEventListener('click', function (evt) {
-            let severityLevel = evt.currentTarget.severityLevel
-            let rule = evt.currentTarget.rule
-
-            // formState = tabButton.id;
-            updateAlertForm(alert, parseInt(tabButton.id, 10), severityLevel, rule);
-        })
-    }
-    formBoundingBox.appendChild(formTabBox);
-
-    formBoundingBox.appendChild(createFormMainBox(alert, severityLevel, rule));
-    infoDiv.appendChild(formBoundingBox);
-}
-
-function updateAlertForm(alert, newState, severityLevel, rule) {
-    if (formState != newState) {
-        let formBoundingBox = document.getElementById('formBoundingBox');
-        let formTabBox = document.getElementById('formTabBox');
-        formTabBox.childNodes[formState].classList.remove('selected');
-        formState = newState;
-        formTabBox.childNodes[formState].classList.add('selected');
-
-        formBoundingBox.removeChild(formBoundingBox.lastChild);
-        formBoundingBox.appendChild(createFormMainBox(alert, severityLevel, rule));
-    }
-}
-
-function createFormMainBox(alert, severityLevel, rule) {
-    let warningId = alert['ID för alert']
-    let mainBox = document.createElement('div');
-    mainBox.setAttribute('id', 'formMainBox');
     let form = document.createElement('form');
-    if (formState == 0) {
-        let radioButtonNames = ["Redan minskad risk", "Palliativ vård", "Engångsdos", "Annan"];
-        for(var name in radioButtonNames) {
+
+    let actionCategories = ["Skicka", "Avvisa", "Spara tillsvidare"];
+    let actionOptions = [["Brådskande", "Vanligt"], ["Redan minskad risk", "Palliativ vård", "Engångsdos", "Annan"], ["Inte viktigt", "Potentiellt farligt"]]
+    for (var category in actionCategories) {
+        let categoryHeader = document.createElement('p');
+        categoryHeader.classList.add('formCategoryHeader');
+        categoryHeader.innerHTML = actionCategories[category];
+        form.appendChild(categoryHeader)
+        let categoryOptions = actionOptions[category];
+        for(var action in categoryOptions) {
             let radioButton = document.createElement('input');
             radioButton.setAttribute('type','radio');
-            radioButton.setAttribute('id', 'radioButton' + name);
-            radioButton.setAttribute('name', 'dismiss');
-            radioButton.setAttribute('value',radioButtonNames[name]);
+            radioButton.setAttribute('id', ('radioButton_' + categoryOptions[action]));
+            radioButton.setAttribute('name', 'actionOptions');
+            radioButton.setAttribute('value', categoryOptions[action]);
 
             let radioLabel = document.createElement('label');
-            radioLabel.setAttribute('for','radioButton' + name);
-            radioLabel.innerHTML = radioButtonNames[name];
-            
+            radioLabel.setAttribute('for', ('radioButton_' + categoryOptions[action]));
+            radioLabel.innerHTML = categoryOptions[action] + "<br>";
+
             form.appendChild(radioButton);
             form.appendChild(radioLabel);
         }
-        mainBox.appendChild(createDataUpdateButton("Dismiss 1", "dis1", severityLevel, 1, alert.PersonID, alert.Regel, warningId))
-    } else if (formState == 1) {
-        mainBox.appendChild(createDataUpdateButton("Dismiss 2", "dis2", severityLevel, 2, alert.PersonID, alert.Regel, warningId))
-    } else {
-        mainBox.appendChild(createDataUpdateButton("Dismiss 3", "dis3", severityLevel, 3, alert.PersonID, alert.Regel, warningId))
     }
-    mainBox.appendChild(form);
-    return mainBox;
+    let commentBoxLabel = document.createElement('label');
+    commentBoxLabel.innerHTML = "Kommentar<br>"
+    let commentBox = document.createElement('textarea');
+    commentBox.setAttribute('placeholder', 'Skriv en kommentar');
+    form.appendChild(commentBoxLabel);
+    form.appendChild(commentBox);
+
+    formBoundingBox.appendChild(form);
+    infoDiv.appendChild(formBoundingBox);
 }
 </script>
 
@@ -1050,51 +1010,17 @@ select {
     margin-top: 10px;
 }
 
-#formTabBox {
+.formCategoryHeader {
+    font-size: 18pt;
+}
+#formBoundingBox textarea {
     width: 100%;
+    height: 150px;
+}
+/* #formBoundingBox form{
     display: flex;
-    flex-direction: row;
-    z-index: 1;
-}
-
-.tabButton {
-    width: calc(100% / 3);
-    background-color: var(--buttonColor);
-    text-align: center;
-    border: var(--generalBorders);
-    border-radius: var(--buttonBorderRadius);
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-}
-
-.tabButton:hover {
-    cursor: pointer;
-    background-color: var(--buttonColorHover);
-}
-
-.tabButton.selected {
-    background-color: var(--buttonSelected);
-    border-bottom: 0;
-}
-
-#formMainBox {
-    background-color: var(--buttonSelected);
-    border: var(--generalBorders);
-    margin-top: -2px;
-    z-index: 0;
-}
-
-#formMainBox form{
-    display: block;
-}
-
-#formMainBox label {
-    display: inline;
-}
-
-#formMainBox label, #formMainBox input {
-    float: left;
-}
+    flex-direction: column;
+} */
 
 fieldset {
     border: 2px solid transparent;

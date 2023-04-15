@@ -103,7 +103,12 @@ function createRuleBottom() {
             ruleDiv.appendChild(ruleCountText);
 
             let severityLevelBox = document.createElement('div');
-            let severityClass = "sev" + ruleInfo.severityLevel;
+            let severityClass = "";
+            if(ruleCountText.innerHTML!="0"){
+                severityClass = "sev" + ruleInfo.severityLevel;
+            } else {
+                severityClass = "assessed";
+            }
             severityLevelBox.classList.add(severityClass);
             severityLevelBox.classList.add('ruleSeverityBox');
             ruleDiv.appendChild(severityLevelBox);
@@ -210,13 +215,13 @@ b {
 .sev1 {
     background-color: var(--severity1);
 }
-
 .sev2 {
     background-color: var(--severity2);
 }
-
 .sev3 {
     background-color: var(--severity3);
-    color: white;
+}
+.assessed {
+    background-color: var(--resolution3);
 }
 </style>

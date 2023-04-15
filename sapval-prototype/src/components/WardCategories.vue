@@ -73,15 +73,38 @@ function createRuleBottom() {
         for(var ward in wardList){
             let currentWard = wardList[ward];
             if(currentWard.wardType==catNames[cat]) {
-                let ruleDiv = document.createElement('div');
-                ruleDiv.classList.add('ruleDiv');
-                ruleDiv.classList.add('gridButton');
-                ruleDiv.setAttribute('id', ward+1);
+                let wardDiv = document.createElement('div');
+                wardDiv.classList.add('wardDiv');
+                wardDiv.classList.add('gridButton');
+                wardDiv.setAttribute('id', currentWard.KeyNamn);
 
                 let ruleText = document.createElement('p');
-                ruleText.innerHTML = "<b>" + currentWard.KeyNamn + ":</b> ";
-                ruleDiv.appendChild(ruleText);
-                
+                ruleText.innerHTML = "<b>" + currentWard.KeyNamn + ".</b> ";
+                wardDiv.appendChild(ruleText);
+
+                let noAlerts = selectionDataStore.noAlertsForWard(currentWard.KeyNamn);
+                let totalAlerts = noAlerts[0] + noAlerts[1] + noAlerts[2];
+
+                let allSeverityLevelBox = document.createElement('div');
+                allSeverityLevelBox.classList.add('allSeverityLevelBox');
+                if(totalAlerts) {
+                    for(var count in noAlerts) {
+                        if(noAlerts[count]) {
+                            let sevBoundingBox = document.createElement('div');
+                            sevBoundingBox.classList.add('sevBoundingBox');
+                            let sevLevelBox = document.createElement('div');
+                            sevLevelBox.classList.add('sevLevelBox');
+                            sevLevelBox.classList.add('sev' + (parseInt(count)+1));
+                            sevBoundingBox.appendChild(sevLevelBox);
+
+                            let sevLevelText = document.createElement('p');
+                            sevLevelText.innerHTML = ": " + noAlerts[count];
+                            sevBoundingBox.appendChild(sevLevelText);
+                            allSeverityLevelBox.appendChild(sevBoundingBox);
+                        }
+                    }
+                }
+                wardDiv.appendChild(allSeverityLevelBox);
 
                 if(currentWard.WardContactPharmacistFirstName!='') {
                     let pharmacistDiv = document.createElement('div');
@@ -91,9 +114,16 @@ function createRuleBottom() {
                     pharmacistTooltip.classList.add('pharmacistTooltip');
                     pharmacistTooltip.innerHTML = currentWard.WardContactPharmacistFirstName + ' ' + currentWard.WardContactPharmacistLastName;
                     pharmacistDiv.appendChild(pharmacistTooltip);
-                    ruleDiv.appendChild(pharmacistDiv);
+                    wardDiv.appendChild(pharmacistDiv);
                 }
-                categoryBoundingBox.appendChild(ruleDiv);
+
+                wardDiv.addEventListener('click', function(){
+                    layoutState.value = 3;
+                    selectionPageState.value = "Ward";
+                    selectionStateVal.value = wardDiv.id;
+                });
+
+                categoryBoundingBox.appendChild(wardDiv);
             }
         }
         ruleGrid.appendChild(categoryBoundingBox);
@@ -152,24 +182,20 @@ b {
     font-size: 14pt;
 }
 
-.categoryDiv, .ruleDiv {
-    width: 200px;
+.wardDiv {
+    width: 250px;
+    display: flex;
+    flex-flow: row wrap;
 }
 
-.categoryDiv {
-    font-size: 105%;
-    text-decoration: underline;
-    border: var(--generalBorders)
-}
-
-.categoryDiv p, .ruleDiv p {
+.categoryDiv p, .wardDiv p {
     display: inline;
 }
 .categoryDiv p:first-child {
     margin-right: 20px;
 }
 
-.ruleDiv p:nth-child(2) {
+.wardDiv p:nth-child(2) {
     margin-right: 20px;
 }
 
@@ -214,6 +240,23 @@ b {
 }
 .pharmacistDiv:hover .pharmacistTooltip {
     visibility: visible;
+}
+
+.allSeverityLevelBox {
+    margin-left: 20px;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.sevBoundingBox {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.sevLevelBox {
+    width: 15px;
+    height: 15px;
+    margin: 5px 1px 0;
 }
 
 .sev1 {
