@@ -6404,7 +6404,7 @@
          "RegelkategoriID": 3,
          "Regelkategori": "Läkemedel och doser",
          "Regel": 36,
-         "RiskLM": "Risperidal Consta",
+         "RiskLM": "Risperdal Consta",
          "Kommentar": "Patiente har en dos på 25 mg, intramusklärt på ondag varannan vecka.",
          "ID för alert": "879",
          "Antal träffar per patient": 1

@@ -12,7 +12,8 @@ import { useActivityLogStore } from '../stores/logger';
 
 let filterRange = []; // [Lower bound, Upper bound]
 let dataList = [];
-let patientIDSet = new Set();
+// let patientIDSet = new Set();
+let patientIDSet = [];
 let ruleNumberSet = [];
 
 let wardName = "All";
@@ -35,9 +36,9 @@ const { updated } = storeToRefs(selectionData)
 
 watch(updated, () => {
     console.log('selectionData ref changed, do something!')
-    cleanInfoDiv()
-    clearFilterDropdowns()
-    setUp()
+    cleanInfoDiv();
+    clearFilterDropdowns();
+    // setUp()
 })
 
 const props = defineProps({
@@ -99,42 +100,6 @@ function setUp() {
     createLayout();
 }
 
-// function setCategoryRange() {
-//     console.log("inside setCategoryRange");
-//     switch (Number(categoryID)) {
-//         case 1:
-//             filterRange = [1, 9];
-//             break;
-//         case 2:
-//             filterRange = [10, 15];
-//             break;
-//         case 3:
-//             filterRange = [16, 33];
-//             break;
-//         case 4:
-//             filterRange = [34, 40];
-//             break;
-//         case 5:
-//             filterRange = [41, 49];
-//             break;
-//         case 6:
-//             filterRange = [50, 51];
-//             break;
-//         case 7:
-//             filterRange = [52, 55];
-//             break;
-//         case 8:
-//             filterRange = [56, 58];
-//             break;
-//         case 9:
-//             filterRange = [59, 62];
-//             break;
-//         default:
-//             filterRange = [1, 62];
-//         //filterRange = [1,9];  
-//     }
-// }
-
 function clearFilterDropdowns() {
     let boundingBox = document.getElementById('filterDropdownBoundingBox');
     while (boundingBox.firstChild) {
@@ -168,17 +133,20 @@ function createFilterDropdowns() {
 
         let wardNames = selectionData.getWardNames();
         wardNames.forEach((ward) => {
-            // let wardData = numberForRule(ruleNr);
-            let wardOption = document.createElement('option');
-            wardOption.setAttribute('value', ward);
-            wardOption.innerHTML = ward;
-            wardSelect.appendChild(wardOption);
+            // let counter = selectionData.noAlertsWardFiltered(patientIDSet, ward, selectionPageState, selectionStateVal);
+            // if(counter) {
+                let wardOption = document.createElement('option');
+                wardOption.setAttribute('value', ward);
+                wardOption.innerHTML = ward;
+
+                wardSelect.appendChild(wardOption);
+            // }
         });
         wardSelect.value = wardName;
         wardBox.appendChild(wardSelect);
         filterDropdownBoundingBox.appendChild(wardBox);
     }
-    if (selectionPageState.value != "Category") {
+    if (selectionPageState.value == "Ward") {
         let categoryBox = document.createElement('div');
         let categoryLegend = document.createElement('legend');
         categoryLegend.innerHTML = "Kategorier";
@@ -243,12 +211,30 @@ function createFilterDropdowns() {
     selectionGrid.appendChild(filterDropdownBoundingBox);
 }
 
+function updateAvailableBoxes(ruleNumber) {
+    let availableRuleBoundingBox = document.getElementById('availableRuleBoundingBox');
+    availableRuleBoundingBox.childNodes.forEach((ruleBox) =>{
+        if(ruleBox.id==ruleNumber) {
+            let boxText = ruleBox.firstChild;
+            let splitText = boxText.innerHTML.split('<br>')[1];
+            let oldCount = parseInt(splitText.split(' '));
+            console.log("old text: " + boxText.innerHTML);
+            let newCount = oldCount-1;
+            if(newCount) {
+                boxText.innerHTML = "Regel " + ruleNumber + "<br>" + newCount + " st";
+            } else {
+                availableRuleBoundingBox.removeChild(ruleBox);
+            }
+        }
+    });
+}
+
+
 function createAvailableRuleBoxes() { // TODO: remake to show accurate information for ward and rule
+    console.log("createAvailableRuleBoxes")
     let selectionGrid = document.getElementById("selectionGrid");
-    let availableRuleBoundingBox = document.createElement("div");
-    console.table(ruleNumberSet[0])
+    let availableRuleBoundingBox = document.getElementById('availableRuleBoundingBox');
     let ruleNumbers = ruleNumberSet.sort(function (a, b) { return a - b });
-    availableRuleBoundingBox.setAttribute("id", "availableRuleBoundingBox");
 
     for (var rule in ruleNumbers) {
         let counter = 0;
@@ -261,7 +247,7 @@ function createAvailableRuleBoxes() { // TODO: remake to show accurate informati
         });
         let availableRuleBox = document.createElement("div");
         availableRuleBox.classList.add("availableRuleBox");
-        availableRuleBox.setAttribute("id", counter);
+        availableRuleBox.setAttribute("id", ruleNumbers[rule]);
         let availableRuleBoxText = document.createElement("p");
         availableRuleBoxText.innerHTML = "Regel " + ruleNumbers[rule] + "<br>" + counter + " st";
         availableRuleBox.appendChild(availableRuleBoxText);
@@ -487,17 +473,17 @@ function updateInfoDiv(patientIndex, alertIndex) {
     dosingInfoBox.appendChild(dosingText);
     mainInfoBox.appendChild(dosingInfoBox);
 
-    if (ruleInfo.CentralApotekarenToDo != "") {
-        mainInfoBox.appendChild(createDividingLine("Åtgärd"));
+    // if (ruleInfo.CentralApotekarenToDo != "") {
+    //     mainInfoBox.appendChild(createDividingLine("Åtgärd"));
 
-        let toDoBox = document.createElement("div");
-        toDoBox.setAttribute("id", "toDoBox");
-        toDoBox.classList.add("infoBoxes");
-        let toDoText = document.createElement("p");
-        toDoText.innerHTML = ruleInfo.CentralApotekarenToDo;
-        toDoBox.appendChild(toDoText);
-        mainInfoBox.appendChild(toDoBox);
-    }
+    //     let toDoBox = document.createElement("div");
+    //     toDoBox.setAttribute("id", "toDoBox");
+    //     toDoBox.classList.add("infoBoxes");
+    //     let toDoText = document.createElement("p");
+    //     toDoText.innerHTML = ruleInfo.CentralApotekarenToDo;
+    //     toDoBox.appendChild(toDoText);
+    //     mainInfoBox.appendChild(toDoBox);
+    // }
 
     //JENNS BUTTON STUFF
     // console.log(wardStoreRef)
@@ -514,7 +500,7 @@ function updateInfoDiv(patientIndex, alertIndex) {
     // infoDiv.prepend(patientDivBoundingBox);
 
     mainInfoBox.appendChild(createDividingLine("Hantera varning"))
-    createAlertForm(alertInfo, ruleInfo.severityLevel, ruleInfo);
+    createAlertForm(alertInfo, ruleInfo.severityLevel, patientIndex, alertIndex);
 }
 
 function cleanPatientDiv() {
@@ -568,7 +554,7 @@ function createDividingLine(label) {
     return fieldset;
 }
 
-function createDataUpdateButton(label, id, severityLevel, newSeverity, personID, ruleNumber, warningId) {
+function createDataUpdateButton(label, id, severityLevel, newSeverity, personID, ruleNumber, warningId, patientIndex, alertIndex) {
     let filterButton = document.createElement("div");
 
     // Setup the attributes for the button that we need in the callback
@@ -605,6 +591,8 @@ function createDataUpdateButton(label, id, severityLevel, newSeverity, personID,
         warningStore.completedWarningWardChartUpdate(severityLevel, newSeverity, ruleNumber);
 
         selectionDataStore.clearWarning(warningId)
+        removeAlertFromPatient(patientIndex, alertIndex);
+        updateAvailableBoxes(ruleNumber);
 
         // Might need to disable the button or reset some page state here
     });
@@ -612,9 +600,8 @@ function createDataUpdateButton(label, id, severityLevel, newSeverity, personID,
     return filterButton
 }
 
-function createAlertForm(alert, severityLevel, rule) {
-    console.log("Alert is")
-    console.log(alert)
+function createAlertForm(alert, severityLevel, patientIndex, alertIndex) {
+    let warningId = alert['ID för alert']
     formState = 0;
     let infoDiv = document.getElementById('infoDiv');
     let formBoundingBox = document.createElement('div');
@@ -650,9 +637,38 @@ function createAlertForm(alert, severityLevel, rule) {
     commentBox.setAttribute('placeholder', 'Skriv en kommentar');
     form.appendChild(commentBoxLabel);
     form.appendChild(commentBox);
-
     formBoundingBox.appendChild(form);
+
+    formBoundingBox.appendChild(createDataUpdateButton("Dismiss 1", "dis1", severityLevel, 1, alert.PersonID, alert.Regel, warningId, patientIndex, alertIndex))
     infoDiv.appendChild(formBoundingBox);
+}
+
+function removeAlertFromPatient(patientIndex, alertIndex) {
+    let listDiv = document.getElementById('listDiv');
+    let patient = null;
+    listDiv.childNodes.forEach((patientDiv) =>{
+        if(patientDiv.id==patientIndex) {
+            patient = patientDiv;
+        }
+    });
+    let alertDiv = null;
+    patient.childNodes.forEach((currDiv) =>{
+        if(currDiv.classList.contains('alertBox')) {
+            alertDiv = currDiv;
+        }
+    })
+    alertDiv.childNodes.forEach((singleAlertDiv) =>{
+        if(singleAlertDiv.id==alertIndex) {
+            alertDiv.removeChild(singleAlertDiv);
+            if(!alertDiv.firstChild) {
+                listDiv.childNodes.forEach((patientDiv) =>{
+                    if(patientDiv.id==patientIndex) {
+                        listDiv.removeChild(patientDiv);
+                    }
+                });
+            }
+        }
+    })
 }
 </script>
 
@@ -663,7 +679,7 @@ function createAlertForm(alert, severityLevel, rule) {
             <p>Backa</p>
         </div>
         <div id="filterDropdownBoundingBox"></div>
-        <div id="availableRulesBoundingBox"></div>
+        <div id="availableRuleBoundingBox"></div>
         <div id="listGridItem" class="selectionGridItem">
             <div class="headerBox">
                 <p v-if="selectionPageState == 'Category'" id="patientListHeader" class="listHeader">Kategori: {{
@@ -864,6 +880,7 @@ select {
 #patientListHeader {
     position: absolute;
     top: -50px;
+    left: 40px;
 }
 
 .alertBox {

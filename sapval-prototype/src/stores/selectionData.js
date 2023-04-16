@@ -52,13 +52,17 @@ export const useSelectionDataStore = defineStore('selectionData', {
             // console.log("running getFilteredData")
             // console.log("wardName: " + wardName + " categoryID: " + categoryID + " ruleNr: " + ruleNr);
             var dataList = [];
-            var patientIDSet = new Set();
+            // var patientIDSet = new Set();
+            var patientIDSet = [];
             var ruleNumberSet = [];
 
             this.WarningInfo.filter(obj => (categoryID == 0 || obj.RegelkategoriID + 1 == categoryID) && (ruleNr == 0 || obj.Regel == ruleNr)).forEach((alert) => {
                 let patientData = this.PatientAlertDrug.filter(obj => obj['Person ID'] == alert.PersonID)[0];
                 if (wardName == "All" || patientData.PatientLocation == wardName) {
-                    patientIDSet.add(alert.PersonID);
+                    // patientIDSet.add(alert.PersonID);
+                    if (!patientIDSet.includes(alert.PersonID)) {
+                        patientIDSet.push(alert.PersonID);
+                    }
                 }
             });
 
@@ -71,6 +75,7 @@ export const useSelectionDataStore = defineStore('selectionData', {
                     }
                 });
             });
+            console.table(patientIDSet)
             return [patientIDSet, dataList, ruleNumberSet];
         },
         getPatientInformation(patientID) {
@@ -149,6 +154,14 @@ export const useSelectionDataStore = defineStore('selectionData', {
         },
         getWardList() {
             return wardsInfo;
+        },
+        noAlertsWardFiltered(dataList) {
+            let counterArray = [];
+            dataList.forEach((alerts) =>{
+                
+            })
+
+            return counterArray;
         },
         initialize() {
             this.WarningInfo = WarningInfo

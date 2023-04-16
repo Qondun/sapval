@@ -103,8 +103,20 @@ function createRuleBottom() {
                             allSeverityLevelBox.appendChild(sevBoundingBox);
                         }
                     }
+                } else {
+                    let sevBoundingBox = document.createElement('div');
+                    sevBoundingBox.classList.add('sevBoundingBox');
+                    let sevLevelBox = document.createElement('div');
+                    sevLevelBox.classList.add('sevLevelBox');
+                    sevLevelBox.classList.add('completed');
+                    sevBoundingBox.appendChild(sevLevelBox);
+                    allSeverityLevelBox.appendChild(sevBoundingBox);
                 }
                 wardDiv.appendChild(allSeverityLevelBox);
+
+                let wardCountText = document.createElement('p');
+                wardCountText.innerHTML = totalAlerts;
+                wardDiv.appendChild(wardCountText);
 
                 if(currentWard.WardContactPharmacistFirstName!='') {
                     let pharmacistDiv = document.createElement('div');
@@ -184,6 +196,7 @@ b {
 
 .wardDiv {
     width: 250px;
+    height: 50px;
     display: flex;
     flex-flow: row wrap;
 }
@@ -198,6 +211,12 @@ b {
 .wardDiv p:nth-child(2) {
     margin-right: 20px;
 }
+
+.wardDiv p:nth-child(3) {
+    float: right;
+    font-size: 130%;
+}
+
 
 .ruleSeverityBox {
     width: 10px;
@@ -214,14 +233,14 @@ b {
 }
 
 .pharmacistDiv {
-    width: 15px;
-    height: 15px;
+    width: 13px;
+    height: 13px;
     background-image: url("./icons/pharmacistIcon.png");
-    background-size: 20px 20px;
+    background-size: 13px 13px;
     position: absolute;
     display: inline-block;
-    top: 10px;
-    right: 10px;
+    top: 5px;
+    right: 5px;
     z-index: 1;
 }
 .pharmacistTooltip {
@@ -270,5 +289,9 @@ b {
 .sev3 {
     background-color: var(--severity3);
     color: white;
+}
+
+.completed {
+    background-color: var(--resolution3);
 }
 </style>
