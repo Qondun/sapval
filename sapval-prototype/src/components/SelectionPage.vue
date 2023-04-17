@@ -676,7 +676,7 @@ function removeAlertFromPatient(patientIndex, alertIndex) {
     <div id="selectionGrid">
         <!-- <h1 class="listHeader">{{ selectionStateVal.value }}</h1>    -->
         <div id="backButton" @click="layoutState = 0">
-            <p>Backa</p>
+            <!-- <p>Backa</p> -->
         </div>
         <div id="filterDropdownBoundingBox"></div>
         <div id="availableRuleBoundingBox"></div>
@@ -729,15 +729,31 @@ b {
 
 #backButton {
     height: 40px;
-    width: 60px;
+    width: 40px;
     text-align: center;
     border-radius: var(--buttonBorderRadius);
-    padding: 6px;
+    /* padding: 6px; */
     background-color: var(--buttonColor);
     position: absolute;
     left: 10px;
     top: 10px;
     z-index: 1;
+    font-size: 40pt;
+} 
+#backButton:before, #backButton:after {
+  position: absolute;
+  left: 18.5px;
+  top: 3.2px;
+  content: ' ';
+  height: 33px;
+  width: 2px;
+  background-color: #333;
+}
+#backButton:before {
+  transform: rotate(45deg);
+}
+#backButton:after {
+  transform: rotate(-45deg);
 }
 
 #backButton:hover {
