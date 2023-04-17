@@ -75,7 +75,6 @@ export const useSelectionDataStore = defineStore('selectionData', {
                     }
                 });
             });
-            console.table(patientIDSet)
             return [patientIDSet, dataList, ruleNumberSet];
         },
         getPatientInformation(patientID) {
@@ -146,8 +145,8 @@ export const useSelectionDataStore = defineStore('selectionData', {
             let counterArray = [alertCounter1,alertCounter2,alertCounter3];
             return counterArray;
         },
-        noAlertsForCategory(categoryID) {
-            return this.WarningInfo.filter(obj => obj.RegelkategoriID == categoryID - 1).length;
+        noAlertsForCategory(categoryName) {
+            return this.WarningInfo.filter(obj => obj.Regelkategori==categoryName).length;
         },
         noAlertsForRule(ruleNr) {
             return this.WarningInfo.filter(obj => obj.Regel == ruleNr).length;
@@ -163,6 +162,18 @@ export const useSelectionDataStore = defineStore('selectionData', {
 
             return counterArray;
         },
+        getDrugFassName(drugName) {
+            return this.PatientAlertDrug.filter(obj=> obj['RiskLM']==drugName)[0].FassName;
+        },
+        getDrugListForPatient(patientID) {
+            console.log("in getDrugListForPatient: " + patientID)
+            let drugMap = new Map();
+            this.PatientAlertDrug.filter(obj => obj['PersonID']==patientID).forEach((drug) =>{
+                drugMap.set(drug.RiskLM, drug.FassName.substring(0, drug.fassName.indexOf(":")));
+            })
+            console.log(drugMap)
+            return drugMap;
+        },
         initialize() {
             this.WarningInfo = WarningInfo
             this.PatientAlertDrug = PatientAlertDrug
@@ -170,10 +181,10 @@ export const useSelectionDataStore = defineStore('selectionData', {
             this.wardsInfo = wardsInfo
         },
         getCategoryNames() {
-            return ["Njurfunktion", "Riskprofil", "LM och labvärden", "LM och äldre", "LM och diagnos", "Interaktioner", "Övriga LM-komb.", "LM och status", "Övrigt"];
+            return ["Njurfunktion", "Riskprofil", "LM och labvärden", "LM och doser", "LM och diagnos", "Interaktioner", "Övriga LM-komb.", "LM och status", "Övrigt"];
         },
         getWardCategoryNames() {
-            return ["Psykiatri", "Blod och tumörsjukd.", "Neuro", "Hjärt- lungmedicin", "Ortopedi", "Kirurgi", "Akut- och internmedicin", "Infektionssjukdomar", "Geriatrik", "Specialmedicin hur reumatol" ,"Ögonsjukdomar", "Öron näs hals", "Plastik- och kärlkirurgi", "Thoraxkirurgi", "Urologi", "Rehabilitering och smärtcentr", "Kvinnosjukvård"];
+            return ["Psykiatri", "Blod och tumörsjukd.", "Neuro", "Hjärt- lungmedicin", "Ortopedi", "Kirurgi", "Akut- och internmedicin", "Infektionssjukdomar", "Geriatrik", "Öron näs hals", "Specialmedicin hur reumatol" ,"Ögonsjukdomar", "Plastik- och kärlkirurgi", "Thoraxkirurgi", "Urologi", "Rehabilitering och smärtcentr", "Kvinnosjukvård"];
         },
         clearWarning(AlertID) {
             const logger = useActivityLogStore()

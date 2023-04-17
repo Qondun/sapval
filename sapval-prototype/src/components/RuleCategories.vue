@@ -72,9 +72,21 @@ function createRuleBottom() {
         categoryText.innerHTML = catNames[cat];
         categoryDiv.appendChild(categoryText);
         
-        let categoryCount = document.createElement('p');
-        categoryCount.innerHTML = selectionDataStore.noAlertsForCategory(parseInt(cat)+1);
-        categoryDiv.appendChild(categoryCount);
+        // let categoryCount = document.createElement('p');
+        // categoryCount.innerHTML = selectionDataStore.noAlertsForCategory(catNames[cat]);
+        // categoryDiv.appendChild(categoryCount);
+        
+        let categoryCount = selectionDataStore.noAlertsForCategory(catNames[cat]);
+        if(categoryCount!=0){
+            let categoryCountText = document.createElement('p');
+            categoryCountText.innerHTML = categoryCount;
+            categoryDiv.appendChild(categoryCountText);
+        } else {
+            let severityLevelBox = document.createElement('div');
+            severityLevelBox.classList.add('assessed');
+            severityLevelBox.classList.add('ruleSeverityBox');
+            categoryDiv.appendChild(severityLevelBox);
+        }
 
         categoryDiv.addEventListener('click', function() {
             layoutState.value = 3;
@@ -98,13 +110,13 @@ function createRuleBottom() {
             ruleText.innerHTML = "<b>" + i + ":</b> " + ruleInfo.warningShortText;
             ruleDiv.appendChild(ruleText);
 
-            let ruleCountText = document.createElement('p');
-            ruleCountText.innerHTML = selectionDataStore.noAlertsForRule(i);
-            ruleDiv.appendChild(ruleCountText);
-
             let severityLevelBox = document.createElement('div');
             let severityClass = "";
-            if(ruleCountText.innerHTML!="0"){
+            let ruleCount = selectionDataStore.noAlertsForRule(i);
+            if(ruleCount!="0"){
+                let ruleCountText = document.createElement('p');
+                ruleCountText.innerHTML = ruleCount;
+                ruleDiv.appendChild(ruleCountText);
                 severityClass = "sev" + ruleInfo.severityLevel;
             } else {
                 severityClass = "assessed";
@@ -158,7 +170,7 @@ b {
     height: 100%;
     display: flex;
     flex-flow: column wrap;
-    padding: 7px 0 0 60px;
+    padding: 7px 0 0 40px;
     overflow: auto;
     justify-content: flex-start; 
     column-gap: 10px;
@@ -168,13 +180,13 @@ b {
     max-height: 95%;
     display: flex;
     flex-flow: column wrap;
-    column-gap: 65px;
+    column-gap: 35px;
     row-gap: 3px;
     margin-bottom: 20px;
 }
 
 .categoryBoundingBox:first-child {
-    width: calc(400px + 65px);
+    width: calc(400px + 35px);
 }
 
 .categoryDiv, .ruleDiv {

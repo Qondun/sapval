@@ -92,8 +92,6 @@ onMounted(() => {
 function setUp() {
     [patientIDSet, dataList, ruleNumberSet] = selectionData.getFilteredData(wardName, categoryID, ruleNr);
     filterRange = selectionData.getCategoryRange(Number(categoryID));
-    console.log("selectionStateVal" + selectionStateVal.value + " filterRange: " + filterRange)
-    console.log('filterrange: ' + filterRange);
     // setCategoryRange();
     createFilterDropdowns();
     createAvailableRuleBoxes();
@@ -229,9 +227,7 @@ function updateAvailableBoxes(ruleNumber) {
     });
 }
 
-
-function createAvailableRuleBoxes() { // TODO: remake to show accurate information for ward and rule
-    console.log("createAvailableRuleBoxes")
+function createAvailableRuleBoxes() { 
     let selectionGrid = document.getElementById("selectionGrid");
     let availableRuleBoundingBox = document.getElementById('availableRuleBoundingBox');
     let ruleNumbers = ruleNumberSet.sort(function (a, b) { return a - b });
@@ -431,30 +427,29 @@ function updateInfoDiv(patientIndex, alertIndex) {
     mainInfoBox.appendChild(patientValueBox);
 
     // Drug information
-    mainInfoBox.appendChild(createDividingLine("Läkemedel"));
+    // mainInfoBox.appendChild(createDividingLine("Läkemedel"));
 
-    let drugInfoBox = document.createElement("div");
-    drugInfoBox.setAttribute("id", "drugInfoBox");
-    drugInfoBox.classList.add("infoBoxes");
-    let drugList = document.createElement("ul");
+    // let drugInfoBox = document.createElement("div");
+    // drugInfoBox.setAttribute("id", "drugInfoBox");
+    // drugInfoBox.classList.add("infoBoxes");
+    // let drugList = document.createElement("ul");
 
-    alertInfo["RiskLM"].split(", ").forEach((drug) => {
-        let singleDrug = document.createElement('li');
-        // singleDrug.innerHTML = drug;
-        let singleDrugHyperlink = document.createElement('a');
-        singleDrugHyperlink.setAttribute('target','_blank');
-        let fassName = getDrugFassName(drug);
-        singleDrugHyperlink.textContent = drug;
-        singleDrugHyperlink.href =  'https://www.fass.se/LIF/atcregister?atcCode=' + fassName.substring(0, fassName.indexOf(":"));
-        singleDrug.appendChild(singleDrugHyperlink);
-        drugList.appendChild(singleDrug);
+    // alertInfo["RiskLM"].split(", ").forEach((drug) => {
+    //     let singleDrug = document.createElement('li');
+    //     let singleDrugHyperlink = document.createElement('a');
+    //     singleDrugHyperlink.setAttribute('target','_blank');
+    //     let fassName = getDrugFassName(drug);
+    //     singleDrugHyperlink.textContent = drug;
+    //     singleDrugHyperlink.href =  'https://www.fass.se/LIF/atcregister?atcCode=' + fassName.substring(0, fassName.indexOf(":"));
+    //     singleDrug.appendChild(singleDrugHyperlink);
+    //     drugList.appendChild(singleDrug);
 
-        singleDrug.addEventListener('click', function() {
+    //     singleDrug.addEventListener('click', function() {
 
-        });
-    });
-    drugInfoBox.appendChild(drugList);
-    mainInfoBox.appendChild(drugInfoBox);
+    //     });
+    // });
+    // drugInfoBox.appendChild(drugList);
+    // mainInfoBox.appendChild(drugInfoBox);
 
     // Dosing information
     mainInfoBox.appendChild(createDividingLine("Dosering"));
@@ -472,32 +467,9 @@ function updateInfoDiv(patientIndex, alertIndex) {
 
     dosingInfoBox.appendChild(dosingText);
     mainInfoBox.appendChild(dosingInfoBox);
-
-    // if (ruleInfo.CentralApotekarenToDo != "") {
-    //     mainInfoBox.appendChild(createDividingLine("Åtgärd"));
-
-    //     let toDoBox = document.createElement("div");
-    //     toDoBox.setAttribute("id", "toDoBox");
-    //     toDoBox.classList.add("infoBoxes");
-    //     let toDoText = document.createElement("p");
-    //     toDoText.innerHTML = ruleInfo.CentralApotekarenToDo;
-    //     toDoBox.appendChild(toDoText);
-    //     mainInfoBox.appendChild(toDoBox);
-    // }
-
-    //JENNS BUTTON STUFF
-    // console.log(wardStoreRef)
-    // mainInfoBox.appendChild(createActionBox(patientIndex, alertIndex));
-    //mainInfoBox.appendChild(createDividingLine("Update Alert Jenn"));
     mainInfoBox.appendChild(document.createElement('alert-form'));
 
-
-    // mainInfoBox.appendChild(createDataUpdateButton("Jenn Button", 'JennID'));
     infoDiv.appendChild(mainInfoBox);
-
-    // mainInfoBox.appendChild(createDividingLine("Update Alert Jenn"));
-
-    // infoDiv.prepend(patientDivBoundingBox);
 
     mainInfoBox.appendChild(createDividingLine("Hantera varning"))
     createAlertForm(alertInfo, ruleInfo.severityLevel, patientIndex, alertIndex);
@@ -521,8 +493,8 @@ function updatePatientDiv(patientData, patientIndex) {
     patientAge.innerHTML = patientData["Birthday"] + "-" + patientData["RandomFourDigitCode"] + " (" + patientData["Age"] + " år)";
     patientDiv.appendChild(patientAge);
 
-    // Ward information for patient
-    let wardInfoBox = document.createElement("div");
+    // Ward information for patient(
+    let wardInfoBox = document.createElement('div');
     wardInfoBox.classList.add("infoBoxes");
     patientDiv.appendChild(createDividingLine("Avdelningsinformation"));
     let wardInfo = document.createElement("p");
@@ -533,17 +505,25 @@ function updatePatientDiv(patientData, patientIndex) {
     wardInfoBox.appendChild(patientInfo);
     patientDiv.appendChild(wardInfoBox);
 
-    // Comments for patient
-
-    let commentBox = document.createElement("div");
-    commentBox.classList.add("infoBoxes");
-    patientDiv.appendChild(createDividingLine("Tidigare kommentarer"));
-    dataList[patientIndex].forEach((alert) => {
-        let comment = document.createElement("p");
-        comment.innerHTML = alert["Kommentar"];
-        commentBox.appendChild(comment);
-    });
-    patientDiv.appendChild(commentBox);
+    // Drug list for patient
+    let drugInfoBox = document.createElement('div');
+    drugInfoBox.classList.add('infoBoxes');
+    patientDiv.appendChild(createDividingLine('Läkemedelslista'));
+    let drugMap = selectionData.getDrugListForPatient(patientData['Person ID']);
+    let drugList = document.createElement("ul");
+    for(var [drug, fass] in drugMap){
+        console.log("drug: " + drug + ", fass: " + fass)
+        let singleDrug = document.createElement('li');
+        let singleDrugHyperlink = document.createElement('a');
+        singleDrugHyperlink.setAttribute('target','_blank');
+        console.log("fass: " + fass)
+        singleDrugHyperlink.textContent = drug;
+        singleDrugHyperlink.href = 'https://www.fass.se/LIF/atcregister?atcCode=' + fass;
+        singleDrug.appendChild(singleDrugHyperlink);
+        drugList.appendChild(singleDrug);
+    };
+    drugInfoBox.appendChild(drugList);
+    patientDiv.appendChild(drugInfoBox);
 }
 
 function createDividingLine(label) {
@@ -607,36 +587,109 @@ function createAlertForm(alert, severityLevel, patientIndex, alertIndex) {
     let formBoundingBox = document.createElement('div');
     formBoundingBox.setAttribute('id', 'formBoundingBox')
     let form = document.createElement('form');
+    form.setAttribute('action','javascript:void(0);')
 
     let actionCategories = ["Skicka", "Avvisa", "Spara tillsvidare"];
     let actionOptions = [["Brådskande", "Vanligt"], ["Redan minskad risk", "Palliativ vård", "Engångsdos", "Annan"], ["Inte viktigt", "Potentiellt farligt"]]
+    let actionCategoryBoundingBox = document.createElement('div');
+    actionCategoryBoundingBox.classList.add('actionCategoryBoundingBox');
+
+    let commentBoxLabel = document.createElement('label');
+    commentBoxLabel.innerHTML = "Kommentar<br>"
+    let commentBox = document.createElement('textarea');
+    commentBox.setAttribute('placeholder', 'Skriv en kommentar');
+    commentBox.required = false;
+
     for (var category in actionCategories) {
+        let actionCategoryDiv = document.createElement('div');
+        actionCategoryDiv.classList.add('actionCategoryDiv');
+        
         let categoryHeader = document.createElement('p');
         categoryHeader.classList.add('formCategoryHeader');
         categoryHeader.innerHTML = actionCategories[category];
-        form.appendChild(categoryHeader)
+        actionCategoryDiv.appendChild(categoryHeader)
+        
         let categoryOptions = actionOptions[category];
+        let optionDiv = document.createElement('div');
+
         for(var action in categoryOptions) {
             let radioButton = document.createElement('input');
             radioButton.setAttribute('type','radio');
             radioButton.setAttribute('id', ('radioButton_' + categoryOptions[action]));
             radioButton.setAttribute('name', 'actionOptions');
             radioButton.setAttribute('value', categoryOptions[action]);
+            radioButton.required = true;
+
+            if(actionCategories[category]=="Skicka") {
+                radioButton.addEventListener('change', () => {
+                    commentBox.required = true;
+                });
+            } else {
+                radioButton.addEventListener('change', () => {
+                    commentBox.required = false;
+                });
+            }
 
             let radioLabel = document.createElement('label');
             radioLabel.setAttribute('for', ('radioButton_' + categoryOptions[action]));
             radioLabel.innerHTML = categoryOptions[action] + "<br>";
 
-            form.appendChild(radioButton);
-            form.appendChild(radioLabel);
+            optionDiv.appendChild(radioButton);
+            optionDiv.appendChild(radioLabel);
         }
+
+        actionCategoryDiv.appendChild(optionDiv);
+        
+        // Creating the recipient dropdown
+        if(actionCategories[category]=="Skicka") {
+            let recipientLegend = document.createElement('legend')
+            recipientLegend.setAttribute('id','recipientLegend');
+            recipientLegend.innerHTML = 'Mottagare';
+            actionCategoryDiv.appendChild(recipientLegend);     
+
+            let recipientDropdown = document.createElement('select');
+            recipientDropdown.setAttribute('id', 'recipientSelect');
+            selectionData.getWardList().forEach((ward) => {
+                let wardGroup = document.createElement('optgroup');
+                wardGroup.setAttribute('label',ward.KeyNamn);
+                
+                let wardPharmacistOption = document.createElement('option');
+                wardPharmacistOption.innerHTML = ward.WardContactPharmacistFirstName + " " + ward.WardContactPharmacistLastName + " (apot.)";
+
+                let wardDoctorOption = document.createElement('option')
+                wardDoctorOption.innerHTML = ward.WardContactDoctorFirstName + " " + ward.WardContactDoctorLastName + " (dokt.)";
+                
+                if(ward.KeyNamn==selectionData.getPatientInformation(alert.PersonID).PatientLocation) {
+                    if(wardPharmacistOption.innerHTML=='') {
+                        wardDoctorOption.selected = true;
+                    } else {
+                        wardPharmacistOption.selected = true;
+                    }
+                }
+                if(ward.WardContactPharmacistFirstName) {
+                    wardGroup.appendChild(wardPharmacistOption);
+                    console.log('pharma for: ' + ward.KeyNamn)
+                }
+                wardGroup.appendChild(wardDoctorOption);
+                recipientDropdown.appendChild(wardGroup);
+            });
+            actionCategoryDiv.appendChild(recipientDropdown);
+        }
+
+        actionCategoryBoundingBox.appendChild(actionCategoryDiv);
+        form.appendChild(actionCategoryBoundingBox);
     }
-    let commentBoxLabel = document.createElement('label');
-    commentBoxLabel.innerHTML = "Kommentar<br>"
-    let commentBox = document.createElement('textarea');
-    commentBox.setAttribute('placeholder', 'Skriv en kommentar');
+    
     form.appendChild(commentBoxLabel);
     form.appendChild(commentBox);
+
+    let submitButton = document.createElement('button');
+    submitButton.setAttribute('type','submit');
+    // submitButton.setAttribute('value','Skicka');
+    submitButton.innerHTML = "Skicka"
+    submitButton.setAttribute('id','submitButton')
+    form.appendChild(submitButton);
+
     formBoundingBox.appendChild(form);
 
     formBoundingBox.appendChild(createDataUpdateButton("Dismiss 1", "dis1", severityLevel, 1, alert.PersonID, alert.Regel, warningId, patientIndex, alertIndex))
@@ -982,7 +1035,6 @@ select {
 #infoDiv,
 #patientDiv {
     height: calc(100% - 56px);
-    ;
     width: 100%;
     background-color: var(--sectionBackground);
     border: var(--buttonBorderRadius);
@@ -1044,16 +1096,39 @@ select {
 }
 
 .formCategoryHeader {
-    font-size: 18pt;
+    font-size: 14pt;
 }
 #formBoundingBox textarea {
     width: 100%;
     height: 150px;
 }
-/* #formBoundingBox form{
+
+.actionCategoryBoundingBox {
     display: flex;
-    flex-direction: column;
-} */
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+.actionCategoryDiv {
+    padding: 5px;
+    display: flex;
+    flex-flow: column wrap;
+    width: calc(100% / 3);
+}
+.actionCategoryDiv:nth-child(odd) {
+    border-left: 2px #aeaeae solid;
+    border-right: 2px #aeaeae solid;
+}
+.actionCategoryDiv input {
+    margin-right: 5px;
+}
+.actionCategoryDiv select {
+    width: 100%;
+}
+
+#recipientLegend {
+    font-size: 10pt;
+}
 
 fieldset {
     border: 2px solid transparent;

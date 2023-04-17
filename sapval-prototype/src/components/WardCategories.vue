@@ -85,9 +85,10 @@ function createRuleBottom() {
                 let noAlerts = selectionDataStore.noAlertsForWard(currentWard.KeyNamn);
                 let totalAlerts = noAlerts[0] + noAlerts[1] + noAlerts[2];
 
-                let allSeverityLevelBox = document.createElement('div');
-                allSeverityLevelBox.classList.add('allSeverityLevelBox');
+                
                 if(totalAlerts) {
+                    let allSeverityLevelBox = document.createElement('div');
+                    allSeverityLevelBox.classList.add('allSeverityLevelBox');
                     for(var count in noAlerts) {
                         if(noAlerts[count]) {
                             let sevBoundingBox = document.createElement('div');
@@ -103,20 +104,19 @@ function createRuleBottom() {
                             allSeverityLevelBox.appendChild(sevBoundingBox);
                         }
                     }
+                    wardDiv.appendChild(allSeverityLevelBox);
+                    let wardCountText = document.createElement('p');
+                    wardCountText.innerHTML = totalAlerts;
+                    wardDiv.appendChild(wardCountText);
                 } else {
                     let sevBoundingBox = document.createElement('div');
                     sevBoundingBox.classList.add('sevBoundingBox');
                     let sevLevelBox = document.createElement('div');
-                    sevLevelBox.classList.add('sevLevelBox');
-                    sevLevelBox.classList.add('completed');
-                    sevBoundingBox.appendChild(sevLevelBox);
-                    allSeverityLevelBox.appendChild(sevBoundingBox);
+                    sevLevelBox.classList.add('assessed');
+                    wardDiv.appendChild(sevLevelBox);
                 }
-                wardDiv.appendChild(allSeverityLevelBox);
 
-                let wardCountText = document.createElement('p');
-                wardCountText.innerHTML = totalAlerts;
-                wardDiv.appendChild(wardCountText);
+                
 
                 if(currentWard.WardContactPharmacistFirstName!='') {
                     let pharmacistDiv = document.createElement('div');
@@ -165,11 +165,6 @@ b {
     cursor: pointer;
 }
 
-.categoryDiv p:last-child, .ruleDiv p:nth-child(2) {
-    float: right;
-    font-size: 130%;
-}
-
 #wardGrid {
     width: 100%;
     height: 100%;
@@ -208,15 +203,14 @@ b {
     margin-right: 20px;
 }
 
-.wardDiv p:nth-child(2) {
-    margin-right: 20px;
-}
-
 .wardDiv p:nth-child(3) {
     float: right;
     font-size: 130%;
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+    font-size: 130%;
 }
-
 
 .ruleSeverityBox {
     width: 10px;
@@ -237,10 +231,9 @@ b {
     height: 13px;
     background-image: url("./icons/pharmacistIcon.png");
     background-size: 13px 13px;
-    position: absolute;
-    display: inline-block;
+    position: relative;
     top: 5px;
-    right: 5px;
+    left: 5px;
     z-index: 1;
 }
 .pharmacistTooltip {
@@ -262,20 +255,30 @@ b {
 }
 
 .allSeverityLevelBox {
-    margin-left: 20px;
+    width: 80%;
+    position: absolute;
+    left: 5px;
+    bottom: 0px;
     display: flex;
     flex-flow: row wrap;
+    column-gap: 12px;
 }
 
 .sevBoundingBox {
+    width: calc(80% / 3);
     display: flex;
     flex-flow: row wrap;
+    font-size: 12pt;
+    column-gap: 2px;
+} 
+.sevBoundingBox p {
+    margin-top: -5px;
 }
 
 .sevLevelBox {
-    width: 15px;
-    height: 15px;
-    margin: 5px 1px 0;
+    width: 17px;
+    height: 17px;
+    border: 1px black solid;
 }
 
 .sev1 {
@@ -288,10 +291,20 @@ b {
 
 .sev3 {
     background-color: var(--severity3);
-    color: white;
 }
 
-.completed {
+.assessed {
     background-color: var(--resolution3);
+    width: 10px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    text-align: center;
+    font-size: calc(1vw + 1vh);
+    line-height: 40px;
+    border-radius: var(--buttonBorderRadius);
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0;
 }
 </style>
