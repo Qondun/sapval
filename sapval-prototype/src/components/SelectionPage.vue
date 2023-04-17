@@ -133,11 +133,11 @@ function createFilterDropdowns() {
         wardNames.forEach((ward) => {
             // let counter = selectionData.noAlertsWardFiltered(patientIDSet, ward, selectionPageState, selectionStateVal);
             // if(counter) {
-                let wardOption = document.createElement('option');
-                wardOption.setAttribute('value', ward);
-                wardOption.innerHTML = ward;
+            let wardOption = document.createElement('option');
+            wardOption.setAttribute('value', ward);
+            wardOption.innerHTML = ward;
 
-                wardSelect.appendChild(wardOption);
+            wardSelect.appendChild(wardOption);
             // }
         });
         wardSelect.value = wardName;
@@ -211,14 +211,14 @@ function createFilterDropdowns() {
 
 function updateAvailableBoxes(ruleNumber) {
     let availableRuleBoundingBox = document.getElementById('availableRuleBoundingBox');
-    availableRuleBoundingBox.childNodes.forEach((ruleBox) =>{
-        if(ruleBox.id==ruleNumber) {
+    availableRuleBoundingBox.childNodes.forEach((ruleBox) => {
+        if (ruleBox.id == ruleNumber) {
             let boxText = ruleBox.firstChild;
             let splitText = boxText.innerHTML.split('<br>')[1];
             let oldCount = parseInt(splitText.split(' '));
             console.log("old text: " + boxText.innerHTML);
-            let newCount = oldCount-1;
-            if(newCount) {
+            let newCount = oldCount - 1;
+            if (newCount) {
                 boxText.innerHTML = "Regel " + ruleNumber + "<br>" + newCount + " st";
             } else {
                 availableRuleBoundingBox.removeChild(ruleBox);
@@ -227,7 +227,7 @@ function updateAvailableBoxes(ruleNumber) {
     });
 }
 
-function createAvailableRuleBoxes() { 
+function createAvailableRuleBoxes() {
     let selectionGrid = document.getElementById("selectionGrid");
     let availableRuleBoundingBox = document.getElementById('availableRuleBoundingBox');
     let ruleNumbers = ruleNumberSet.sort(function (a, b) { return a - b });
@@ -511,11 +511,11 @@ function updatePatientDiv(patientData, patientIndex) {
     patientDiv.appendChild(createDividingLine('Läkemedelslista'));
     let drugMap = selectionData.getDrugListForPatient(patientData['Person ID']);
     let drugList = document.createElement("ul");
-    for(var [drug, fass] in drugMap){
+    for (var [drug, fass] in drugMap) {
         console.log("drug: " + drug + ", fass: " + fass)
         let singleDrug = document.createElement('li');
         let singleDrugHyperlink = document.createElement('a');
-        singleDrugHyperlink.setAttribute('target','_blank');
+        singleDrugHyperlink.setAttribute('target', '_blank');
         console.log("fass: " + fass)
         singleDrugHyperlink.textContent = drug;
         singleDrugHyperlink.href = 'https://www.fass.se/LIF/atcregister?atcCode=' + fass;
@@ -566,6 +566,14 @@ function createDataUpdateButton(label, id, severityLevel, newSeverity, personID,
         let warningStore = useWarningsByRuleStore()
         let selectionDataStore = useSelectionDataStore()
         let act = useActivityLogStore()
+        let commentFromUser = document.getElementById("commentLeftByUser").value
+
+        let msg = 'personID[' + personID + '] severityLevel[' + severityLevel + '] message[' + commentFromUser + ']';
+        //this.chartData.datasets[severityLevel].data[locationIndex] -= 1;
+        //this.chartData.datasets[newSeverity].data[locationIndex] += 1;
+        // console.log("commentByUSER" + x)
+        act.logAppend(msg);
+        console.log(msg)
 
         wardsStore.completedWarningWardChartUpdate(severityLevel, newSeverity, personID);
         warningStore.completedWarningWardChartUpdate(severityLevel, newSeverity, ruleNumber);
@@ -587,7 +595,7 @@ function createAlertForm(alert, severityLevel, patientIndex, alertIndex) {
     let formBoundingBox = document.createElement('div');
     formBoundingBox.setAttribute('id', 'formBoundingBox')
     let form = document.createElement('form');
-    form.setAttribute('action','javascript:void(0);')
+    form.setAttribute('action', 'javascript:void(0);')
 
     let actionCategories = ["Skicka", "Avvisa", "Spara tillsvidare"];
     let actionOptions = [["Brådskande", "Vanligt"], ["Redan minskad risk", "Palliativ vård", "Engångsdos", "Annan"], ["Inte viktigt", "Potentiellt farligt"]]
@@ -598,29 +606,31 @@ function createAlertForm(alert, severityLevel, patientIndex, alertIndex) {
     commentBoxLabel.innerHTML = "Kommentar<br>"
     let commentBox = document.createElement('textarea');
     commentBox.setAttribute('placeholder', 'Skriv en kommentar');
+    commentBox.setAttribute('id', 'commentLeftByUser');
+
     commentBox.required = false;
 
     for (var category in actionCategories) {
         let actionCategoryDiv = document.createElement('div');
         actionCategoryDiv.classList.add('actionCategoryDiv');
-        
+
         let categoryHeader = document.createElement('p');
         categoryHeader.classList.add('formCategoryHeader');
         categoryHeader.innerHTML = actionCategories[category];
         actionCategoryDiv.appendChild(categoryHeader)
-        
+
         let categoryOptions = actionOptions[category];
         let optionDiv = document.createElement('div');
 
-        for(var action in categoryOptions) {
+        for (var action in categoryOptions) {
             let radioButton = document.createElement('input');
-            radioButton.setAttribute('type','radio');
+            radioButton.setAttribute('type', 'radio');
             radioButton.setAttribute('id', ('radioButton_' + categoryOptions[action]));
             radioButton.setAttribute('name', 'actionOptions');
             radioButton.setAttribute('value', categoryOptions[action]);
             radioButton.required = true;
 
-            if(actionCategories[category]=="Skicka") {
+            if (actionCategories[category] == "Skicka") {
                 radioButton.addEventListener('change', () => {
                     commentBox.required = true;
                 });
@@ -639,34 +649,34 @@ function createAlertForm(alert, severityLevel, patientIndex, alertIndex) {
         }
 
         actionCategoryDiv.appendChild(optionDiv);
-        
+
         // Creating the recipient dropdown
-        if(actionCategories[category]=="Skicka") {
+        if (actionCategories[category] == "Skicka") {
             let recipientLegend = document.createElement('legend')
-            recipientLegend.setAttribute('id','recipientLegend');
+            recipientLegend.setAttribute('id', 'recipientLegend');
             recipientLegend.innerHTML = 'Mottagare';
-            actionCategoryDiv.appendChild(recipientLegend);     
+            actionCategoryDiv.appendChild(recipientLegend);
 
             let recipientDropdown = document.createElement('select');
             recipientDropdown.setAttribute('id', 'recipientSelect');
             selectionData.getWardList().forEach((ward) => {
                 let wardGroup = document.createElement('optgroup');
-                wardGroup.setAttribute('label',ward.KeyNamn);
-                
+                wardGroup.setAttribute('label', ward.KeyNamn);
+
                 let wardPharmacistOption = document.createElement('option');
                 wardPharmacistOption.innerHTML = ward.WardContactPharmacistFirstName + " " + ward.WardContactPharmacistLastName + " (apot.)";
 
                 let wardDoctorOption = document.createElement('option')
                 wardDoctorOption.innerHTML = ward.WardContactDoctorFirstName + " " + ward.WardContactDoctorLastName + " (dokt.)";
-                
-                if(ward.KeyNamn==selectionData.getPatientInformation(alert.PersonID).PatientLocation) {
-                    if(wardPharmacistOption.innerHTML=='') {
+
+                if (ward.KeyNamn == selectionData.getPatientInformation(alert.PersonID).PatientLocation) {
+                    if (wardPharmacistOption.innerHTML == '') {
                         wardDoctorOption.selected = true;
                     } else {
                         wardPharmacistOption.selected = true;
                     }
                 }
-                if(ward.WardContactPharmacistFirstName) {
+                if (ward.WardContactPharmacistFirstName) {
                     wardGroup.appendChild(wardPharmacistOption);
                     console.log('pharma for: ' + ward.KeyNamn)
                 }
@@ -679,15 +689,15 @@ function createAlertForm(alert, severityLevel, patientIndex, alertIndex) {
         actionCategoryBoundingBox.appendChild(actionCategoryDiv);
         form.appendChild(actionCategoryBoundingBox);
     }
-    
+
     form.appendChild(commentBoxLabel);
     form.appendChild(commentBox);
 
     let submitButton = document.createElement('button');
-    submitButton.setAttribute('type','submit');
+    submitButton.setAttribute('type', 'submit');
     // submitButton.setAttribute('value','Skicka');
     submitButton.innerHTML = "Skicka"
-    submitButton.setAttribute('id','submitButton')
+    submitButton.setAttribute('id', 'submitButton')
     form.appendChild(submitButton);
 
     formBoundingBox.appendChild(form);
@@ -699,23 +709,23 @@ function createAlertForm(alert, severityLevel, patientIndex, alertIndex) {
 function removeAlertFromPatient(patientIndex, alertIndex) {
     let listDiv = document.getElementById('listDiv');
     let patient = null;
-    listDiv.childNodes.forEach((patientDiv) =>{
-        if(patientDiv.id==patientIndex) {
+    listDiv.childNodes.forEach((patientDiv) => {
+        if (patientDiv.id == patientIndex) {
             patient = patientDiv;
         }
     });
     let alertDiv = null;
-    patient.childNodes.forEach((currDiv) =>{
-        if(currDiv.classList.contains('alertBox')) {
+    patient.childNodes.forEach((currDiv) => {
+        if (currDiv.classList.contains('alertBox')) {
             alertDiv = currDiv;
         }
     })
-    alertDiv.childNodes.forEach((singleAlertDiv) =>{
-        if(singleAlertDiv.id==alertIndex) {
+    alertDiv.childNodes.forEach((singleAlertDiv) => {
+        if (singleAlertDiv.id == alertIndex) {
             alertDiv.removeChild(singleAlertDiv);
-            if(!alertDiv.firstChild) {
-                listDiv.childNodes.forEach((patientDiv) =>{
-                    if(patientDiv.id==patientIndex) {
+            if (!alertDiv.firstChild) {
+                listDiv.childNodes.forEach((patientDiv) => {
+                    if (patientDiv.id == patientIndex) {
                         listDiv.removeChild(patientDiv);
                     }
                 });
@@ -792,21 +802,25 @@ b {
     top: 10px;
     z-index: 1;
     font-size: 40pt;
-} 
-#backButton:before, #backButton:after {
-  position: absolute;
-  left: 18.5px;
-  top: 3.2px;
-  content: ' ';
-  height: 33px;
-  width: 2px;
-  background-color: #333;
 }
-#backButton:before {
-  transform: rotate(45deg);
-}
+
+#backButton:before,
 #backButton:after {
-  transform: rotate(-45deg);
+    position: absolute;
+    left: 18.5px;
+    top: 3.2px;
+    content: ' ';
+    height: 33px;
+    width: 2px;
+    background-color: #333;
+}
+
+#backButton:before {
+    transform: rotate(45deg);
+}
+
+#backButton:after {
+    transform: rotate(-45deg);
 }
 
 #backButton:hover {
@@ -822,7 +836,7 @@ b {
     left: 70px;
     display: flex;
     flex-direction: row;
-    justify-content:flex-start;
+    justify-content: flex-start;
     position: absolute;
 }
 
@@ -928,6 +942,7 @@ select {
     flex-flow: row;
     justify-content: space-between;
 }
+
 .patientHeaderBox:hover {
     background-color: var(--buttonColorHover);
 }
@@ -936,6 +951,7 @@ select {
     background-color: var(--buttonSelected);
     border: var(--generalBorders);
 }
+
 .patientHeaderBox.selected:hover {
     background-color: var(--buttonSelectedHover)
 }
@@ -1098,6 +1114,7 @@ select {
 .formCategoryHeader {
     font-size: 14pt;
 }
+
 #formBoundingBox textarea {
     width: 100%;
     height: 150px;
@@ -1115,13 +1132,16 @@ select {
     flex-flow: column wrap;
     width: calc(100% / 3);
 }
+
 .actionCategoryDiv:nth-child(odd) {
     border-left: 2px #aeaeae solid;
     border-right: 2px #aeaeae solid;
 }
+
 .actionCategoryDiv input {
     margin-right: 5px;
 }
+
 .actionCategoryDiv select {
     width: 100%;
 }

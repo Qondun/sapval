@@ -174,33 +174,33 @@ export const useWarningsByRuleStore = defineStore('warnings', {
 
 
         decreaseWarningNumberArray(severityLevel, ruleNumber) {
-            console.log('decrease warning level for sev: ' + severityLevel + ' rule: ' + ruleNumber)
+            //console.log('decrease warning level for sev: ' + severityLevel + ' rule: ' + ruleNumber)
             let s = Number(severityLevel)
-            console.log(this.chartData.datasets[s - 1].data)
+            //console.log(this.chartData.datasets[s - 1].data)
             if (this.chartData.datasets[severityLevel - 1].data[ruleNumber - 1] > 0) {
                 this.chartData.datasets[severityLevel - 1].data[ruleNumber - 1] = this.chartData.datasets[severityLevel - 1].data[ruleNumber - 1] - 1
             }
         },
 
         completedWarningWardChartUpdate(severityLevel, newSeverityLevel, ruleNumber) {
-            console.log('decrease warning level for sev: ' + severityLevel + ' rule: ' + ruleNumber)
+            //console.log('decrease warning level for sev: ' + severityLevel + ' rule: ' + ruleNumber)
             // due to the array setup, the new severity level will need to be converted to match the array 
             let newSeverity = 3;
             let sevIndex = severityLevel - 1
             // severityLevel = severityLevel - 1;
-            console.log(this.warningValueListWithSpacer)
+            //console.log(this.warningValueListWithSpacer)
             for (let j = 0; j < this.warningValueListWithSpacer.length; j++) {
                 if (ruleNumber == this.warningValueListWithSpacer[j]) {
-                    console.log('Found rule[' + ruleNumber + '] at index[' + j + ']')
+                    //console.log('Found rule[' + ruleNumber + '] at index[' + j + ']')
                     let decSeverityLevel = this.severityLevelListWithSpacer[j]
                     //   console.log(severityLevel + 'severityLevel')
                     // console.log(matchIndex + 'matchIndex')
-                    console.log('dec level 0: ' + this.chartData.datasets[0].data[j])
-                    console.log('dec level 1: ' + this.chartData.datasets[1].data[j])
-                    console.log('dec level 2: ' + this.chartData.datasets[2].data[j])
-                    console.log('dec level 3: ' + this.chartData.datasets[3].data[j])
+                    // console.log('dec level 0: ' + this.chartData.datasets[0].data[j])
+                    // console.log('dec level 1: ' + this.chartData.datasets[1].data[j])
+                    //console.log('dec level 2: ' + this.chartData.datasets[2].data[j])
+                    //console.log('dec level 3: ' + this.chartData.datasets[3].data[j])
 
-                    console.log('sev level' + this.chartData.datasets[sevIndex].data[j])
+                    //console.log('sev level' + this.chartData.datasets[sevIndex].data[j])
 
                     this.chartData.datasets[sevIndex].data[j] -= 1;
                     this.chartData.datasets[newSeverity].data[j] += 1;

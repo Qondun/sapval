@@ -54,7 +54,7 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
 
             }
 
-            console.log("initializing wardwarningsData")
+            // console.log("initializing wardwarningsData")
             this.sumWarningArray = Array(5).fill(0);
             this.wardNameList = [];
             //var value = 0;
@@ -81,7 +81,7 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
             for (let i = 0; i < this.patientInfo.length; i++) {
                 let obj = this.patientInfo[i]
                 this.patientLocationList[obj['Person ID']] = obj.PatientLocation
-                console.log('Setting patient: ' + obj['Person ID'] + ' to ' + obj.PatientLocation)
+                //  console.log('Setting patient: ' + obj['Person ID'] + ' to ' + obj.PatientLocation)
             }
             //console.log(this.patientLocationList + 'patientlocationlist')
 
@@ -153,7 +153,7 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
         },
         //TODO: need to move location array so the index can be sent to this function (it is above)
         decreaseWarningNumberArray(severityLevel, locationCode) {
-            console.log('decrease warning level for sev: ' + severityLevel + ' location: ' + locationCode)
+            //console.log('decrease warning level for sev: ' + severityLevel + ' location: ' + locationCode)
             let s = Number(severityLevel)
 
             let l = Number(locationCode)
@@ -164,7 +164,7 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
             if (s > 3 && this.chartData.datasets[s - 1].data[l - 1] > 0) {
                 this.chartData.datasets[s - 1].data[l - 1] = this.chartData.datasets[s - 1].data[l - 1] - 1
             }
-            console.log(this.chartData.datasets[s - 1].data)
+            // console.log(this.chartData.datasets[s - 1].data)
             //if (this.chartData.datasets[severityLevel - 1].data[locationCode - 1] > 1) {
             //this.chartData.datasets[severityLevel - 1].data[locationCode - 1] = this.chartData.datasets[severityLevel - 1].data[locationCode - 1] - 1
             //}
@@ -184,7 +184,7 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
             //console.log(obj.PersonID)
 
             this.sumWarningArray[severityLevel] += 1;
-            console.log('warningarray from byward: ' + this.sumWarningArray[severityLevel])
+            //console.log('warningarray from byward: ' + this.sumWarningArray[severityLevel])
 
             //console.log(`regel: ${obj.Regel} sev level: ${severityLevel}`)
             let personNumber = parseInt(personID);
@@ -198,12 +198,12 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
             if (locationIndex < 0) {
                 // console.log(locationIndex)
                 console.log('Location index not found so using the top location...')
-                locationIndex = Number(len - 1)
+                //locationIndex = Number(len - 1)
                 //console.log(locationIndex)
 
             }
-            console.log('location index: ' + locationIndex)
-            console.log('severityLevel: ' + severityLevel)
+            //console.log('location index: ' + locationIndex)
+            //console.log('severityLevel: ' + severityLevel)
 
             //console.log(this.chartData.datasets);
             let msg = 'personNumber[' + personNumber + '] location[' + personLocation + '] location index[' + locationIndex + '] severityLevel[' + severityLevel + '] newSeverity[' + newSeverity + '] Prev Values: ' + this.chartData.datasets[severityLevel].data[locationIndex] + ' : ' + this.chartData.datasets[newSeverity].data[locationIndex];
@@ -211,8 +211,8 @@ export const useWarningsByWardStore = defineStore('wardWarnings', {
             this.chartData.datasets[newSeverity].data[locationIndex] += 1;
 
             let act = useActivityLogStore()
-            act.logAppend(msg);
-            console.log(msg)
+            //  act.logAppend(msg);
+            //  console.log(msg)
             //this.wardWarningArray[severityLevel][locationIndex] += 1
             //this.wardWarningArray[newSeverity][locationIndex] += 1
 
