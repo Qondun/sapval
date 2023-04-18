@@ -279,9 +279,18 @@ function createLayout() {
         let headerText = document.createElement("h3");
         headerText.innerHTML = patientData['First Name'] + " " + patientData['Last Name'] + ", " + patientData['Age'];
         let noAlerts = document.createElement('h3');
-        noAlerts.innerHTML = alertList.length
+        noAlerts.setAttribute('id','noAlerts'+patientIndex);
+        noAlerts.innerHTML = alertList.length;
+
+        let highestSeverity = selectionData.getHighestSeverity(alertList[0].PersonID);
+        let highestSeverityDiv = document.createElement('div');
+        highestSeverityDiv.classList.add('patientSeverityBox');
+        highestSeverityDiv.classList.add('sev'+highestSeverity)
+        highestSeverityDiv.setAttribute('id','patientSeverityBox'+patientIndex);
+
         patientHeaderBox.appendChild(headerText);
         patientHeaderBox.appendChild(noAlerts);
+        patientHeaderBox.appendChild(highestSeverityDiv);
         patientBox.appendChild(patientHeaderBox);
 
         /* Add all alerts into bounding box for alerts */
@@ -756,6 +765,14 @@ function createAlertForm(alert, severityLevel, patientIndex, alertIndex) {
 function removeAlertFromPatient(patientIndex, alertIndex) {
     let listDiv = document.getElementById('listDiv');
     let patient = null;
+    let noAlertsForPatient = document.getElementById('noAlerts'+patientIndex);
+    noAlertsForPatient.innerHTML = parseInt(noAlertsForPatient.innerHTML)-1;
+
+    let highestSeverityDiv = document.getElementById('patientSeverityBox'+patientIndex);
+    highestSeverityDiv.classList.remove(highestSeverityDiv.classList[1]);
+    let alertList = dataList[patientIndex];
+    highestSeverityDiv.classList.add('sev'+selectionData.getHighestSeverity(alertList[0].PersonID));
+
     listDiv.childNodes.forEach((patientDiv) => {
         if (patientDiv.id == patientIndex) {
             patient = patientDiv;
@@ -776,6 +793,7 @@ function removeAlertFromPatient(patientIndex, alertIndex) {
                         listDiv.removeChild(patientDiv);
                     }
                 });
+                cleanPatientDiv();
             }
         }
     })
@@ -905,7 +923,6 @@ select {
     right: 25px;
     display: flex;
     flex-wrap: wrap;
-    /* justify-content: space-between; */
     position: absolute;
 }
 
@@ -913,11 +930,8 @@ select {
     width: 69px;
     height: 60px;
     margin: 3px;
-    /* margin-right: 10px;
-    margin-left: 10px; */
     padding: 3px 3px 0 3px;
     background-color: var(--sectionBackground);
-    /* border-radius: var(--buttonBorderRadius); */
     text-align: center;
 }
 
@@ -985,28 +999,48 @@ select {
     border-radius: var(--buttonBorderRadius);
     cursor: pointer;
     padding: 3px 10px 3px 10px;
-    display: flex;
-    flex-flow: row;
-    justify-content: space-between;
+    /* display: flex; */
+    /* flex-flow: row; */
+    /* justify-content: space-between; */
 }
-
 .patientHeaderBox:hover {
     background-color: var(--buttonColorHover);
 }
-
 .patientHeaderBox.selected {
     background-color: var(--buttonSelected);
     border: var(--generalBorders);
+    padding: 1px 8px 1px 8px
 }
-
 .patientHeaderBox.selected:hover {
     background-color: var(--buttonSelectedHover)
-}
 
-.patientHeaderBox h3:last-child {
+}
+.patientHeaderBox h3:first-child {
+    float: left;
+}
+.patientHeaderBox h3:nth-child(2) {
     font-weight: bold;
     font-size: 16pt;
     margin-top: -2px;
+    float: right;
+    position: relative;
+    right: 20px;
+    width: 10px;
+}
+
+.patientSeverityBox {
+    height: inherit;
+    width: 13px;
+    float: right;
+    margin: -10px;
+    position: relative;
+    right: -10px;
+    top: 7px;
+    border-radius: inherit;
+    border: 1px black solid;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    z-index: 1;
 }
 
 #patientListHeader {
@@ -1122,7 +1156,6 @@ select {
     font-size: calc(1vw + 1vh);
     line-height: 40px;
 }
-
 .severityLevelBox p {
     margin-top: -2px;
 }

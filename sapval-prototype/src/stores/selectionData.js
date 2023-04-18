@@ -189,6 +189,13 @@ export const useSelectionDataStore = defineStore('selectionData', {
         getWardCategoryNames() {
             return ["Psykiatri", "Blod och tumörsjukd.", "Neuro", "Hjärt- lungmedicin", "Ortopedi", "Kirurgi", "Akut- och internmedicin", "Infektionssjukdomar", "Geriatrik", "Öron näs hals", "Specialmedicin hur reumatol" ,"Ögonsjukdomar", "Plastik- och kärlkirurgi", "Thoraxkirurgi", "Urologi", "Rehabilitering och smärtcentr", "Kvinnosjukvård"];
         },
+        getHighestSeverity(patientID) {
+            let highestSev = 0;
+            this.WarningInfo.filter(obj => obj.PersonID == patientID).forEach((alert) =>{
+                highestSev = Math.max(highestSev,this.WarningData.filter(obj => obj.warningNumber==alert.Regel)[0].severityLevel);
+            });
+            return highestSev;
+        },
         clearWarning(AlertID) {
             const logger = useActivityLogStore()
             let items = this.WarningInfo.filter(obj => obj['ID för alert'] == AlertID)

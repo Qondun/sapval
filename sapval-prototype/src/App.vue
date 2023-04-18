@@ -128,8 +128,7 @@ a:hover {
 header {
   background-color: var(--background-color);
   line-height: 1.5;
-  height: 45vh;
-  overflow: scroll;
+  height: 48vh;
 }
 
 .logo {
@@ -138,7 +137,7 @@ header {
 
 main {
   background-color: var(--background-color);
-  height: 10vh;
+  height: 7vh;
 }
 
 #dynamicBottom {

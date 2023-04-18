@@ -37,7 +37,7 @@
     #menuBox {
         display: flex;
         flex-flow: row wrap;
-        height: 65%;
+        height: 80%;
         width: 30%;
         justify-content: flex-end;
         position: absolute;
