@@ -6,6 +6,7 @@ import { WarningInfo } from '../records/PatientWarnings.json';
 import { PatientAlertDrug } from '../records/patientInformation.json'
 import { WarningInfo as WarningData } from '../records/warningList.json'
 import { wardsInfo } from '../records/inpatientWards.json'
+import { PatientAlertDrug as DrugList } from '../records/patientDrugAlerts.json'
 
 export const useSelectionDataStore = defineStore('selectionData', {
     state: () => ({
@@ -13,6 +14,7 @@ export const useSelectionDataStore = defineStore('selectionData', {
         PatientAlertDrug: useLocalStorage('PatientAlertDrug', {}),
         WarningData: useLocalStorage('WarningData', {}),
         wardsInfo: useLocalStorage('wardsInfo', {}),
+        DrugList: useLocalStorage('DrugList', {}),
         updated: 0
     }),
     actions: {
@@ -49,14 +51,14 @@ export const useSelectionDataStore = defineStore('selectionData', {
             return [patientIDSet, dataList];
         },
         getFilteredData(wardName, categoryID, ruleNr) {
-            // console.log("running getFilteredData")
-            // console.log("wardName: " + wardName + " categoryID: " + categoryID + " ruleNr: " + ruleNr);
+            console.log("running getFilteredData")
+            console.log("wardName: " + wardName + " categoryID: " + categoryID + " ruleNr: " + ruleNr);
             var dataList = [];
             // var patientIDSet = new Set();
             var patientIDSet = [];
             var ruleNumberSet = [];
 
-            this.WarningInfo.filter(obj => (categoryID == 0 || obj.RegelkategoriID + 1 == categoryID) && (ruleNr == 0 || obj.Regel == ruleNr)).forEach((alert) => {
+            this.WarningInfo.filter(obj => (categoryID == 0 || obj.RegelkategoriID == categoryID) && (ruleNr == 0 || obj.Regel == ruleNr)).forEach((alert) => {
                 let patientData = this.PatientAlertDrug.filter(obj => obj['Person ID'] == alert.PersonID)[0];
                 if (wardName == "All" || patientData.PatientLocation == wardName) {
                     // patientIDSet.add(alert.PersonID);
@@ -97,17 +99,17 @@ export const useSelectionDataStore = defineStore('selectionData', {
                 case 2:
                     return [1, 9];
                 case 3:
-                    return [41, 49];
+                    return [41, 48];
                 case 4:
                     return [34, 40];
                 case 5:
-                    return [50, 51];
+                    return [49, 50];
                 case 6:
                     return [10, 15];
                 case 7:
                     return [56, 58];
                 case 8:
-                    return [52, 55];
+                    return [51, 55];
                 case 9:
                     return [59, 62];
                 default:
@@ -122,7 +124,8 @@ export const useSelectionDataStore = defineStore('selectionData', {
             return ruleArr;
         },
         noAlertsForWard(wardName) {
-            let patientList = this.PatientAlertDrug.filter(obj => obj['PatientLocation'] == wardName);
+            console.log("wardName: " + wardName)
+            let patientList = this.PatientAlertDrug.filter(obj => obj.PatientLocation == wardName);
             let alertCounter1 = 0;
             let alertCounter2 = 0;
             let alertCounter3 = 0;
@@ -143,13 +146,31 @@ export const useSelectionDataStore = defineStore('selectionData', {
                 });
             })
             let counterArray = [alertCounter1,alertCounter2,alertCounter3];
+            console.log("ward " + wardName + ": " + counterArray)
             return counterArray;
         },
         noAlertsForCategory(categoryName) {
-            return this.WarningInfo.filter(obj => obj.Regelkategori==categoryName).length;
+            let count = this.WarningInfo.filter(obj => obj.Regelkategori==categoryName).length;
+            console.log('ID: ' + categoryName + ': ' + count);
+            return count;
         },
         noAlertsForRule(ruleNr) {
             return this.WarningInfo.filter(obj => obj.Regel == ruleNr).length;
+        },
+        getDrugListForPatient(patientID) {
+            console.log("inside getDrugListForPatient for " + (typeof patientID))
+            let drugList = [];
+            let fassList = [];
+            this.DrugList.filter(obj => obj.PersonID==patientID).forEach((drug) =>{
+                console.log("drug: " + drug.RiskLM);
+                if(!drugList.includes(drug.RiskLM)) {
+                    drugList.push(drug.RiskLM);
+                    fassList.push(drug.FassName.substring(0, drug.fassName.indexOf(":")));
+                }
+            });
+            console.log(drugList);
+            console.log(fassList);
+            return [drugList,fassList];
         },
         getWardList() {
             return wardsInfo;
@@ -165,20 +186,12 @@ export const useSelectionDataStore = defineStore('selectionData', {
         getDrugFassName(drugName) {
             return this.PatientAlertDrug.filter(obj=> obj['RiskLM']==drugName)[0].FassName;
         },
-        getDrugListForPatient(patientID) {
-            console.log("in getDrugListForPatient: " + patientID)
-            let drugMap = new Map();
-            this.PatientAlertDrug.filter(obj => obj['PersonID']==patientID).forEach((drug) =>{
-                drugMap.set(drug.RiskLM, drug.FassName.substring(0, drug.fassName.indexOf(":")));
-            })
-            console.log(drugMap)
-            return drugMap;
-        },
         initialize() {
             this.WarningInfo = WarningInfo
             this.PatientAlertDrug = PatientAlertDrug
             this.WarningData = WarningData
             this.wardsInfo = wardsInfo
+            this.DrugList = DrugList
         },
         getCategoryNames() {
             return ["Njurfunktion", "Riskprofil", "LM och labvärden", "LM och doser", "LM och diagnos", "Interaktioner", "Övriga LM-komb.", "LM och status", "Övrigt"];

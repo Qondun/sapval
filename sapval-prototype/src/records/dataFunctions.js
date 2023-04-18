@@ -127,6 +127,5 @@ export function getCategoryRange(categoryID) {
 }
 
 export function getDrugFassName(drugName) {
-    console.log(drugName)
-    return DrugList.filter(obj=> obj['RiskLM'].toLowerCase().includes(drugName.toLowerCase()))[0].FassName;
+    return DrugList.filter(obj=> obj['RiskLM']==drugName)[0].FassName;
 }

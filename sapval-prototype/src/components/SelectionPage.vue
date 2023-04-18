@@ -154,6 +154,7 @@ function createFilterDropdowns() {
         categorySelect.setAttribute('id', 'categorySelect');
         categorySelect.addEventListener('change', (event) => {
             categoryID = event.target.value;
+            ruleNr = 0;
             setUp();
         });
 
@@ -195,10 +196,9 @@ function createFilterDropdowns() {
         ruleSelect.appendChild(allOption);
 
         for (var ruleNum = filterRange[0]; ruleNum <= filterRange[1]; ruleNum++) {
-            let ruleData = selectionData.noAlertsForRule(ruleNum);
             let ruleOption = document.createElement('option');
             ruleOption.setAttribute('value', ruleNum);
-            ruleOption.innerHTML = "Regel " + ruleNum + ": " + ruleData + " st";
+            ruleOption.innerHTML = "Regel " + ruleNum;
             ruleSelect.appendChild(ruleOption);
         }
         ruleSelect.value = ruleNr;
@@ -216,7 +216,6 @@ function updateAvailableBoxes(ruleNumber) {
             let boxText = ruleBox.firstChild;
             let splitText = boxText.innerHTML.split('<br>')[1];
             let oldCount = parseInt(splitText.split(' '));
-            console.log("old text: " + boxText.innerHTML);
             let newCount = oldCount - 1;
             if (newCount) {
                 boxText.innerHTML = "Regel " + ruleNumber + "<br>" + newCount + " st";
@@ -292,17 +291,13 @@ function createLayout() {
         let alertIndex = 0;
         alertList.forEach((alert) => {
             let ruleInfo = selectionData.getRuleInformation(alert.Regel);
-            if (!ruleInfo) {
-                console.log("undefined ruleInfo: " + alert.Regel);
-                console.table(ruleInfo)
-            }
             let singleAlertBox = document.createElement('div');
             singleAlertBox.classList.add("singleAlert");
             singleAlertBox.setAttribute("id", alertIndex);
             let singleAlertText = document.createElement('p');
 
             // Remake getRuleInformation to give alert name and severity level
-            singleAlertText.innerHTML = "Regel " + alert.Regel + ": " + ruleInfo.warningName;
+            singleAlertText.innerHTML = "Regel " + alert.Regel + ": " + ruleInfo.warningShortText;
             singleAlertBox.appendChild(singleAlertText);
             alertBox.appendChild(singleAlertBox);
 
@@ -509,16 +504,17 @@ function updatePatientDiv(patientData, patientIndex) {
     let drugInfoBox = document.createElement('div');
     drugInfoBox.classList.add('infoBoxes');
     patientDiv.appendChild(createDividingLine('Läkemedelslista'));
-    let drugMap = selectionData.getDrugListForPatient(patientData['Person ID']);
+    console.log("before calling getDrugListForPatient")
+    let [drugNameList,fassList] = selectionData.getDrugListForPatient(patientData['Person ID']);
+    console.log("after calling getDrugListForPatient")
     let drugList = document.createElement("ul");
-    for (var [drug, fass] in drugMap) {
-        console.log("drug: " + drug + ", fass: " + fass)
+    for (var drug in drugNameList) {
+        console.log("drug: " + drug + ", fass: " + fassList[drug])
         let singleDrug = document.createElement('li');
         let singleDrugHyperlink = document.createElement('a');
         singleDrugHyperlink.setAttribute('target', '_blank');
-        console.log("fass: " + fass)
-        singleDrugHyperlink.textContent = drug;
-        singleDrugHyperlink.href = 'https://www.fass.se/LIF/atcregister?atcCode=' + fass;
+        singleDrugHyperlink.textContent = drugList[drug];
+        singleDrugHyperlink.href = 'https://www.fass.se/LIF/atcregister?atcCode=' + fassList[drug];
         singleDrug.appendChild(singleDrugHyperlink);
         drugList.appendChild(singleDrug);
     };
@@ -607,6 +603,7 @@ function createAlertForm(alert, severityLevel, patientIndex, alertIndex) {
     let commentBox = document.createElement('textarea');
     commentBox.setAttribute('placeholder', 'Skriv en kommentar');
     commentBox.setAttribute('id', 'commentLeftByUser');
+    commentBox.setAttribute('minlength','3')
 
     commentBox.required = false;
 
@@ -630,7 +627,7 @@ function createAlertForm(alert, severityLevel, patientIndex, alertIndex) {
             radioButton.setAttribute('value', categoryOptions[action]);
             radioButton.required = true;
 
-            if (actionCategories[category] == "Skicka") {
+            if (actionCategories[category] == 'Skicka' || categoryOptions[action] == 'Annan') {
                 radioButton.addEventListener('change', () => {
                     commentBox.required = true;
                 });
@@ -678,7 +675,6 @@ function createAlertForm(alert, severityLevel, patientIndex, alertIndex) {
                 }
                 if (ward.WardContactPharmacistFirstName) {
                     wardGroup.appendChild(wardPharmacistOption);
-                    console.log('pharma for: ' + ward.KeyNamn)
                 }
                 wardGroup.appendChild(wardDoctorOption);
                 recipientDropdown.appendChild(wardGroup);

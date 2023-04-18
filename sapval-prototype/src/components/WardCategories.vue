@@ -170,7 +170,7 @@ b {
     height: 100%;
     display: flex;
     flex-flow: column wrap;
-    padding: 7px 0 0 60px;
+    padding: 7px 0 0 30px;
     overflow: auto;
     justify-content: flex-start; 
     column-gap: 10px;
