@@ -22,7 +22,6 @@ export const useSelectionDataStore = defineStore('selectionData', {
             var dataList = [];
             var patientIDSet = new Set();
             var ruleNumberSet = [];
-            console.log(filterRange)
             for (var ruleNr = filterRange[0]; ruleNr <= filterRange[1]; ruleNr++) {
                 this.WarningInfo.filter(obj => obj.Regel == ruleNr).forEach((patient) => {
                     patientIDSet.add(patient.PersonID);
@@ -51,8 +50,6 @@ export const useSelectionDataStore = defineStore('selectionData', {
             return [patientIDSet, dataList];
         },
         getFilteredData(wardName, categoryID, ruleNr) {
-            console.log("running getFilteredData")
-            console.log("wardName: " + wardName + " categoryID: " + categoryID + " ruleNr: " + ruleNr);
             var dataList = [];
             // var patientIDSet = new Set();
             var patientIDSet = [];
@@ -124,7 +121,6 @@ export const useSelectionDataStore = defineStore('selectionData', {
             return ruleArr;
         },
         noAlertsForWard(wardName) {
-            console.log("wardName: " + wardName)
             let patientList = this.PatientAlertDrug.filter(obj => obj.PatientLocation == wardName);
             let alertCounter1 = 0;
             let alertCounter2 = 0;
@@ -146,30 +142,24 @@ export const useSelectionDataStore = defineStore('selectionData', {
                 });
             })
             let counterArray = [alertCounter1,alertCounter2,alertCounter3];
-            console.log("ward " + wardName + ": " + counterArray)
             return counterArray;
         },
         noAlertsForCategory(categoryName) {
             let count = this.WarningInfo.filter(obj => obj.Regelkategori==categoryName).length;
-            console.log('ID: ' + categoryName + ': ' + count);
             return count;
         },
         noAlertsForRule(ruleNr) {
             return this.WarningInfo.filter(obj => obj.Regel == ruleNr).length;
         },
         getDrugListForPatient(patientID) {
-            console.log("inside getDrugListForPatient for " + (typeof patientID))
             let drugList = [];
             let fassList = [];
             this.DrugList.filter(obj => obj.PersonID==patientID).forEach((drug) =>{
-                console.log("drug: " + drug.RiskLM);
                 if(!drugList.includes(drug.RiskLM)) {
                     drugList.push(drug.RiskLM);
                     fassList.push(drug.FassName.substring(0, drug.FassName.indexOf(":")));
                 }
             });
-            console.log(drugList);
-            console.log(fassList);
             return [drugList,fassList];
         },
         getWardList() {

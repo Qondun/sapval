@@ -35,7 +35,6 @@ const categoryNames = selectionData.getCategoryNames()
 const { updated } = storeToRefs(selectionData)
 
 watch(updated, () => {
-    console.log('selectionData ref changed, do something!')
     cleanInfoDiv();
     clearFilterDropdowns();
     // setUp()
@@ -320,11 +319,9 @@ function createLayout() {
                     singleAlertBox.classList.add("selected");
                     updateInfoDiv(patientBox.id, singleAlertBox.id);
                     currentAlert = alert;
-                    console.log("updated?" + JSON.stringify(currentAlert))
                 } else {
                     cleanInfoDiv();
                     currentAlert = null;
-                    console.log("updated?" + JSON.stringify(currentAlert))
                 }
 
             });
@@ -509,7 +506,6 @@ function updatePatientDiv(patientData, patientIndex) {
     let [drugNameList,fassList] = selectionData.getDrugListForPatient(patientData['Person ID']);
     let drugList = document.createElement('ul');
     for (var drug in drugNameList) {
-        console.log("drug: " + drugNameList[drug] + ", fass: " + fassList[drug])
         let singleDrug = document.createElement('li');
         let singleDrugHyperlink = document.createElement('a');
         singleDrugHyperlink.setAttribute('target', '_blank');
@@ -551,33 +547,72 @@ function createDataUpdateButton(label, id, severityLevel, newSeverity, personID,
 
     // Our on click event
     filterButton.addEventListener("click", function (evt) {
-        let personID = evt.currentTarget.personID
-        let severityLevel = evt.currentTarget.severityLevel
-        //let newSeverity = evt.currentTarget.newSeverity
-        let newSeverity = 3
-        let ruleNumber = evt.currentTarget.ruleNumber
-        let warningId = evt.currentTarget.warningId
+        let radioButtons = document.getElementsByName('actionOptions');
+        let commentBox = document.getElementById('commentLeftByUser');
+        let mandatoryTextOptions = ['Brådskande','Vanligt','Annan']
+        let radioValue = "";
 
-        let wardsStore = useWarningsByWardStore()
-        let warningStore = useWarningsByRuleStore()
-        let selectionDataStore = useSelectionDataStore()
-        let act = useActivityLogStore()
-        let commentFromUser = document.getElementById("commentLeftByUser").value
+        let warningTextArea = document.getElementById('warningTextArea');
+        let warningText1 = document.getElementById('warningText1');
+        let warningText2 = document.getElementById('warningText2');
+        let warningText3 = document.getElementById('warningText3');
+        let radioChecked = false;
 
-        let msg = 'personID[' + personID + '] severityLevel[' + severityLevel + '] message[' + commentFromUser + ']';
-        //this.chartData.datasets[severityLevel].data[locationIndex] -= 1;
-        //this.chartData.datasets[newSeverity].data[locationIndex] += 1;
-        // console.log("commentByUSER" + x)
-        act.logAppend(msg);
-        console.log(msg)
+        warningTextArea.classList.remove('visible');
+        warningText1.classList.remove('visible');
+        warningText2.classList.remove('visible');
+        warningText3.classList.remove('visible')
 
-        wardsStore.completedWarningWardChartUpdate(severityLevel, newSeverity, personID);
-        warningStore.completedWarningWardChartUpdate(severityLevel, newSeverity, ruleNumber);
+        radioButtons.forEach((button) =>{
+            // console.log(button.value)
+            if(button.checked) {
+                radioChecked = true;
+                radioValue = button.value;
+                console.log("the selected radio button is: " + button.value);
+                console.log("text area: " + commentBox.value);
+                if(mandatoryTextOptions.includes(radioValue) && commentBox.value.length==0) {
+                    warningTextArea.classList.add('visible')
+                    warningText2.classList.add('visible')
+                } else if(mandatoryTextOptions.includes(radioValue) && commentBox.value.length<3) {
+                    console.log("textarea is not long enough")
+                    warningTextArea.classList.add('visible')
+                    warningText3.classList.add('visible')
+                } else {
+                    let personID = evt.currentTarget.personID
+                    let severityLevel = evt.currentTarget.severityLevel
+                    //let newSeverity = evt.currentTarget.newSeverity
+                    let newSeverity = 3
+                    let ruleNumber = evt.currentTarget.ruleNumber
+                    let warningId = evt.currentTarget.warningId
 
-        selectionDataStore.clearWarning(warningId)
-        removeAlertFromPatient(patientIndex, alertIndex);
-        updateAvailableBoxes(ruleNumber);
+                    let wardsStore = useWarningsByWardStore()
+                    let warningStore = useWarningsByRuleStore()
+                    let selectionDataStore = useSelectionDataStore()
+                    let act = useActivityLogStore()
 
+                    let msg = 'personID[' + personID + '] severityLevel[' + severityLevel + '] message[' + commentBox.value + ']' + ' chosen option[' + radioValue + ']';
+                    //this.chartData.datasets[severityLevel].data[locationIndex] -= 1;
+                    //this.chartData.datasets[newSeverity].data[locationIndex] += 1;
+                    // console.log("commentByUSER" + x)
+                    act.logAppend(msg);
+                    console.log(msg)
+
+                    wardsStore.completedWarningWardChartUpdate(severityLevel, newSeverity, personID);
+                    warningStore.completedWarningWardChartUpdate(severityLevel, newSeverity, ruleNumber);
+
+                    selectionDataStore.clearWarning(warningId)
+                    removeAlertFromPatient(patientIndex, alertIndex);
+                    updateAvailableBoxes(ruleNumber);
+
+                }
+            }
+        });
+
+        if(!radioChecked) {
+            warningTextArea.classList.add('visible')
+            warningText1.classList.add('visible')
+        }
+        
         // Might need to disable the button or reset some page state here
     });
 
@@ -600,10 +635,11 @@ function createAlertForm(alert, severityLevel, patientIndex, alertIndex) {
 
     let commentBoxLabel = document.createElement('label');
     commentBoxLabel.innerHTML = "Kommentar<br>"
+
     let commentBox = document.createElement('textarea');
     commentBox.setAttribute('placeholder', 'Skriv en kommentar');
     commentBox.setAttribute('id', 'commentLeftByUser');
-    commentBox.setAttribute('minlength','3')
+    // commentBox.setAttribute('minlength','3')
 
     commentBox.required = false;
 
@@ -648,9 +684,10 @@ function createAlertForm(alert, severityLevel, patientIndex, alertIndex) {
         actionCategoryDiv.appendChild(optionDiv);
 
         // Creating the recipient dropdown
-        if (actionCategories[category] == "Skicka") {
+        if (actionCategories[category] == actionCategories[0]) {
             let recipientLegend = document.createElement('legend')
             recipientLegend.setAttribute('id', 'recipientLegend');
+            recipientLegend.setAttribute('for','recipientSelect')
             recipientLegend.innerHTML = 'Mottagare';
             actionCategoryDiv.appendChild(recipientLegend);
 
@@ -687,18 +724,32 @@ function createAlertForm(alert, severityLevel, patientIndex, alertIndex) {
     }
 
     form.appendChild(commentBoxLabel);
-    form.appendChild(commentBox);
 
-    let submitButton = document.createElement('button');
-    submitButton.setAttribute('type', 'submit');
-    // submitButton.setAttribute('value','Skicka');
-    submitButton.innerHTML = "Skicka"
-    submitButton.setAttribute('id', 'submitButton')
-    form.appendChild(submitButton);
+    // Warning text when incorrect input
+    let warningTextArea = document.createElement('div');
+    warningTextArea.setAttribute('id','warningTextArea');
+    let warningText1 = document.createElement('p');
+    warningText1.classList.add('warningText');
+    warningText1.setAttribute('id','warningText1');
+    warningText1.innerHTML = "Hanteringsalternativ måste väljas."
+    warningTextArea.appendChild(warningText1);
+    let warningText2 = document.createElement('p');
+    warningText2.classList.add('warningText');
+    warningText2.setAttribute('id','warningText2');
+    warningText2.innerHTML = "Kommentar krävs."
+    warningTextArea.appendChild(warningText2);
+    let warningText3 = document.createElement('p');
+    warningText3.classList.add('warningText');
+    warningText3.setAttribute('id','warningText3');
+    warningText3.innerHTML = "Kommentar för kort"
+    warningTextArea.appendChild(warningText3);
+    form.appendChild(warningTextArea);
+
+    form.appendChild(commentBox);
 
     formBoundingBox.appendChild(form);
 
-    formBoundingBox.appendChild(createDataUpdateButton("Dismiss 1", "dis1", severityLevel, 1, alert.PersonID, alert.Regel, warningId, patientIndex, alertIndex))
+    formBoundingBox.appendChild(createDataUpdateButton("Skicka", "dis1", severityLevel, 1, alert.PersonID, alert.Regel, warningId, patientIndex, alertIndex))
     infoDiv.appendChild(formBoundingBox);
 }
 
@@ -1142,6 +1193,22 @@ select {
 
 #recipientLegend {
     font-size: 10pt;
+}
+
+#warningTextArea {
+    display: none;
+}
+#warningTextArea.visible {
+    display: block;
+}
+
+.warningText {
+    display: none;
+    color: red;
+}
+
+.visible {
+    display: block;
 }
 
 fieldset {
