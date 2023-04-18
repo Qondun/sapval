@@ -165,7 +165,7 @@ export const useSelectionDataStore = defineStore('selectionData', {
                 console.log("drug: " + drug.RiskLM);
                 if(!drugList.includes(drug.RiskLM)) {
                     drugList.push(drug.RiskLM);
-                    fassList.push(drug.FassName.substring(0, drug.fassName.indexOf(":")));
+                    fassList.push(drug.FassName.substring(0, drug.FassName.indexOf(":")));
                 }
             });
             console.log(drugList);

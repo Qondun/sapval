@@ -503,17 +503,17 @@ function updatePatientDiv(patientData, patientIndex) {
     // Drug list for patient
     let drugInfoBox = document.createElement('div');
     drugInfoBox.classList.add('infoBoxes');
+    drugInfoBox.setAttribute('id','drugInfoBox')
     patientDiv.appendChild(createDividingLine('Läkemedelslista'));
-    console.log("before calling getDrugListForPatient")
+
     let [drugNameList,fassList] = selectionData.getDrugListForPatient(patientData['Person ID']);
-    console.log("after calling getDrugListForPatient")
-    let drugList = document.createElement("ul");
+    let drugList = document.createElement('ul');
     for (var drug in drugNameList) {
-        console.log("drug: " + drug + ", fass: " + fassList[drug])
+        console.log("drug: " + drugNameList[drug] + ", fass: " + fassList[drug])
         let singleDrug = document.createElement('li');
         let singleDrugHyperlink = document.createElement('a');
         singleDrugHyperlink.setAttribute('target', '_blank');
-        singleDrugHyperlink.textContent = drugList[drug];
+        singleDrugHyperlink.textContent = drugNameList[drug];
         singleDrugHyperlink.href = 'https://www.fass.se/LIF/atcregister?atcCode=' + fassList[drug];
         singleDrug.appendChild(singleDrugHyperlink);
         drugList.appendChild(singleDrug);
@@ -1059,9 +1059,6 @@ select {
     margin-bottom: 10px;
 }
 
-#infoDiv ul {
-    columns: 2;
-}
 
 .severityLevelBox {
     width: 40px;
@@ -1099,6 +1096,7 @@ select {
 #drugInfoBox ul {
     margin-top: -10px;
     margin-left: -15px;
+    columns: 2;
 }
 
 #formBoundingBox {
