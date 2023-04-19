@@ -42,7 +42,7 @@ export default {
                     },
                     y: {
                         stacked: true,
-                        max: 100,
+                        max: 50,
                     }
                 },
                 plugins: {

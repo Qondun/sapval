@@ -1,0 +1,106 @@
+[
+  {
+    "time": "Wed Apr 19 2023 13:27:35 GMT+0200 (Central European Summer Time)",
+    "item": "personID[1341] severityLevel[3] message[Kalium 6,1 och spironolakton. (oklart vad som är viktig information från journalen). Se över detta brådskande. ] chosen option[Brådskande]"
+  },
+  {
+    "time": "Wed Apr 19 2023 13:27:35 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 1341,\n    \"Kommentar\": \"Nyinsatt, tillfällig behandling?\",\n    \"GFR\": \"17\",\n    \"K\": \"6.1\",\n    \"Ca\": \"-\",\n    \"BT\": \"120/ 70\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"14\",\n    \"Puls\": \"42\",\n    \"RegelkategoriID\": 3,\n    \"Regelkategori\": \"LM och labvärden\",\n    \"Regel\": 43,\n    \"RiskLM\": \"Spironolakton\",\n    \"ID för alert\": \"968\",\n    \"Antal träffar per patient\": 9\n  }\n]"
+  },
+  {
+    "time": "Wed Apr 19 2023 13:28:26 GMT+0200 (Central European Summer Time)",
+    "item": "personID[1341] severityLevel[2] message[RAAS samt kaliumsparande diuretika vid K. 6,1.] chosen option[Brådskande]"
+  },
+  {
+    "time": "Wed Apr 19 2023 13:28:26 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 1341,\n    \"Kommentar\": \"Nyinsatt, tillfällig behandling?\",\n    \"GFR\": \"17\",\n    \"K\": \"6.1\",\n    \"Ca\": \"-\",\n    \"BT\": \"120/ 70\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"14\",\n    \"Puls\": \"42\",\n    \"RegelkategoriID\": 3,\n    \"Regelkategori\": \"LM och labvärden\",\n    \"Regel\": 47,\n    \"RiskLM\": \"Enalapril\",\n    \"ID för alert\": \"969\",\n    \"Antal träffar per patient\": 9\n  }\n]"
+  },
+  {
+    "time": "Wed Apr 19 2023 13:30:40 GMT+0200 (Central European Summer Time)",
+    "item": "personID[1341] severityLevel[2] message[Ordinerad spironolakton, Enalapril, nedsatt njurfunktion. Se över dos/pausning mtp K. 6,1] chosen option[Brådskande]"
+  },
+  {
+    "time": "Wed Apr 19 2023 13:30:40 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 1341,\n    \"Kommentar\": \"Nyinsatt, tillfällig behandling?\",\n    \"GFR\": \"17\",\n    \"K\": \"6.1\",\n    \"Ca\": \"-\",\n    \"BT\": \"120/ 70\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"14\",\n    \"Puls\": \"42\",\n    \"RegelkategoriID\": 1,\n    \"Regelkategori\": \"Njurfunktion\",\n    \"Regel\": 28,\n    \"RiskLM\": \"Spironolakton\",\n    \"ID för alert\": \"1133\",\n    \"Antal träffar per patient\": 9\n  }\n]"
+  },
+  {
+    "time": "Wed Apr 19 2023 13:37:24 GMT+0200 (Central European Summer Time)",
+    "item": "personID[1341] severityLevel[1] message[Se över andningsfrekvensen, finns ej under patientvärden... Insatt på palliativa läkemedel (oklart när dessa sattes in)... Se över om patient är palliativ (hade önskat denna info för addekvat bedömning) ] chosen option[Vanligt]"
+  },
+  {
+    "time": "Wed Apr 19 2023 13:37:24 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 1341,\n    \"Kommentar\": \"Nyinsatt, tillfällig behandling?\",\n    \"GFR\": \"17\",\n    \"K\": \"6.1\",\n    \"Ca\": \"-\",\n    \"BT\": \"120/ 70\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"14\",\n    \"Puls\": \"42\",\n    \"RegelkategoriID\": 9,\n    \"Regelkategori\": \"Övrigt\",\n    \"Regel\": 61,\n    \"RiskLM\": \"Morfin\",\n    \"ID för alert\": \"1136\",\n    \"Antal träffar per patient\": 9\n  }\n]"
+  },
+  {
+    "time": "Wed Apr 19 2023 13:38:54 GMT+0200 (Central European Summer Time)",
+    "item": "personID[153] severityLevel[3] message[Se över behov av vätskedrivande och överväg insättning av kalium substitution. (Önskar veta dos furosemid)] chosen option[Vanligt]"
+  },
+  {
+    "time": "Wed Apr 19 2023 13:38:54 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 153,\n    \"Kommentar\": \"\",\n    \"GFR\": \"61\",\n    \"K\": \"3.2\",\n    \"Ca\": \"-\",\n    \"BT\": \"\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"\",\n    \"Puls\": \"72\",\n    \"RegelkategoriID\": 3,\n    \"Regelkategori\": \"LM och labvärden\",\n    \"Regel\": 42,\n    \"RiskLM\": \"Furosemid Accord\",\n    \"ID för alert\": \"122\",\n    \"Antal träffar per patient\": 2\n  }\n]"
+  },
+  {
+    "time": "Wed Apr 19 2023 13:40:35 GMT+0200 (Central European Summer Time)",
+    "item": "personID[281] severityLevel[3] message[Vätskedrivande i form av furosemid. Möjlighet att byta till kaliumsparande diretika?] chosen option[Vanligt]"
+  },
+  {
+    "time": "Wed Apr 19 2023 13:40:35 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 281,\n    \"Kommentar\": \"Patienten har diagnosen \\\"Asthma bronchiale, allergisk, akut, infektionsutlöst\\\" sedan 2012. Har medicinering för astman (Bricanyl, Pulmicort). Carvedilol är icke-selektiv. Carvedilol insatt 2017.\",\n    \"GFR\": \"33\",\n    \"K\": \"3.1\",\n    \"Ca\": \"-\",\n    \"BT\": \"\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"\",\n    \"Puls\": \"80\",\n    \"RegelkategoriID\": 3,\n    \"Regelkategori\": \"LM och labvärden\",\n    \"Regel\": 42,\n    \"RiskLM\": \"Furix\",\n    \"ID för alert\": \"205\",\n    \"Antal träffar per patient\": 6\n  }\n]"
+  },
+  {
+    "time": "Wed Apr 19 2023 13:42:40 GMT+0200 (Central European Summer Time)",
+    "item": "personID[281] severityLevel[1] message[Betsäm S-digoxin. (önskvärt att veta njurfunktions kurva, dos digoxin samt senaste S-digoxin värderna för ställningstagande)] chosen option[Brådskande]"
+  },
+  {
+    "time": "Wed Apr 19 2023 13:42:40 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 281,\n    \"Kommentar\": \"Patienten har diagnosen \\\"Asthma bronchiale, allergisk, akut, infektionsutlöst\\\" sedan 2012. Har medicinering för astman (Bricanyl, Pulmicort). Carvedilol är icke-selektiv. Carvedilol insatt 2017.\",\n    \"GFR\": \"33\",\n    \"K\": \"3.1\",\n    \"Ca\": \"-\",\n    \"BT\": \"\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"\",\n    \"Puls\": \"80\",\n    \"RegelkategoriID\": 1,\n    \"Regelkategori\": \"Njurfunktion\",\n    \"Regel\": 16,\n    \"RiskLM\": \"Digoxin\",\n    \"ID för alert\": \"204\",\n    \"Antal träffar per patient\": 6\n  }\n]"
+  },
+  {
+    "time": "Wed Apr 19 2023 13:44:41 GMT+0200 (Central European Summer Time)",
+    "item": "personID[390] severityLevel[3] message[K. 3,2 Behov av vätskedrivande? Möjligt med kaliumsparande diuretikum istället?] chosen option[Vanligt]"
+  },
+  {
+    "time": "Wed Apr 19 2023 13:44:41 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 390,\n    \"Kommentar\": \"\",\n    \"GFR\": \"66\",\n    \"K\": \"3.2\",\n    \"Ca\": \"-\",\n    \"BT\": \"\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"\",\n    \"Puls\": \"73\",\n    \"RegelkategoriID\": 3,\n    \"Regelkategori\": \"LM och labvärden\",\n    \"Regel\": 42,\n    \"RiskLM\": \"Losartan/Hydroklortiazid\",\n    \"ID för alert\": \"295\",\n    \"Antal träffar per patient\": 3\n  }\n]"
+  },
+  {
+    "time": "Wed Apr 19 2023 13:46:12 GMT+0200 (Central European Summer Time)",
+    "item": "personID[410] severityLevel[3] message[Se över dos/behov av vätskedrivande. Överväg kaliumsubstitution. ] chosen option[Vanligt]"
+  },
+  {
+    "time": "Wed Apr 19 2023 13:46:12 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 410,\n    \"Kommentar\": \"\",\n    \"GFR\": \"89\",\n    \"K\": \"3.2\",\n    \"Ca\": \"2.54\",\n    \"BT\": \"\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"\",\n    \"Puls\": \"-\",\n    \"RegelkategoriID\": 3,\n    \"Regelkategori\": \"LM och labvärden\",\n    \"Regel\": 42,\n    \"RiskLM\": \"Hydroklortiazid\",\n    \"ID för alert\": \"305\",\n    \"Antal träffar per patient\": 2\n  }\n]"
+  },
+  {
+    "time": "Wed Apr 19 2023 13:47:14 GMT+0200 (Central European Summer Time)",
+    "item": "personID[410] severityLevel[1] message[Nästan inom referensintrvall. Möjligen se över indikation och behov?] chosen option[Inte viktigt]"
+  },
+  {
+    "time": "Wed Apr 19 2023 13:47:14 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 410,\n    \"Kommentar\": \"\",\n    \"GFR\": \"89\",\n    \"K\": \"3.2\",\n    \"Ca\": \"2.54\",\n    \"BT\": \"\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"\",\n    \"Puls\": \"-\",\n    \"RegelkategoriID\": 8,\n    \"Regelkategori\": \"LM och status\",\n    \"Regel\": 53,\n    \"RiskLM\": \"Kalcipos-D forte\",\n    \"ID för alert\": \"306\",\n    \"Antal träffar per patient\": 2\n  }\n]"
+  },
+  {
+    "time": "Wed Apr 19 2023 13:48:25 GMT+0200 (Central European Summer Time)",
+    "item": "personID[526] severityLevel[3] message[Normal njurfunktion. Nästan inom referensintervall (3,4).] chosen option[Redan minskad risk]"
+  },
+  {
+    "time": "Wed Apr 19 2023 13:48:25 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 526,\n    \"Kommentar\": \"\",\n    \"GFR\": \">90\",\n    \"K\": \"3.4\",\n    \"Ca\": \"-\",\n    \"BT\": \"160 /80\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"18\",\n    \"Puls\": \"77\",\n    \"RegelkategoriID\": 3,\n    \"Regelkategori\": \"LM och labvärden\",\n    \"Regel\": 42,\n    \"RiskLM\": \"Salures\",\n    \"ID för alert\": \"881\",\n    \"Antal träffar per patient\": 1\n  }\n]"
+  },
+  {
+    "time": "Wed Apr 19 2023 13:49:40 GMT+0200 (Central European Summer Time)",
+    "item": "personID[658] severityLevel[3] message[Behov av vätskedrivande? Möjlighet att byta till spironolakton?] chosen option[Vanligt]"
+  },
+  {
+    "time": "Wed Apr 19 2023 13:49:40 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 658,\n    \"Kommentar\": \"\",\n    \"GFR\": \"58\",\n    \"K\": \"3.2\",\n    \"Ca\": \"-\",\n    \"BT\": \"130/ 70\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"15\",\n    \"Puls\": \"58\",\n    \"RegelkategoriID\": 3,\n    \"Regelkategori\": \"LM och labvärden\",\n    \"Regel\": 42,\n    \"RiskLM\": \"Lasix Retard\",\n    \"ID för alert\": \"467\",\n    \"Antal träffar per patient\": 1\n  }\n]"
+  },
+  {
+    "time": "Wed Apr 19 2023 13:54:44 GMT+0200 (Central European Summer Time)",
+    "item": "personID[668] severityLevel[1] message[Ordinerad: Morfin, OxyContin, Gabapentin samt sederande Stesolid, Imovane. Behov av läkemedelsgenomgång. (önskvärt: doser, tid för insättning, andningsfrekvens)] chosen option[Brådskande]"
+  },
+  {
+    "time": "Wed Apr 19 2023 13:54:44 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 668,\n    \"Kommentar\": \"\",\n    \"GFR\": \"63\",\n    \"K\": \"3.2\",\n    \"Ca\": \"-\",\n    \"BT\": \"122/ 65\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"14\",\n    \"Puls\": \"66\",\n    \"RegelkategoriID\": 9,\n    \"Regelkategori\": \"Övrigt\",\n    \"Regel\": 61,\n    \"RiskLM\": \"OxyContin, Morfin\",\n    \"ID för alert\": \"476\",\n    \"Antal träffar per patient\": 5\n  }\n]"
+  }
+]

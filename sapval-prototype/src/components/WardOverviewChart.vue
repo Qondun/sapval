@@ -39,8 +39,8 @@ export default {
           },
           y: {
             stacked: true,
-            max: 100,
-            suggestedMax: 100,
+            max: 50,
+            suggestedMax: 50,
           }
         },
         plugins: {
