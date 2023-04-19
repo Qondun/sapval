@@ -746,7 +746,7 @@ function createAlertForm(alert, severityLevel, patientIndex, alertIndex) {
     let warningText3 = document.createElement('p');
     warningText3.classList.add('warningText');
     warningText3.setAttribute('id','warningText3');
-    warningText3.innerHTML = "Kommentar för kort"
+    warningText3.innerHTML = "Kommentar för kort."
     warningTextArea.appendChild(warningText3);
     form.appendChild(warningTextArea);
 
@@ -1235,6 +1235,10 @@ select {
     background-color: var(--buttonColorHover);
 }
 
+label span {
+    font-size: 80%;
+}
+
 .actionCategoryBoundingBox {
     display: flex;
     flex-flow: row wrap;
@@ -1246,7 +1250,7 @@ select {
     display: flex;
     flex-flow: column wrap;
     width: calc(100% / 3);
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .actionCategoryDiv:nth-child(odd) {
@@ -1292,9 +1296,5 @@ fieldset {
 legend {
     font-size: calc(0.6vw + 0.6vh);
     color: #333;
-}
-
-label span {
-    font-size: 80%;
 }
 </style>
