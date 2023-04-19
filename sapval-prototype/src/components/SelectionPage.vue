@@ -812,7 +812,10 @@ function removeAlertFromPatient(patientIndex, alertIndex) {
                 cleanPatientDiv();
             }
         }
-    })
+    });
+    if(listDiv.firstChild==null) {
+        layoutState.value = 0;
+    }
 }
 </script>
 
