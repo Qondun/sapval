@@ -637,7 +637,7 @@ function createAlertForm(alert, severityLevel, patientIndex, alertIndex) {
 
     let commentBoxLabel = document.createElement('label');
     commentBoxLabel.setAttribute('id','commentBoxLabel');
-    commentBoxLabel.innerHTML = "Kommentar (* - kommentar krävs)<br>"
+    commentBoxLabel.innerHTML = "Kommentar <span>(* - kommentar krävs)</span><br>"
 
     let commentBox = document.createElement('textarea');
     commentBox.setAttribute('placeholder', 'Skriv en kommentar');
@@ -673,7 +673,7 @@ function createAlertForm(alert, severityLevel, patientIndex, alertIndex) {
                 radioButton.addEventListener('change', () => {
                     commentBox.required = true;
                 });
-                radioLabel.innerHTML = categoryOptions[action] + " (*)<br>";
+                radioLabel.innerHTML = categoryOptions[action] + " <span>(*)</span><br>";
 
             } else {
                 radioButton.addEventListener('change', () => {
@@ -1292,5 +1292,9 @@ fieldset {
 legend {
     font-size: calc(0.6vw + 0.6vh);
     color: #333;
+}
+
+label span {
+    font-size: 80%;
 }
 </style>
