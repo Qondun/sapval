@@ -1,0 +1,242 @@
+[
+  {
+    "time": "Thu May 04 2023 13:05:11 GMT+0200 (Central European Summer Time)",
+    "item": "personID[509] severityLevel[3] message[Kalium nästan inom referens] chosen option[Inte viktigt]"
+  },
+  {
+    "time": "Thu May 04 2023 13:05:12 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 509,\n    \"Kommentar\": \"Kalium på 3,4 och står på tiazid-diuretika\",\n    \"GFR\": \"63\",\n    \"K\": \"3.4\",\n    \"Ca\": \"-\",\n    \"BT\": \"115 / 60\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"18\",\n    \"Puls\": \"68\",\n    \"RegelkategoriID\": 3,\n    \"Regelkategori\": \"LM och labvärden\",\n    \"Regel\": 42,\n    \"RiskLM\": \"Salures\",\n    \"ID för alert\": 1162,\n    \"Antal träffar per patient\": 4\n  }\n]"
+  },
+  {
+    "time": "Thu May 04 2023 13:05:58 GMT+0200 (Central European Summer Time)",
+    "item": "personID[1065] severityLevel[3] message[Kalium 3,3, värskedrivande samt lågt GFR] chosen option[Vanligt]"
+  },
+  {
+    "time": "Thu May 04 2023 13:05:58 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 1065,\n    \"Kommentar\": \"\",\n    \"GFR\": \"16\",\n    \"K\": \"3.3\",\n    \"Ca\": \"-\",\n    \"BT\": \"110/ 60\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"24\",\n    \"Puls\": \"88\",\n    \"RegelkategoriID\": 3,\n    \"Regelkategori\": \"LM och labvärden\",\n    \"Regel\": 42,\n    \"RiskLM\": \"Furix\",\n    \"ID för alert\": 880,\n    \"Antal träffar per patient\": 4\n  }\n]"
+  },
+  {
+    "time": "Thu May 04 2023 13:07:21 GMT+0200 (Central European Summer Time)",
+    "item": "personID[1065] severityLevel[1] message[Har inget värde på PK men ligger över 4, oklar dosering av earfarin, låg njurfunktion. Se över detta!] chosen option[Brådskande]"
+  },
+  {
+    "time": "Thu May 04 2023 13:07:21 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 1065,\n    \"Kommentar\": \"\",\n    \"GFR\": \"16\",\n    \"K\": \"3.3\",\n    \"Ca\": \"-\",\n    \"BT\": \"110/ 60\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"24\",\n    \"Puls\": \"88\",\n    \"RegelkategoriID\": 7,\n    \"Regelkategori\": \"Övriga LM-komb.\",\n    \"Regel\": 58,\n    \"RiskLM\": \"Waran\",\n    \"ID för alert\": 891,\n    \"Antal träffar per patient\": 4\n  }\n]"
+  },
+  {
+    "time": "Thu May 04 2023 13:08:34 GMT+0200 (Central European Summer Time)",
+    "item": "personID[1344] severityLevel[3] message[K:3,1 ordinerad loop- och tiaziddiuretika. Ingen kalium substitution.] chosen option[Vanligt]"
+  },
+  {
+    "time": "Thu May 04 2023 13:08:34 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 1344,\n    \"Kommentar\": \"\",\n    \"GFR\": \"55\",\n    \"K\": \"3.1\",\n    \"Ca\": \"-\",\n    \"BT\": \"165/ 86\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"33\",\n    \"Puls\": \"65\",\n    \"RegelkategoriID\": 3,\n    \"Regelkategori\": \"LM och labvärden\",\n    \"Regel\": 42,\n    \"RiskLM\": \"Losartan/Hydroclorothiazide, Furix\",\n    \"ID för alert\": 1138,\n    \"Antal träffar per patient\": 2\n  }\n]"
+  },
+  {
+    "time": "Thu May 04 2023 13:09:45 GMT+0200 (Central European Summer Time)",
+    "item": "personID[1253] severityLevel[2] message[Dosering 4gx3 ok ned till GFR 20ml/min.] chosen option[Annan]"
+  },
+  {
+    "time": "Thu May 04 2023 13:09:45 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 1253,\n    \"Kommentar\": \"\",\n    \"GFR\": \"36\",\n    \"K\": \"3.4\",\n    \"Ca\": \"-\",\n    \"BT\": \"130/ 80\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"22\",\n    \"Puls\": \"87\",\n    \"RegelkategoriID\": 1,\n    \"Regelkategori\": \"Njurfunktion\",\n    \"Regel\": 22,\n    \"RiskLM\": \"Piperacillin/tazobactam\",\n    \"ID för alert\": 1041,\n    \"Antal träffar per patient\": 3\n  }\n]"
+  },
+  {
+    "time": "Thu May 04 2023 13:10:40 GMT+0200 (Central European Summer Time)",
+    "item": "personID[1297] severityLevel[2] message[Dosering 4gx3 ok ned till GFR 20] chosen option[Annan]"
+  },
+  {
+    "time": "Thu May 04 2023 13:10:40 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 1297,\n    \"Kommentar\": \"\",\n    \"GFR\": \"37\",\n    \"K\": \"4.1\",\n    \"Ca\": \"-\",\n    \"BT\": \"120/ 50\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"14\",\n    \"Puls\": \"58\",\n    \"RegelkategoriID\": 1,\n    \"Regelkategori\": \"Njurfunktion\",\n    \"Regel\": 22,\n    \"RiskLM\": \"Piperacillin/tazobactam\",\n    \"ID för alert\": 724,\n    \"Antal träffar per patient\": 1\n  }\n]"
+  },
+  {
+    "time": "Thu May 04 2023 13:12:39 GMT+0200 (Central European Summer Time)",
+    "item": "personID[1013] severityLevel[2] message[GFR 24, K 5,4 oridnerad eplerenon.] chosen option[Brådskande]"
+  },
+  {
+    "time": "Thu May 04 2023 13:12:39 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 1013,\n    \"Kommentar\": \"\",\n    \"GFR\": \"24\",\n    \"K\": \"5.4\",\n    \"Ca\": \"-\",\n    \"BT\": \"110/ 70\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"26\",\n    \"Puls\": \"70\",\n    \"RegelkategoriID\": 1,\n    \"Regelkategori\": \"Njurfunktion\",\n    \"Regel\": 28,\n    \"RiskLM\": \"Eplerenon\",\n    \"ID för alert\": 805,\n    \"Antal träffar per patient\": 1\n  }\n]"
+  },
+  {
+    "time": "Thu May 04 2023 13:15:05 GMT+0200 (Central European Summer Time)",
+    "item": "personID[1056] severityLevel[2] message[Har GFR 22, kalium ej högt (lite lågt 3,4). Se över njurfunktionstrend/kaliumtrend/dos för ytterligare ställning.] chosen option[Vanligt]"
+  },
+  {
+    "time": "Thu May 04 2023 13:15:05 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 1056,\n    \"Kommentar\": \"\",\n    \"GFR\": \"22\",\n    \"K\": \"3.4\",\n    \"Ca\": \"-\",\n    \"BT\": \"165/ 75\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"16\",\n    \"Puls\": \"73\",\n    \"RegelkategoriID\": 1,\n    \"Regelkategori\": \"Njurfunktion\",\n    \"Regel\": 28,\n    \"RiskLM\": \"Spironolakton\",\n    \"ID för alert\": 870,\n    \"Antal träffar per patient\": 3\n  }\n]"
+  },
+  {
+    "time": "Thu May 04 2023 13:17:18 GMT+0200 (Central European Summer Time)",
+    "item": "personID[1194] severityLevel[2] message[Se över dos prednisolon för ställningstgande till behov av PPI. Tidigare besvär? BEhanldingslängd fragmin?] chosen option[Vanligt]"
+  },
+  {
+    "time": "Thu May 04 2023 13:17:18 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 1194,\n    \"Kommentar\": \"\",\n    \"GFR\": \"67\",\n    \"K\": \"4.1\",\n    \"Ca\": \"-\",\n    \"BT\": \"150/ 80\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"16\",\n    \"Puls\": \"100\",\n    \"RegelkategoriID\": 2,\n    \"Regelkategori\": \"Riskprofil\",\n    \"Regel\": 2,\n    \"RiskLM\": \"Fragmin, Prednisolon\",\n    \"ID för alert\": 990,\n    \"Antal träffar per patient\": 2\n  }\n]"
+  },
+  {
+    "time": "Thu May 04 2023 13:18:44 GMT+0200 (Central European Summer Time)",
+    "item": "personID[1214] severityLevel[2] message[Oridnerad kombination av klopidogrel och fragmin. Ska kombinationen förekomma? Dos fragmin? PPI?] chosen option[Brådskande]"
+  },
+  {
+    "time": "Thu May 04 2023 13:18:44 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 1214,\n    \"Kommentar\": \"\",\n    \"GFR\": \"60\",\n    \"K\": \"4.2\",\n    \"Ca\": \"-\",\n    \"BT\": \"-\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"-\",\n    \"Puls\": \"-\",\n    \"RegelkategoriID\": 2,\n    \"Regelkategori\": \"Riskprofil\",\n    \"Regel\": 2,\n    \"RiskLM\": \"Clopidogrel, Klexane\",\n    \"ID för alert\": 1000,\n    \"Antal träffar per patient\": 3\n  }\n]"
+  },
+  {
+    "time": "Thu May 04 2023 13:20:04 GMT+0200 (Central European Summer Time)",
+    "item": "personID[1282] severityLevel[2] message[Kombination av Eliquis och Prednisolon. Saknar PPI! (patient oridnerad gaviscon upplevda besvär?)] chosen option[Brådskande]"
+  },
+  {
+    "time": "Thu May 04 2023 13:20:04 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 1282,\n    \"Kommentar\": \"\",\n    \"GFR\": \"66\",\n    \"K\": \"4.6\",\n    \"Ca\": \"-\",\n    \"BT\": \"160/ 60\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"25\",\n    \"Puls\": \"78\",\n    \"RegelkategoriID\": 2,\n    \"Regelkategori\": \"Riskprofil\",\n    \"Regel\": 2,\n    \"RiskLM\": \"Eliquis, Prednisolon\",\n    \"ID för alert\": 1071,\n    \"Antal träffar per patient\": 4\n  }\n]"
+  },
+  {
+    "time": "Thu May 04 2023 13:20:44 GMT+0200 (Central European Summer Time)",
+    "item": "personID[1302] severityLevel[2] message[Kombination ok beroende på dos Fragmin, se över dos.] chosen option[Vanligt]"
+  },
+  {
+    "time": "Thu May 04 2023 13:20:44 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 1302,\n    \"Kommentar\": \"\",\n    \"GFR\": \"63\",\n    \"K\": \"3.4\",\n    \"Ca\": \"-\",\n    \"BT\": \"150/ 80\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"20\",\n    \"Puls\": \"86\",\n    \"RegelkategoriID\": 2,\n    \"Regelkategori\": \"Riskprofil\",\n    \"Regel\": 2,\n    \"RiskLM\": \"Fragmin, Trombyl\",\n    \"ID för alert\": 1082,\n    \"Antal träffar per patient\": 1\n  }\n]"
+  },
+  {
+    "time": "Thu May 04 2023 13:22:59 GMT+0200 (Central European Summer Time)",
+    "item": "personID[1168] severityLevel[2] message[Bradykardi ordinerad Digoxin+Bisoprolol. Se över dosering, njurfunktionstrend, ev. digoxin konc.] chosen option[Brådskande]"
+  },
+  {
+    "time": "Thu May 04 2023 13:22:59 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 1168,\n    \"Kommentar\": \"\",\n    \"GFR\": \"49\",\n    \"K\": \"4\",\n    \"Ca\": \"-\",\n    \"BT\": \"100/ 50\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"12\",\n    \"Puls\": \"40\",\n    \"RegelkategoriID\": 3,\n    \"Regelkategori\": \"LM och labvärden\",\n    \"Regel\": 46,\n    \"RiskLM\": \"Digoxin\",\n    \"ID för alert\": 1200,\n    \"Antal träffar per patient\": 4\n  }\n]"
+  },
+  {
+    "time": "Thu May 04 2023 13:23:45 GMT+0200 (Central European Summer Time)",
+    "item": "personID[1168] severityLevel[2] message[Oridnerad digoxin+Bidoprolol brdykardi, se över dosering, njufunktionstrend, pulstrend.] chosen option[Vanligt]"
+  },
+  {
+    "time": "Thu May 04 2023 13:23:45 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 1168,\n    \"Kommentar\": \"\",\n    \"GFR\": \"49\",\n    \"K\": \"4\",\n    \"Ca\": \"-\",\n    \"BT\": \"100/ 50\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"12\",\n    \"Puls\": \"40\",\n    \"RegelkategoriID\": 3,\n    \"Regelkategori\": \"LM och labvärden\",\n    \"Regel\": 45,\n    \"RiskLM\": \"Bisoprolol\",\n    \"ID för alert\": 1140,\n    \"Antal träffar per patient\": 4\n  }\n]"
+  },
+  {
+    "time": "Thu May 04 2023 13:25:02 GMT+0200 (Central European Summer Time)",
+    "item": "personID[1168] severityLevel[1] message[Se över S-digoxin. Njurfunktionstrend.] chosen option[Vanligt]"
+  },
+  {
+    "time": "Thu May 04 2023 13:25:02 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 1168,\n    \"Kommentar\": \"\",\n    \"GFR\": \"49\",\n    \"K\": \"4\",\n    \"Ca\": \"-\",\n    \"BT\": \"100/ 50\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"12\",\n    \"Puls\": \"40\",\n    \"RegelkategoriID\": 1,\n    \"Regelkategori\": \"Njurfunktion\",\n    \"Regel\": 16,\n    \"RiskLM\": \"Digoxin\",\n    \"ID för alert\": 967,\n    \"Antal träffar per patient\": 4\n  }\n]"
+  },
+  {
+    "time": "Thu May 04 2023 13:26:55 GMT+0200 (Central European Summer Time)",
+    "item": "personID[49] severityLevel[2] message[EKG tagit igår var normalt->bortser därför från varningen.] chosen option[Annan]"
+  },
+  {
+    "time": "Thu May 04 2023 13:26:55 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 49,\n    \"Kommentar\": \"EKG taget igår, QT normalt\",\n    \"GFR\": \"85\",\n    \"K\": \"4.3\",\n    \"Ca\": \"2.14\",\n    \"BT\": \"\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"\",\n    \"Puls\": \"88\",\n    \"RegelkategoriID\": 2,\n    \"Regelkategori\": \"Riskprofil\",\n    \"Regel\": 4,\n    \"RiskLM\": \"Akynzeo, Ciprofloxacin, Fluconazol\",\n    \"ID för alert\": 26,\n    \"Antal träffar per patient\": 5\n  }\n]"
+  },
+  {
+    "time": "Thu May 04 2023 13:29:32 GMT+0200 (Central European Summer Time)",
+    "item": "personID[49] severityLevel[2] message[Se över infektionsparametrar. Har patient fått önskad effekt av antibiotikat, då cipro ej varit dosseparerat från kalk. Dessa ska dosserpareras för addekvat upptag av cipro.] chosen option[Vanligt]"
+  },
+  {
+    "time": "Thu May 04 2023 13:29:32 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 49,\n    \"Kommentar\": \"Ej dosseparerade\",\n    \"GFR\": \"85\",\n    \"K\": \"4.7\",\n    \"Ca\": \"2.18\",\n    \"BT\": \"\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"\",\n    \"Puls\": \"88\",\n    \"RegelkategoriID\": 6,\n    \"Regelkategori\": \"Interaktioner\",\n    \"Regel\": 14,\n    \"RiskLM\": \"Kalcipos D-forte, Ciprofloxacin\",\n    \"ID för alert\": 30,\n    \"Antal träffar per patient\": 5\n  }\n]"
+  },
+  {
+    "time": "Thu May 04 2023 13:30:50 GMT+0200 (Central European Summer Time)",
+    "item": "personID[1260] severityLevel[2] message[Ciprofloxacin och Gaviscon ska dosseprareas för addekvat upptag av Ciprofloxacin.] chosen option[Vanligt]"
+  },
+  {
+    "time": "Thu May 04 2023 13:30:50 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 1260,\n    \"Kommentar\": \"Ej dosseparerat, båda tas på morgonen\",\n    \"GFR\": \"72\",\n    \"K\": \"3.6\",\n    \"Ca\": \"2.19\",\n    \"BT\": \"120/ 70\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"20\",\n    \"Puls\": \"83\",\n    \"RegelkategoriID\": 6,\n    \"Regelkategori\": \"Interaktioner\",\n    \"Regel\": 14,\n    \"RiskLM\": \"Gaviscon, Ciprofloxacin\",\n    \"ID för alert\": 1050,\n    \"Antal träffar per patient\": 8\n  }\n]"
+  },
+  {
+    "time": "Thu May 04 2023 13:31:37 GMT+0200 (Central European Summer Time)",
+    "item": "personID[1148] severityLevel[2] message[Kalium inom referensintervall-->bortser från varningen.] chosen option[Annan]"
+  },
+  {
+    "time": "Thu May 04 2023 13:31:37 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 1148,\n    \"Kommentar\": \"\",\n    \"GFR\": \"32\",\n    \"K\": \"3.8\",\n    \"Ca\": \"-\",\n    \"BT\": \"140/ 80\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"13\",\n    \"Puls\": \"52\",\n    \"RegelkategoriID\": 6,\n    \"Regelkategori\": \"Interaktioner\",\n    \"Regel\": 12,\n    \"RiskLM\": \"Kaleorid, Sprionolakton\",\n    \"ID för alert\": 952,\n    \"Antal träffar per patient\": 2\n  }\n]"
+  },
+  {
+    "time": "Thu May 04 2023 13:32:42 GMT+0200 (Central European Summer Time)",
+    "item": "personID[268] severityLevel[1] message[Se över S-digoxin, ingen koncentrationsbestämning finns sedan insättning.] chosen option[Vanligt]"
+  },
+  {
+    "time": "Thu May 04 2023 13:32:42 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 268,\n    \"Kommentar\": \"Patienten står på digoxin 0,13mg 1x1 sedan många år ingen koncentrationsmätning utförd någonsin enligt lablistan.\",\n    \"GFR\": \"37\",\n    \"K\": \"3.7\",\n    \"Ca\": \"-\",\n    \"BT\": \"\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"\",\n    \"Puls\": \"74\",\n    \"RegelkategoriID\": 1,\n    \"Regelkategori\": \"Njurfunktion\",\n    \"Regel\": 16,\n    \"RiskLM\": \"Digoxin\",\n    \"ID för alert\": 194,\n    \"Antal träffar per patient\": 1\n  }\n]"
+  },
+  {
+    "time": "Thu May 04 2023 13:33:34 GMT+0200 (Central European Summer Time)",
+    "item": "personID[1224] severityLevel[1] message[Överväg koncentrationsbestämning om detta ej tagits inom närtid.] chosen option[Vanligt]"
+  },
+  {
+    "time": "Thu May 04 2023 13:33:35 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 1224,\n    \"Kommentar\": \"\",\n    \"GFR\": \"69\",\n    \"K\": \"4.1\",\n    \"Ca\": \"-\",\n    \"BT\": \"110/ 55\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"20\",\n    \"Puls\": \"73\",\n    \"RegelkategoriID\": 1,\n    \"Regelkategori\": \"Njurfunktion\",\n    \"Regel\": 16,\n    \"RiskLM\": \"Digoxin\",\n    \"ID för alert\": 1009,\n    \"Antal träffar per patient\": 4\n  }\n]"
+  },
+  {
+    "time": "Thu May 04 2023 13:34:02 GMT+0200 (Central European Summer Time)",
+    "item": "personID[1110] severityLevel[1] message[Överväg koncentrationsbesämning om detta ej tagits inom närtid.] chosen option[Vanligt]"
+  },
+  {
+    "time": "Thu May 04 2023 13:34:02 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 1110,\n    \"Kommentar\": \"\",\n    \"GFR\": \"63\",\n    \"K\": \"4.4\",\n    \"Ca\": \"-\",\n    \"BT\": \"110/ 75\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"14\",\n    \"Puls\": \"68\",\n    \"RegelkategoriID\": 1,\n    \"Regelkategori\": \"Njurfunktion\",\n    \"Regel\": 16,\n    \"RiskLM\": \"Digoxin\",\n    \"ID för alert\": 922,\n    \"Antal träffar per patient\": 1\n  }\n]"
+  },
+  {
+    "time": "Thu May 04 2023 13:35:41 GMT+0200 (Central European Summer Time)",
+    "item": "personID[1313] severityLevel[1] message[Koncentrationsbesämning önskvärt om detta inte tagits i närtid. Bör även tas om det skett förändirng i patientens njurfunktion sedan senaste koncentrationsbestämningen.] chosen option[Vanligt]"
+  },
+  {
+    "time": "Thu May 04 2023 13:35:41 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 1313,\n    \"Kommentar\": \"\",\n    \"GFR\": \"40\",\n    \"K\": \"4.7\",\n    \"Ca\": \"-\",\n    \"BT\": \"110/ 60\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"18\",\n    \"Puls\": \"88\",\n    \"RegelkategoriID\": 1,\n    \"Regelkategori\": \"Njurfunktion\",\n    \"Regel\": 16,\n    \"RiskLM\": \"Digoxin\",\n    \"ID för alert\": 1102,\n    \"Antal träffar per patient\": 2\n  }\n]"
+  },
+  {
+    "time": "Thu May 04 2023 13:36:16 GMT+0200 (Central European Summer Time)",
+    "item": "personID[1347] severityLevel[1] message[Överväg koncentrationsbestämning av digoxin om inte det tagits i närtid.] chosen option[Vanligt]"
+  },
+  {
+    "time": "Thu May 04 2023 13:36:16 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 1347,\n    \"Kommentar\": \"\",\n    \"GFR\": \"62\",\n    \"K\": \"4.1\",\n    \"Ca\": \"-\",\n    \"BT\": \"100/ 60\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"20\",\n    \"Puls\": \"108\",\n    \"RegelkategoriID\": 1,\n    \"Regelkategori\": \"Njurfunktion\",\n    \"Regel\": 16,\n    \"RiskLM\": \"Digoxin\",\n    \"ID för alert\": 731,\n    \"Antal träffar per patient\": 2\n  }\n]"
+  },
+  {
+    "time": "Thu May 04 2023 13:36:58 GMT+0200 (Central European Summer Time)",
+    "item": "personID[1320] severityLevel[1] message[Koncentrationsbestämmning av Digoxin om inte detta tagits i närtid.] chosen option[Vanligt]"
+  },
+  {
+    "time": "Thu May 04 2023 13:36:58 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 1320,\n    \"Kommentar\": \"\",\n    \"GFR\": \"63\",\n    \"K\": \"3.5\",\n    \"Ca\": \"-\",\n    \"BT\": \"140/ 70\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"18\",\n    \"Puls\": \"53\",\n    \"RegelkategoriID\": 1,\n    \"Regelkategori\": \"Njurfunktion\",\n    \"Regel\": 16,\n    \"RiskLM\": \"Digoxin\",\n    \"ID för alert\": 1112,\n    \"Antal träffar per patient\": 1\n  }\n]"
+  },
+  {
+    "time": "Thu May 04 2023 13:38:50 GMT+0200 (Central European Summer Time)",
+    "item": "personID[1407] severityLevel[1] message[Konc under 1,4 (1,0) därmed inom referens-->bortser från varningen.] chosen option[Annan]"
+  },
+  {
+    "time": "Thu May 04 2023 13:38:50 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 1407,\n    \"Kommentar\": \"Nyligen tagen konc, 1,0\",\n    \"GFR\": \"58\",\n    \"K\": \"4.4\",\n    \"Ca\": \"-\",\n    \"BT\": \"118/ 70\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"16\",\n    \"Puls\": \"64\",\n    \"RegelkategoriID\": 1,\n    \"Regelkategori\": \"Njurfunktion\",\n    \"Regel\": 16,\n    \"RiskLM\": \"Digoxin\",\n    \"ID för alert\": 1213,\n    \"Antal träffar per patient\": 2\n  }\n]"
+  },
+  {
+    "time": "Thu May 04 2023 13:41:44 GMT+0200 (Central European Summer Time)",
+    "item": "personID[1407] severityLevel[2] message[Se över dos Prednisolon. Sannolikt behov av PPI mtp oridnerad kortison samt NOAK (även Brintellix antidepersivt dock okänd frekvens av biverkning iform av blödning).] chosen option[Brådskande]"
+  },
+  {
+    "time": "Thu May 04 2023 13:41:44 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 1407,\n    \"Kommentar\": \"Nyligen tagen konc, 1,0\",\n    \"GFR\": \"58\",\n    \"K\": \"4.4\",\n    \"Ca\": \"-\",\n    \"BT\": \"118/ 70\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"16\",\n    \"Puls\": \"64\",\n    \"RegelkategoriID\": 2,\n    \"Regelkategori\": \"Riskprofil\",\n    \"Regel\": 2,\n    \"RiskLM\": \"Brintellix, Eliquis, Prednisolon\",\n    \"ID för alert\": 1212,\n    \"Antal träffar per patient\": 2\n  }\n]"
+  },
+  {
+    "time": "Thu May 04 2023 13:43:33 GMT+0200 (Central European Summer Time)",
+    "item": "personID[223] severityLevel[2] message[Överväg EKG. Se över doser (oklart vilken tablett som har styrkan 10mg...)] chosen option[Vanligt]"
+  },
+  {
+    "time": "Thu May 04 2023 13:43:33 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 223,\n    \"Kommentar\": \"10mg 1 tn sedan länge, inga uppenbara besvär med detta\",\n    \"GFR\": \"41\",\n    \"K\": \"4.4\",\n    \"Ca\": \"-\",\n    \"BT\": \"\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"\",\n    \"Puls\": \"71\",\n    \"RegelkategoriID\": 2,\n    \"Regelkategori\": \"Riskprofil\",\n    \"Regel\": 4,\n    \"RiskLM\": \"Mirtazapin, Escitalopram, Hydroxyzine\",\n    \"ID för alert\": 162,\n    \"Antal träffar per patient\": 5\n  }\n]"
+  },
+  {
+    "time": "Thu May 04 2023 13:45:25 GMT+0200 (Central European Summer Time)",
+    "item": "personID[223] severityLevel[1] message[Patient ligger på Hospiceavdelning-->bortser från varningen.] chosen option[Palliativ vård]"
+  },
+  {
+    "time": "Thu May 04 2023 13:45:25 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 223,\n    \"Kommentar\": \"10mg 1 tn sedan länge, inga uppenbara besvär med detta\",\n    \"GFR\": \"41\",\n    \"K\": \"4.4\",\n    \"Ca\": \"-\",\n    \"BT\": \"\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"\",\n    \"Puls\": \"71\",\n    \"RegelkategoriID\": 4,\n    \"Regelkategori\": \"LM och doser\",\n    \"Regel\": 38,\n    \"RiskLM\": \"Zopiklon\",\n    \"ID för alert\": 165,\n    \"Antal träffar per patient\": 5\n  }\n]"
+  },
+  {
+    "time": "Thu May 04 2023 13:49:06 GMT+0200 (Central European Summer Time)",
+    "item": "personID[502] severityLevel[1] message[Vad är andningsfrekvensen? \n\nTillägg: oklart vad den viktiga infomrationen från journlaen tillför\"Risk: Förlängt QT-intervall. Pimperan sattes in under vårdtiden inget EKG taget\"] chosen option[Vanligt]"
+  },
+  {
+    "time": "Thu May 04 2023 13:49:06 GMT+0200 (Central European Summer Time)",
+    "item": "Cleared Item: [\n  {\n    \"PersonID\": 502,\n    \"Kommentar\": \"Risk: Förlängt QT-intervall. Pimperan sattes in under vårdtiden inget EKG taget\",\n    \"GFR\": \"42\",\n    \"K\": \"3.8\",\n    \"Ca\": \"-\",\n    \"BT\": \"111 / 65\",\n    \"Hg\": \"\",\n    \"Andningsfrekvens\": \"13\",\n    \"Puls\": \"70\",\n    \"RegelkategoriID\": 9,\n    \"Regelkategori\": \"Övrigt\",\n    \"Regel\": 61,\n    \"RiskLM\": \"Oxycontin, OxyNorm\",\n    \"ID för alert\": 1070,\n    \"Antal träffar per patient\": 2\n  }\n]"
+  }
+]
